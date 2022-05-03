@@ -1,0 +1,154 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2940804170899513101
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2940804170899513098}
+  - component: {fileID: 2940804170899513099}
+  - component: {fileID: 2940804170899513096}
+  - component: {fileID: 5847023261019807991}
+  m_Layer: 10
+  m_Name: Butterfly Enemy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2940804170899513098
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2940804170899513101}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4781709098203112529}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2940804170899513099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2940804170899513101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33aabe1a2dec93349b06e6e5dc51bc06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathCreator: {fileID: 5777144279509328335, guid: 899c1c89cbad369438f14f7ebfa05d94, type: 3}
+  endOfPathInstruction: 0
+  speed: 5
+  distanceTravelled: 0
+  rotate: 0
+--- !u!114 &2940804170899513096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2940804170899513101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a159bd40087a9d3488367ca1755cbc9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contactDamage: 1
+  turnAroundSpeed: 5
+  pathPrefab: {fileID: 5777144279509328334, guid: 1fb9372a8cf3ee84892f7ac2754b626b, type: 3}
+  currentHealth: 0
+  maxHealth: 1
+  bubble: {fileID: 4129302837664924161, guid: 5b64495461de8544f87c67cb8830c27c, type: 3}
+  deathCloud:
+    effect: {fileID: 0}
+    index: 0
+  VFX_prefab: {fileID: 239912885287363553, guid: 87ac8f2e8a45d8f40bf052fda9490b72, type: 3}
+--- !u!58 &5847023261019807991
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2940804170899513101}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.43, y: 0.66}
+  serializedVersion: 2
+  m_Radius: 0.36
+--- !u!1001 &2940804170210344165
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2940804170899513098}
+    m_Modifications:
+    - target: {fileID: 7679726812497811636, guid: 0c7ae884f6972824082c02947094f918, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7679726812497811636, guid: 0c7ae884f6972824082c02947094f918, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7679726812497811636, guid: 0c7ae884f6972824082c02947094f918, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7679726812497811636, guid: 0c7ae884f6972824082c02947094f918, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7679726812497811636, guid: 0c7ae884f6972824082c02947094f918, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.92387956
+      objectReference: {fileID: 0}
+    - target: {fileID: 7679726812497811636, guid: 0c7ae884f6972824082c02947094f918, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.38268343
+      objectReference: {fileID: 0}
+    - target: {fileID: 7679726812497811636, guid: 0c7ae884f6972824082c02947094f918, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7679726812497811636, guid: 0c7ae884f6972824082c02947094f918, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7679726812497811636, guid: 0c7ae884f6972824082c02947094f918, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7679726812497811636, guid: 0c7ae884f6972824082c02947094f918, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 7679726812497811636, guid: 0c7ae884f6972824082c02947094f918, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7679726812497811642, guid: 0c7ae884f6972824082c02947094f918, type: 3}
+      propertyPath: m_Name
+      value: Butterfly
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5050005300008606921, guid: 0c7ae884f6972824082c02947094f918, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 0c7ae884f6972824082c02947094f918, type: 3}
+--- !u!4 &4781709098203112529 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7679726812497811636, guid: 0c7ae884f6972824082c02947094f918, type: 3}
+  m_PrefabInstance: {fileID: 2940804170210344165}
+  m_PrefabAsset: {fileID: 0}
