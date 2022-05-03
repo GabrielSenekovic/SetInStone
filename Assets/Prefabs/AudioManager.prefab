@@ -1,0 +1,165 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5873878312423660674
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5873878312423660676}
+  - component: {fileID: 5873878312423660675}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5873878312423660676
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5873878312423660674}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.078116, y: 3.675962, z: -0.08172496}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5873878312423660675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5873878312423660674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6512d1af73422494f8bbe38835082075, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Jump
+    clip:
+    - {fileID: 8300000, guid: 6db345529e0db0f45ae3455e0574cd9a, type: 3}
+    - {fileID: 8300000, guid: 8ad175f9d6cf04f4fa3a3c9d29349b30, type: 3}
+    - {fileID: 8300000, guid: 10a1cddbcaa1d4b44a25c8846d3494c5, type: 3}
+  - name: DoubleJump
+    clip:
+    - {fileID: 8300000, guid: 18e851fa26071a143b411cc20733bbbd, type: 3}
+    - {fileID: 8300000, guid: c4ec4c07ca5aa9d478974546980cc5f7, type: 3}
+  - name: LandOnLand
+    clip:
+    - {fileID: 8300000, guid: e0e9c4e0e87c4aa4098ee370f9e77891, type: 3}
+  - name: TakeDamage
+    clip:
+    - {fileID: 8300000, guid: 4f60cc08db29aac4c9d20faa71ed6a1c, type: 3}
+    - {fileID: 8300000, guid: d1718f5b92b80b746b0e01890f67a0a1, type: 3}
+    - {fileID: 8300000, guid: 29439d76ba563db4cb03b26259cf9d6d, type: 3}
+  - name: DamageBubbles
+    clip:
+    - {fileID: 8300000, guid: 41e9dbabee0d8d147b0b838992e1ff38, type: 3}
+  - name: PickUpHeart
+    clip:
+    - {fileID: 8300000, guid: 5f5b6b688d812c442af0bf3717d116a5, type: 3}
+  - name: Attack
+    clip:
+    - {fileID: 8300000, guid: 9cf569b9fdec9854191d8e9b974bed91, type: 3}
+    - {fileID: 8300000, guid: c68261abe82f3ff4589c64a1ad6c3633, type: 3}
+    - {fileID: 8300000, guid: f0e57adb7b8417e42a5ae33050dc0d1a, type: 3}
+  - name: CaneHit
+    clip:
+    - {fileID: 8300000, guid: 558e041b6cbe3344faae69bd47f0c905, type: 3}
+  - name: SitOnSled
+    clip:
+    - {fileID: 8300000, guid: 50fecbbaab6147d41bc9d15ff7abc851, type: 3}
+    - {fileID: 8300000, guid: f063915c612df7b44b87d8703fc4a781, type: 3}
+  - name: Shield
+    clip:
+    - {fileID: 8300000, guid: d2b347976a61f9445ac45eecfcf82fee, type: 3}
+  - name: Block
+    clip:
+    - {fileID: 8300000, guid: 92941809cf5d05741b604f67e93dd275, type: 3}
+    - {fileID: 8300000, guid: ef7859a1d2d2aff49ba2429ea71817ca, type: 3}
+    - {fileID: 8300000, guid: 596208a69af341c48b9a769caa772371, type: 3}
+  - name: LemmyBounce
+    clip:
+    - {fileID: 8300000, guid: 80a84dc8c6b7a9d4c9da825ece88cca2, type: 3}
+  - name: HookThrow
+    clip:
+    - {fileID: 8300000, guid: 2274a7443d3059e4da85e0b4ef8c9d25, type: 3}
+    - {fileID: 8300000, guid: 4cf23317af2695246987600f4ccf0ce2, type: 3}
+    - {fileID: 8300000, guid: d77fe6fba044a024fbe3a7fd45585c68, type: 3}
+  - name: HookReel
+    clip:
+    - {fileID: 8300000, guid: 6b5f9af72e164004683d5091f3de7324, type: 3}
+    - {fileID: 8300000, guid: e68ec078894044a48913eac9685dc86d, type: 3}
+  - name: HookHit
+    clip:
+    - {fileID: 8300000, guid: 100cc2659261d2347aafc6d9a144c453, type: 3}
+  - name: SwitchHit
+    clip:
+    - {fileID: 8300000, guid: 1b4944aa5e4a8bc4e858f19d4bd58684, type: 3}
+  - name: DoorOpen
+    clip:
+    - {fileID: 8300000, guid: 72b23485acc4e5946b07680a7d7d1619, type: 3}
+  - name: ButterflyDeath
+    clip:
+    - {fileID: 8300000, guid: bceb0cbd185d7c04ebc3ac00567e16e1, type: 3}
+  - name: ButterflyTouch
+    clip:
+    - {fileID: 8300000, guid: 792839d9dfdd0fd4bb05702bfbc974e2, type: 3}
+  - name: ButterflyHit
+    clip:
+    - {fileID: 8300000, guid: 8f9e6c2d1beadbd44905840ad76207d7, type: 3}
+  - name: LemmyAttack
+    clip:
+    - {fileID: 8300000, guid: 6333567a333da56448aec16b14034fc9, type: 3}
+    - {fileID: 8300000, guid: 59a9291b283793644a7037830b3f7b9b, type: 3}
+  - name: LemmyCry
+    clip:
+    - {fileID: 8300000, guid: 242796637c6723847ac21769a27b4a8b, type: 3}
+  - name: LemmyDeath
+    clip:
+    - {fileID: 8300000, guid: 295a3a72284e6a344a8680f92b01c81c, type: 3}
+  - name: SnailCry
+    clip:
+    - {fileID: 8300000, guid: f16f8acb468463a418ca627a3847ba2b, type: 3}
+  - name: SnailDeath
+    clip:
+    - {fileID: 8300000, guid: 8e33bbe6a7af80d44b0f7d0ea97e0395, type: 3}
+  - name: SnailShoot
+    clip:
+    - {fileID: 8300000, guid: 512a8f430033eb040839189dce4e64e2, type: 3}
+  - name: SnailShotHit
+    clip:
+    - {fileID: 8300000, guid: 256796618344dc94ca75c985064a60c2, type: 3}
+  - name: SnailTouch
+    clip:
+    - {fileID: 8300000, guid: 32fae521f088b20459e282a93be35d89, type: 3}
+  - name: VoiceDeath
+    clip:
+    - {fileID: 8300000, guid: d12bcad7856b3734b9b7ce85bc6a0797, type: 3}
+  - name: VoiceHurt
+    clip:
+    - {fileID: 8300000, guid: 849869350cddce0428790db8d1370a2e, type: 3}
+    - {fileID: 8300000, guid: 5e0adf5bcdafeb141ab7aa7bfee26783, type: 3}
+    - {fileID: 8300000, guid: 345eb296f7f89ce4dbbdf13c5946da02, type: 3}
+  - name: VoiceHeal
+    clip:
+    - {fileID: 8300000, guid: e33a62c417230ba49a12c23f1cd96099, type: 3}
+  - name: VoiceJump
+    clip:
+    - {fileID: 8300000, guid: 816772b6cf9960e4dba2c45d43d3bbe5, type: 3}
+    - {fileID: 8300000, guid: 76e5eceb4811b5a4d8665d757af8a9a3, type: 3}
+    - {fileID: 8300000, guid: 8c0af346495cdbf409aa599e64927f92, type: 3}
+  music:
+  - name: ForestDungeonTheme
+    intro: {fileID: 8300000, guid: 6ac664b55bd52484cb69486eb871faf8, type: 3}
+    theme: {fileID: 8300000, guid: 64d52e988964f944fb0729b15fd50511, type: 3}
+  debug: 0
