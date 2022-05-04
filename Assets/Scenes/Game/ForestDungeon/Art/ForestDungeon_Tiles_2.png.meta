@@ -11,6 +11,24 @@ TextureImporter:
   - first:
       213: 5575462544614039875
     second: ForestDungeon_Tiles_2_2
+  - first:
+      213: 4481923120195372145
+    second: ForestDungeon_Tiles_2_3
+  - first:
+      213: -1309900410209947833
+    second: ForestDungeon_Tiles_2_4
+  - first:
+      213: 4098650895458410097
+    second: ForestDungeon_Tiles_2_5
+  - first:
+      213: -8839211314956928000
+    second: ForestDungeon_Tiles_2_6
+  - first:
+      213: 3026544093998616446
+    second: ForestDungeon_Tiles_2_7
+  - first:
+      213: -78535367377307384
+    second: ForestDungeon_Tiles_2_8
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -182,6 +200,132 @@ TextureImporter:
       bones: []
       spriteID: 341273ee4a5006d40800000000000000
       internalID: 5575462544614039875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ForestDungeon_Tiles_2_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1740bd1e45df23e30800000000000000
+      internalID: 4481923120195372145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ForestDungeon_Tiles_2_4
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74f2c4e548c42dde0800000000000000
+      internalID: -1309900410209947833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ForestDungeon_Tiles_2_5
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17e922a164551e830800000000000000
+      internalID: 4098650895458410097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ForestDungeon_Tiles_2_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00cf0652420d45580800000000000000
+      internalID: -8839211314956928000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ForestDungeon_Tiles_2_7
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7f08d371d1700a20800000000000000
+      internalID: 3026544093998616446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ForestDungeon_Tiles_2_8
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 809bb2ddf7cf8eef0800000000000000
+      internalID: -78535367377307384
       vertices: []
       indices: 
       edges: []

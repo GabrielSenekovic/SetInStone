@@ -20,6 +20,10 @@ public class HookShot : MonoBehaviour
     public bool retract;
     public bool shooting;
     [System.NonSerialized] public bool hit;
+    public Vector2 hitPoint; //DEBUG
+    public Vector2[] colliderCheckPoints = new Vector2[3];
+    public Color[] colliderCheckPoint_colors = new Color[3];
+    public Color hitPoint_color;
 
     void Start()
     {
@@ -185,5 +189,14 @@ public class HookShot : MonoBehaviour
         
         Gizmos.color = new Color32(255,125,0,255);
         Gizmos.DrawLine(transform.position, (Vector2)transform.position + hookForce);
+
+        Gizmos.color = hitPoint_color;
+        Gizmos.DrawSphere(hitPoint, 0.2f);
+
+        for(int i = 0; i < 3; i++)
+        {
+            Gizmos.color = colliderCheckPoint_colors[i];
+            Gizmos.DrawSphere(colliderCheckPoints[i], 0.4f);
+        }
     }
 }
