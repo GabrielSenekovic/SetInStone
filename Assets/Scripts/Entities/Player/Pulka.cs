@@ -14,7 +14,6 @@ public class Pulka : MonoBehaviour
     public Vector2 pulkaDir;
     public float pulkaDistanceRad;
     [SerializeField] GameObject pulka;
-    [SerializeField] GameObject cane;
     [SerializeField] Vector2 sittingPosition;
 
     public PulkaState state;
@@ -44,7 +43,6 @@ public class Pulka : MonoBehaviour
             //Sit down in the Pulka
             pulka.transform.localPosition = sittingPosition;
             pulka.GetComponentInChildren<BoxCollider2D>().isTrigger = false;
-            cane.SetActive(false);
             pulka.transform.localRotation = Quaternion.identity;
         }
         else
@@ -63,7 +61,6 @@ public class Pulka : MonoBehaviour
         Debug.Log("Dismounting");
         //*If you stop holding the shield, it goes away. Dont set it riding pulka, because it should dismount only when you hit the ground
         state = PulkaState.NONE;
-        cane.SetActive(true);
         pulka.SetActive(false);
     }
 }

@@ -11,6 +11,8 @@ public class Input : MonoBehaviour
     PlayerAttack attack;
     Animator playerAnimator;
 
+    Inventory inventory;
+
     bool controllable;
 
     [System.NonSerialized] public HookShot hookShot;
@@ -26,6 +28,7 @@ public class Input : MonoBehaviour
         attack = GetComponent<PlayerAttack>();
         hookShot = GetComponent<HookShot>();
         pulka = GetComponent<Pulka>();
+        inventory = GetComponent<Inventory>();
 
         controllable = true;
     }
@@ -60,7 +63,8 @@ public class Input : MonoBehaviour
         if (!controllable || movement.actionBuffer) {return;}
         playerAnimator.SetBool("walking", true);
         movement.movingDirection = value.Get<float>(); //! how we get stick direction
-        movement.bodyTransform.localRotation = Quaternion.Euler(new Vector3(0, 90 * movement.movingDirection, 0));
+        movement.bodyTransform.localScale = new Vector3(movement.movingDirection,1,1);
+        //Quaternion.Euler(new Vector3(0, 90 - 90 * movement.movingDirection, 0));
         movement.facingDirection = movement.movingDirection == 0 ? movement.facingDirection : movement.movingDirection;
     }
 
@@ -84,17 +88,18 @@ public class Input : MonoBehaviour
 
     void OnSpecial()
     {
-        if (!controllable || movement.actionBuffer) {return;}
+        if (!controllable || movement.actionBuffer || !inventory.HasHookshot()) {return;}
         if(movement.hookShot.Shoot()) {movement.StopVelocity();}
     }
     void OnStopSpecial()
     {
+        if(!inventory.HasHookshot()){return;}
         movement.hookShot.StopPull();
     }
 
     void OnPulka()
     {
-        if (!controllable || movement.actionBuffer) {return;}
+        if (!controllable || movement.actionBuffer || !inventory.HasPulka()) {return;}
 
         if(debug){Debug.Log("Using Pulka");}
 
