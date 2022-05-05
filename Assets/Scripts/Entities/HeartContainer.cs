@@ -39,7 +39,7 @@ public class HeartContainer : MonoBehaviour
             healthModel = collision.GetComponent<HealthModel>();
             if(healthModel == null)
             {
-                healthModel = collision.transform.parent.transform.parent.GetComponent<HealthModel>();
+                healthModel = collision.transform.parent.GetComponent<HealthModel>();
             }
             healthModel.maxHealth += 4;
             healthModel.Heal(healthModel.maxHealth - healthModel.currentHealth);

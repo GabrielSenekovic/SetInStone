@@ -63,9 +63,12 @@ public class Input : MonoBehaviour
         if (!controllable || movement.actionBuffer) {return;}
         playerAnimator.SetBool("walking", true);
         movement.movingDirection = value.Get<float>(); //! how we get stick direction
-        movement.bodyTransform.localScale = new Vector3(movement.movingDirection,1,1);
         //Quaternion.Euler(new Vector3(0, 90 - 90 * movement.movingDirection, 0));
-        movement.facingDirection = movement.movingDirection == 0 ? movement.facingDirection : movement.movingDirection;
+        if(!movement.canClimbLedge)
+        { //* If not climbing a ledge, turn around and move
+            movement.bodyTransform.localScale = new Vector3(movement.movingDirection,1,1);
+            movement.facingDirection = movement.movingDirection == 0 ? movement.facingDirection : movement.movingDirection;
+        }
     }
 
     void OnZoom(InputValue value)

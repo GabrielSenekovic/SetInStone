@@ -67,6 +67,9 @@ public class Movement : MonoBehaviour
     public float ledgeClimbYOffset2;
 
     public Collider2D mainCollider;
+
+    int ledgeHangTimer;
+    int ledgeHangTimer_max = 20;
     [System.Serializable] public class MovementDebug
     {
         [System.NonSerialized] public Vector2 buttonLiftPosition;
@@ -151,7 +154,7 @@ public class Movement : MonoBehaviour
         
         TriggerSlide();
 
-        if(actionBuffer || (ducking && grounded) || canClimbLedge) {return;}
+        if(actionBuffer || (ducking && grounded)) {return;}
 
         float speedMod = 1;
 
@@ -167,7 +170,22 @@ public class Movement : MonoBehaviour
             }
         }
 
-        transform.position +=  new Vector3(movingDirection * speed * speedMod,0,0);
+        if(!canClimbLedge)
+        {
+            transform.position +=  new Vector3(movingDirection * speed * speedMod,0,0);
+        }
+        else if(canClimbLedge && facingDirection == movingDirection)
+        {
+            if(ledgeHangTimer >= ledgeHangTimer_max)
+            {
+                ledgeHangTimer = 0;
+                playerAnimator.SetTrigger("ledgeClimb");
+            }
+        }
+        if(canClimbLedge)
+        {
+            ledgeHangTimer++;
+        }
 
         if(jumping) {jumpTimer++;}
         if(jumpBufferTimer > 0) {jumpBufferTimer--;}
@@ -185,8 +203,8 @@ public class Movement : MonoBehaviour
             }
             else if(transform.localScale.x < 0)
             {
-                ledgePos1 = new Vector2(Mathf.Ceil(ledgePosBot.x - wallCheckDistance) + ledgeClimbXOffset1, Mathf.Ceil(ledgePosBot.y) + ledgeClimbYOffset1);
-                ledgePos2 = new Vector2(Mathf.Ceil(ledgePosBot.x - wallCheckDistance) - ledgeClimbXOffset2, Mathf.Ceil(ledgePosBot.y) + ledgeClimbYOffset2);
+                ledgePos1 = new Vector2(Mathf.Ceil(ledgePosBot.x - wallCheckDistance) + ledgeClimbXOffset1, Mathf.Floor(ledgePosBot.y) + ledgeClimbYOffset1);
+                ledgePos2 = new Vector2(Mathf.Ceil(ledgePosBot.x - wallCheckDistance) - ledgeClimbXOffset2, Mathf.Floor(ledgePosBot.y) + ledgeClimbYOffset2);
             }
             body.gravityScale = 0; body.velocity = Vector2.zero;
             mainCollider.gameObject.SetActive(false);
