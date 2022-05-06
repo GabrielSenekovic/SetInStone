@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class PuzzleSwitch : MonoBehaviour, Attackable
 {
-    [SerializeField] GameObject door;
-    RoomDoor doorScript;
+    [SerializeField] List<Activatable> activatables = new List<Activatable>();
     public bool isHit;
     Animator anim;
 
@@ -14,18 +13,13 @@ public class PuzzleSwitch : MonoBehaviour, Attackable
     {
         anim = GetComponent<Animator>();
         isHit = false;
-        doorScript = door.GetComponent<RoomDoor>();
     }
 
-    public void switchHit()
+    public void SwitchHit()
     {
         isHit = true;
         AudioManager.PlaySFX("SwitchHit");
-        if(doorScript)
-        {
-            doorScript.doorOpening = true;
-            AudioManager.PlaySFX("DoorOpen");
-        }
+        StartCoroutine("ActivationCutscene");
         anim.SetTrigger("Activate");
     }
 
@@ -34,7 +28,21 @@ public class PuzzleSwitch : MonoBehaviour, Attackable
         if(!isHit)
         {
             Debug.Log("Switch is being hit");
-            switchHit();
+            SwitchHit();
         }
+    }
+    public IEnumerator ActivationCutscene()
+    {
+        Debug.Log("ACTIVATION");
+        Transform temp = Game.Instance.cinemachineVirtualCamera.Follow;
+        yield return new WaitForSeconds(1.0f);
+        for(int i = 0; i < activatables.Count; i++)
+        {
+            Game.Instance.cinemachineVirtualCamera.Follow = activatables[i].transform;
+            yield return new WaitForSeconds(0.4f);
+            activatables[i].Activate();
+            yield return new WaitForSeconds(0.4f);
+        }
+        Game.Instance.cinemachineVirtualCamera.Follow = temp;
     }
 }

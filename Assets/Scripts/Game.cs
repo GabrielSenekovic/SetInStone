@@ -24,7 +24,7 @@ public class Game : MonoBehaviour
 
     [System.NonSerialized] public VFXManager visualEffects;
 
-    [SerializeField] CinemachineVirtualCamera cinemachineVirtualCamera;
+    public CinemachineVirtualCamera cinemachineVirtualCamera;
 
     public InputChange inputChange;
 

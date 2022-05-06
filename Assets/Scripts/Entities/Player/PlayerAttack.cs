@@ -101,7 +101,7 @@ public class PlayerAttack : MonoBehaviour
                 AudioManager.PlaySFX("CaneHit");
                 if (obj.gameObject.GetComponent<PuzzleSwitch>() && !obj.gameObject.GetComponent<PuzzleSwitch>().isHit)
                 {
-                    obj.gameObject.GetComponent<PuzzleSwitch>().switchHit();
+                    obj.gameObject.GetComponent<PuzzleSwitch>().SwitchHit();
                 }
                 obj.gameObject.GetComponent<Attackable>().OnBeAttacked(baseAtkDamage);
             }
