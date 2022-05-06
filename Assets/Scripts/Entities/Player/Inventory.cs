@@ -6,7 +6,7 @@ public class Inventory : MonoBehaviour
 {
     bool hasPulka = false;
     bool hasAxe = false;
-    bool hasHookshot = false;
+    bool hasHookshot = true;
 
     public bool HasAxe()
     {

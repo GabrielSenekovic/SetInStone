@@ -64,7 +64,7 @@ public class Input : MonoBehaviour
         playerAnimator.SetBool("walking", true);
         movement.movingDirection = value.Get<float>(); //! how we get stick direction
         //Quaternion.Euler(new Vector3(0, 90 - 90 * movement.movingDirection, 0));
-        if(!movement.canClimbLedge)
+        if(!movement.hangingFromLedge)
         { //* If not climbing a ledge, turn around and move
             movement.bodyTransform.localScale = new Vector3(movement.movingDirection,1,1);
             movement.facingDirection = movement.movingDirection == 0 ? movement.facingDirection : movement.movingDirection;
@@ -85,7 +85,7 @@ public class Input : MonoBehaviour
 
     private void OnAttack()
     {
-        if (!controllable || movement.actionBuffer) {return;}
+        if (!controllable || movement.actionBuffer || movement.hangingFromLedge) {return;}
         if(attack.Attack()) {playerAnimator.SetTrigger("attack"); movement.StopVelocity();}
     }
 

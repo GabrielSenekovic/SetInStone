@@ -59,7 +59,7 @@ public class HookShot : MonoBehaviour
         }
     }
 
-    public void PullPlayer(Vector2 posIn)
+    public void PullPlayer(Vector2 posIn) //This is when the player gets yeeted 
     {
         playerAnimator.SetBool("hookpulling", true);
         body.velocity = Vector2.zero;
@@ -78,6 +78,7 @@ public class HookShot : MonoBehaviour
     {
         if(!hook.gameObject.activeSelf){return;}
         shooting = false;
+        movement.forceLedgeClimb = false;
         if(hit)
         {
             PullPlayer(hook.body.position);
@@ -86,8 +87,14 @@ public class HookShot : MonoBehaviour
     }
     public void PullIn()
     {
-        Vector2 Dir = (hook.transform.position - movement.gameObject.transform.position).normalized;
-        body.velocity = Dir * hookSpeed; //* Hookspeed
+        if((hitPoint - (Vector2)transform.position).magnitude < 0.2f)
+        {
+            body.velocity = Vector2.zero;
+            shooting = false;
+            return;
+        }
+        Vector2 Dir = (hitPoint - (Vector2)transform.position).normalized;
+        body.velocity = Dir * hookSpeed;
 
         /*if((transform.position - playerMov.gameObject.transform.position).magnitude < 1)
         {
@@ -155,11 +162,15 @@ public class HookShot : MonoBehaviour
 
         if((hook.transform.position - movement.gameObject.transform.position).magnitude < 1)
         {
-            Debug.Log("Retracted fully!");
-            hook.gameObject.SetActive(false);
-            hook.transform.rotation = Quaternion.identity;
-            retract = false;
+            FinishRetraction();
         }
+    }
+    public void FinishRetraction()
+    {
+        Debug.Log("Retracted fully!");
+        hook.gameObject.SetActive(false);
+        hook.transform.rotation = Quaternion.identity;
+        retract = false;
     }
 
     public void AdjustSeaweed()
@@ -177,6 +188,10 @@ public class HookShot : MonoBehaviour
         seaweed.GetComponent<SpriteRenderer>().size = new Vector2(vectorToTarget.magnitude * 2 * (1 / hook.transform.localScale.x), seaweed.localScale.y);
         //seaweed.localScale = new Vector3(vectorToTarget.magnitude * 2 * (1 / hook.transform.localScale.x), seaweed.localScale.y, 1);
         //seaweed.GetComponent<MeshRenderer>().sharedMaterials[0].mainTextureScale = new Vector2(seaweed.localScale.x/2, 1);
+    }
+    public void ClimbLedge()
+    {
+        movement.forceLedgeClimb = true;
     }
 
     private void OnDrawGizmos()

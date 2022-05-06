@@ -51,6 +51,7 @@ public class HookProjectile : MonoBehaviour
             if(j >= 2)
             {
                 hookScript.hitPoint_color = Color.green;
+                hookScript.ClimbLedge();
             }
             else
             {

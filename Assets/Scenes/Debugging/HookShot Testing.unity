@@ -430,6 +430,23 @@ MonoBehaviour:
   m_YawDamping: 0
   m_RollDamping: 0
   m_AngularDamping: 0
+--- !u!1 &712269912 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2866837049075620533, guid: 7108319037d013048acb130722723263, type: 3}
+  m_PrefabInstance: {fileID: 1049310334}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &712269913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712269912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c76c45ea47a4874aad6ef724a3253d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &815064883 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6109885671159055737, guid: 7108319037d013048acb130722723263, type: 3}
@@ -523,6 +540,10 @@ PrefabInstance:
     - target: {fileID: -6437868355953878240, guid: 7108319037d013048acb130722723263, type: 3}
       propertyPath: ledgeClimbYOffset2
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6437868355953878240, guid: 7108319037d013048acb130722723263, type: 3}
+      propertyPath: movementDebug.debugMessages
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 78617743, guid: 7108319037d013048acb130722723263, type: 3}
       propertyPath: m_IsActive
@@ -624,6 +645,10 @@ PrefabInstance:
       propertyPath: collid
       value: 
       objectReference: {fileID: 1394541550}
+    - target: {fileID: 8693717344497037949, guid: 7108319037d013048acb130722723263, type: 3}
+      propertyPath: debug
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 78617745, guid: 7108319037d013048acb130722723263, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7108319037d013048acb130722723263, type: 3}
@@ -3307,7 +3332,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2119815598}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1

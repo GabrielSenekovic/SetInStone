@@ -53,7 +53,7 @@ public class Movement : MonoBehaviour
     public Vector2 currentVelocity;
     public bool isFlung; //Used for hookshotting. If moving in the opposite direction of velocity you break it but if you move in the same direction nothing happens
     public bool isTouchingLedge;
-    public bool canClimbLedge;
+    public bool hangingFromLedge;
     public bool ledgeDetected;
     public Transform ledgeCheck;
     public Transform wallCheck;
@@ -68,8 +68,10 @@ public class Movement : MonoBehaviour
 
     public Collider2D mainCollider;
 
-    int ledgeHangTimer;
-    int ledgeHangTimer_max = 20;
+    int ledgeClimbTimer;
+    int ledgeClimbTimer_max = 20;
+
+    public bool forceLedgeClimb = false;
     [System.Serializable] public class MovementDebug
     {
         [System.NonSerialized] public Vector2 buttonLiftPosition;
@@ -114,7 +116,7 @@ public class Movement : MonoBehaviour
         facingDirection = 1;
         actionBuffer = false;
         ducking = false;
-        canClimbLedge = false;
+        hangingFromLedge = false;
 
         doubleJumpVFX.effect = Instantiate(doubleJump_prefab, transform.position, Quaternion.identity, transform);
         Game.Instance.visualEffects.Add(doubleJumpVFX, false);
@@ -125,17 +127,10 @@ public class Movement : MonoBehaviour
         currentVelocity = body.velocity;
         GroundCollisionCheck();
 
-        bool isTouchingWall = Physics2D.Raycast(wallCheck.position, transform.right, wallCheckDistance, whatIsGround);
-        isTouchingLedge = Physics2D.Raycast(ledgeCheck.position, transform.right, wallCheckDistance, whatIsGround);
-        if(isTouchingWall && !isTouchingLedge && !ledgeDetected)
-        {
-            ledgeDetected = true;
-            ledgePosBot = wallCheck.position;
-        }
         CheckLedgeClimb();
 
         
-        if(!grounded && !canClimbLedge && Mathf.Abs(body.velocity.y) < 1 && jumpTimer > 0 && actionBuffer == false) //!If the down velocity or the up velocity is less than a threshold
+        if(!grounded && !hangingFromLedge && Mathf.Abs(body.velocity.y) < 1 && jumpTimer > 0 && actionBuffer == false) //!If the down velocity or the up velocity is less than a threshold
         {
             body.gravityScale = normGrav * gravityModifier;
         }
@@ -169,22 +164,22 @@ public class Movement : MonoBehaviour
                 body.velocity = new Vector3(0, body.velocity.y); //If youre trying to move in the opposite direction, cancel the hookshot on twitter
             }
         }
-
-        if(!canClimbLedge)
+        if(!hangingFromLedge)
         {
             transform.position +=  new Vector3(movingDirection * speed * speedMod,0,0);
         }
-        else if(canClimbLedge && facingDirection == movingDirection)
+        else if(hangingFromLedge && (facingDirection == movingDirection || forceLedgeClimb))
         {
-            if(ledgeHangTimer >= ledgeHangTimer_max)
+            if(ledgeClimbTimer >= ledgeClimbTimer_max || forceLedgeClimb)
             {
-                ledgeHangTimer = 0;
+                ledgeClimbTimer = 0;
                 playerAnimator.SetTrigger("ledgeClimb");
+                forceLedgeClimb = false;
             }
         }
-        if(canClimbLedge)
+        if(hangingFromLedge)
         {
-            ledgeHangTimer++;
+            ledgeClimbTimer++;
         }
 
         if(jumping) {jumpTimer++;}
@@ -193,9 +188,16 @@ public class Movement : MonoBehaviour
 
     void CheckLedgeClimb()
     {
-        if(ledgeDetected && !canClimbLedge)
+        bool isTouchingWall = Physics2D.Raycast(wallCheck.position, transform.right, wallCheckDistance, whatIsGround);
+        isTouchingLedge = Physics2D.Raycast(ledgeCheck.position, transform.right, wallCheckDistance, whatIsGround);
+        if(isTouchingWall && !isTouchingLedge && !ledgeDetected)
         {
-            canClimbLedge = true;
+            ledgeDetected = true;
+            ledgePosBot = wallCheck.position;
+        }
+        if(ledgeDetected && !hangingFromLedge)
+        {
+            hangingFromLedge = true;
             if(transform.localScale.x > 0)
             {
                 ledgePos1 = new Vector2(Mathf.Floor(ledgePosBot.x + wallCheckDistance) - ledgeClimbXOffset1, Mathf.Floor(ledgePosBot.y) + ledgeClimbYOffset1);
@@ -210,13 +212,15 @@ public class Movement : MonoBehaviour
             mainCollider.gameObject.SetActive(false);
             playerAnimator.SetTrigger("ledgeHang");
             transform.position = ledgePos1;
+            actionBuffer = false;
+            hookShot.FinishRetraction(); hookShot.shooting = false;
         }
     }
 
     public void FinishLedgeClimb()
     {
-        if(!canClimbLedge){return;}
-        canClimbLedge = false;
+        if(!hangingFromLedge){return;}
+        hangingFromLedge = false;
         transform.position = ledgePos2;
         mainCollider.gameObject.SetActive(true);
         ledgeDetected = false;
@@ -302,7 +306,7 @@ public class Movement : MonoBehaviour
         jumpTimer = jumpLimit; //* you can jump now :)
         AudioManager.PlaySFX("LandOnLand");
 
-        if (!ducking) {body.velocity = Vector2.zero; Debug.Log("Velocity set to zero");}
+        if (!ducking) {body.velocity = Vector2.zero;}
         else {body.AddForce( new Vector2(movingDirection * speed * 20, 0), ForceMode2D.Impulse);}
         body.gravityScale = normGrav;
         isFlung = false;
@@ -328,6 +332,18 @@ public class Movement : MonoBehaviour
         if(jumpBufferTimer <= 0) {return;} //! you can't jump unless you've pressed jump
         if(jumpTimer < jumpLimit) {return;} // ! you can't jump unless it's been a while since you last jumped
         if(pulka.state == Pulka.PulkaState.SITTING) { return; }
+        
+        if(hangingFromLedge) //If ledge hanging and trying to jump away from it
+        {
+            hangingFromLedge = false;
+            mainCollider.gameObject.SetActive(true);
+            ledgeDetected = false;
+            body.gravityScale = normGrav;
+            grounded = true;
+            amntOfJumps = 0;
+            ledgeClimbTimer = 0;
+            bodyTransform.localScale = new Vector3(-facingDirection,1,1);
+        }
         
         if (grounded || amntOfJumps < amntOfJumpsMax) // * if you are on the ground OR you are double jumping :)
         {
