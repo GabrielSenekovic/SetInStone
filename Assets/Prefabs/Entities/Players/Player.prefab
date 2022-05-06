@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 78617744}
   - component: {fileID: 78617747}
   - component: {fileID: 78617746}
-  - component: {fileID: 78617745}
   m_Layer: 10
   m_Name: Bubble
   m_TagString: Untagged
@@ -27,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 78617743}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.4375, y: -0.0625, z: -1}
+  m_LocalPosition: {x: 0.4375, y: -0.0625, z: 1}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_Children: []
   m_Father: {fileID: 2593896496241876665}
@@ -82,19 +81,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &78617745
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 78617743}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2405240609589922532
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,6 +238,7 @@ GameObject:
   - component: {fileID: 6067472280786907983}
   - component: {fileID: 6438979006872232872}
   - component: {fileID: 8693717344497037949}
+  - component: {fileID: 712269913}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -364,8 +351,8 @@ MonoBehaviour:
   movementDebug:
     trajectoryInterval: 3
     maxTrajectory: 0
-    debugMessages: 1
-  bodyTransform: {fileID: 2593896496241876665}
+    debugMessages: 0
+  bodyTransform: {fileID: 2866837049075620558}
   doubleJumpVFX:
     effect: {fileID: 0}
     index: 0
@@ -373,19 +360,20 @@ MonoBehaviour:
   currentVelocity: {x: 0, y: 0}
   isFlung: 0
   isTouchingLedge: 0
-  canClimbLedge: 0
+  hangingFromLedge: 0
   ledgeDetected: 0
-  ledgeCheck: {fileID: 0}
-  wallCheck: {fileID: 0}
-  wallCheckDistance: 0
+  ledgeCheck: {fileID: 3208712078895267526}
+  wallCheck: {fileID: 6109885671159055737}
+  wallCheckDistance: 0.65
   ledgePosBot: {x: 0, y: 0}
   ledgePos1: {x: 0, y: 0}
   ledgePos2: {x: 0, y: 0}
-  ledgeClimbXOffset1: 0.3
-  ledgeClimbYOffset1: 0
+  ledgeClimbXOffset1: 0.2
+  ledgeClimbYOffset1: -0.75
   ledgeClimbXOffset2: 0.5
-  ledgeClimbYOffset2: 2
-  mainCollider: {fileID: 0}
+  ledgeClimbYOffset2: 1
+  mainCollider: {fileID: 7255899783724612402}
+  forceLedgeClimb: 0
 --- !u!114 &8321820850026777538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -479,7 +467,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2866837049075620533}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -500,7 +488,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12a8182f38810ae44859d6095bc3dd72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 1
+  debug: 0
+--- !u!114 &712269913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2866837049075620533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c76c45ea47a4874aad6ef724a3253d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3171512857525296850
 GameObject:
   m_ObjectHideFlags: 0
@@ -710,8 +710,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1155500757
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 044802b7fdc25874e967ed17d7513e92, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -780,7 +780,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6682362938837797942}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 1.5, z: 0}
+  m_LocalPosition: {x: 0.5, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2866837049075620558}
@@ -810,7 +810,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6777537879235616375}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2866837049075620558}
@@ -884,9 +884,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1155500757
+  m_SortingLayer: 1
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 67e3c4c77febe1d4fa2d2e1954eb5a27, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
