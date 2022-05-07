@@ -158,6 +158,9 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 816772b6cf9960e4dba2c45d43d3bbe5, type: 3}
     - {fileID: 8300000, guid: 76e5eceb4811b5a4d8665d757af8a9a3, type: 3}
     - {fileID: 8300000, guid: 8c0af346495cdbf409aa599e64927f92, type: 3}
+  - name: Discovery
+    clip:
+    - {fileID: 8300000, guid: a3667c770b888da4bb0236bb06a50b47, type: 3}
   music:
   - name: ForestDungeonTheme
     intro: {fileID: 8300000, guid: 6ac664b55bd52484cb69486eb871faf8, type: 3}

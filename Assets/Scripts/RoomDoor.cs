@@ -9,6 +9,8 @@ public class RoomDoor : MonoBehaviour
     public float moveSpeed;
     Vector3 startingPosition;
     Vector3 currentPosition;
+    Animator anim;
+    public Room roomBehind;
 
     [SerializeField] GameObject collider;
 
@@ -22,6 +24,7 @@ public class RoomDoor : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         startingPosition = body.transform.position;
         currentPosition = body.transform.position;
+        anim = GetComponent<Animator>();
     }
 
     void FixedUpdate()
@@ -42,9 +45,11 @@ public class RoomDoor : MonoBehaviour
         }
         if(!(currentPosition.y <= (startingPosition.y - transform.localScale.y)*2))
         {
+            anim.SetTrigger("Open");
             collider.SetActive(false);
-            body.AddForce(Vector3.down * moveSpeed);
+            body.AddForce(Vector3.up * moveSpeed);
             currentPosition = body.transform.position;
+            roomBehind.Discover();
         }
     }
 }

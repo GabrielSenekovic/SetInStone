@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class Room : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class Room : MonoBehaviour
     [SerializeField] List<GameObject> enemies;
     public bool discovered;
    [SerializeField] GameObject door;
+   [SerializeField] Light2D roomLight;
     public PolygonCollider2D GetCollider()
     {
         return myCollider;
@@ -22,6 +24,18 @@ public class Room : MonoBehaviour
         if(door != null && enemies.Count == 0)
         {
             door.GetComponent<RoomDoor>().doorOpening = true;
+        }
+    }
+
+    public void Discover()
+    {
+        discovered = true;
+    }
+    void FixedUpdate()
+    {
+        if(discovered && roomLight && roomLight.intensity < 1)
+        {
+            roomLight.intensity += 0.05f;
         }
     }
 

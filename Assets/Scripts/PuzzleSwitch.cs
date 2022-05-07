@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class PuzzleSwitch : MonoBehaviour, Attackable
 {
@@ -19,6 +20,7 @@ public class PuzzleSwitch : MonoBehaviour, Attackable
     {
         isHit = true;
         AudioManager.PlaySFX("SwitchHit");
+        Game.Instance.cinemachineVirtualCamera.gameObject.GetComponent<CinemachineConfiner>().m_ConfineScreenEdges = false;
         StartCoroutine("ActivationCutscene");
         anim.SetTrigger("Activate");
     }
@@ -41,8 +43,13 @@ public class PuzzleSwitch : MonoBehaviour, Attackable
             Game.Instance.cinemachineVirtualCamera.Follow = activatables[i].transform;
             yield return new WaitForSeconds(0.4f);
             activatables[i].Activate();
+            if(i == activatables.Count - 1)
+            {
+                AudioManager.PlaySFX("Discovery");
+            }
             yield return new WaitForSeconds(0.4f);
         }
         Game.Instance.cinemachineVirtualCamera.Follow = temp;
+        Game.Instance.cinemachineVirtualCamera.gameObject.GetComponent<CinemachineConfiner>().m_ConfineScreenEdges = true;
     }
 }

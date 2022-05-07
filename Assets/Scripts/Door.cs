@@ -7,9 +7,9 @@ public class Door : MonoBehaviour
     public Room myRoom; //The room it transitions to
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<Movement>())
+        if (collision.transform.parent.GetComponent<Movement>())
         {
-            collision.GetComponent<HealthModel>().safePos = collision.transform.position;
+            collision.transform.parent.GetComponent<HealthModel>().safePos = collision.transform.position;
             if (Game.GetCurrentCameraCollider() != myRoom.GetCollider())
             {
                 Game.SetCameraCollider(myRoom.GetCollider());
