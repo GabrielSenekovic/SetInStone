@@ -52,7 +52,6 @@ public class Movement : MonoBehaviour
 
     public Vector2 currentVelocity;
     public bool isFlung; //Used for hookshotting. If moving in the opposite direction of velocity you break it but if you move in the same direction nothing happens
-    public bool isTouchingLedge;
     public bool hangingFromLedge;
     public bool ledgeDetected;
     public Transform ledgeCheck;
@@ -188,9 +187,11 @@ public class Movement : MonoBehaviour
 
     void CheckLedgeClimb()
     {
-        bool isTouchingWall = Physics2D.Raycast(wallCheck.position, transform.right, wallCheckDistance, whatIsGround);
-        isTouchingLedge = Physics2D.Raycast(ledgeCheck.position, transform.right, wallCheckDistance, whatIsGround);
-        if(isTouchingWall && !isTouchingLedge && !ledgeDetected)
+        if(grounded){return;}
+        bool isTouchingWall = Physics2D.Raycast(wallCheck.position, new Vector2(facingDirection, 0), wallCheckDistance, whatIsGround);
+        bool isTouchingLedge = Physics2D.Raycast(ledgeCheck.position, new Vector2(facingDirection, 0), wallCheckDistance, whatIsGround);
+        bool isCloseToGround = Physics2D.Raycast(groundCheck.position, -transform.up, wallCheckDistance, whatIsGround);
+        if(isTouchingWall && !isTouchingLedge && !isCloseToGround && !ledgeDetected)
         {
             ledgeDetected = true;
             ledgePosBot = wallCheck.position;

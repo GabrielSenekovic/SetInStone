@@ -359,7 +359,6 @@ MonoBehaviour:
   doubleJump_prefab: {fileID: 4803029953742735533, guid: d6d8a0b6f165a464f8663d61648487da, type: 3}
   currentVelocity: {x: 0, y: 0}
   isFlung: 0
-  isTouchingLedge: 0
   hangingFromLedge: 0
   ledgeDetected: 0
   ledgeCheck: {fileID: 3208712078895267526}
@@ -556,7 +555,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4447035480035119739}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.59, z: 0}
+  m_LocalPosition: {x: 0.51, y: 0.59, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2866837049075620558}
@@ -575,8 +574,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.03}
-  m_Size: {x: 0.74, y: 1.39}
+  m_Offset: {x: 0, y: 0.13534546}
+  m_Size: {x: 0.74, y: 1.7293091}
   m_Direction: 0
 --- !u!1 &5570359049264429200
 GameObject:
@@ -633,7 +632,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5982958660446483279}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0.54, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2866837049075620558}
@@ -913,7 +912,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1063989410566084592
 Transform:
   m_ObjectHideFlags: 0
