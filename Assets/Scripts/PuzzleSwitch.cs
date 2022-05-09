@@ -29,13 +29,11 @@ public class PuzzleSwitch : MonoBehaviour, Attackable
     {
         if(!isHit)
         {
-            Debug.Log("Switch is being hit");
             SwitchHit();
         }
     }
     public IEnumerator ActivationCutscene()
     {
-        Debug.Log("ACTIVATION");
         Transform temp = Game.Instance.cinemachineVirtualCamera.Follow;
         yield return new WaitForSeconds(1.0f);
         for(int i = 0; i < activatables.Count; i++)

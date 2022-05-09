@@ -50,6 +50,9 @@ TagManager:
   - name: Entity
     uniqueID: 3139466539
     locked: 0
+  - name: Glowing
+    uniqueID: 2252474593
+    locked: 0
   - name: Foreground
     uniqueID: 310259863
     locked: 0
