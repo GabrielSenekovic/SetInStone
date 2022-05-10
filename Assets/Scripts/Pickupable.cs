@@ -24,6 +24,10 @@ public class Pickupable : MonoBehaviour
     void pickUP(Collider2D collision, bool parent)
     {
         healthModel = parent ? collision.GetComponentInParent<HealthModel>() : collision.GetComponent<HealthModel>();
+        if(healthModel.currentHealth == healthModel.maxHealth)
+        {
+            return;
+        }
         if(healthModel.Damaged())
         {
             healthModel.Heal(value);
