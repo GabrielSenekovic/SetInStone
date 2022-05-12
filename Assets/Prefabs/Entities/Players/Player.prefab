@@ -374,6 +374,7 @@ MonoBehaviour:
   ledgeClimbYOffset2: 1
   mainCollider: {fileID: 7255899783724612402}
   forceLedgeClimb: 0
+  swimming: 0
 --- !u!114 &8321820850026777538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -775,7 +776,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1082,7 +1083,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1196,6 +1197,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4379236374932495320, guid: 801cbde90d944264dad2336c50d4c23f, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4768704196984737058, guid: 801cbde90d944264dad2336c50d4c23f, type: 3}
       propertyPath: m_Materials.Array.size
       value: 0
@@ -1231,6 +1236,10 @@ PrefabInstance:
     - target: {fileID: 6316692769374641542, guid: 801cbde90d944264dad2336c50d4c23f, type: 3}
       propertyPath: m_Name
       value: Hook Projectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 6394174152265446647, guid: 801cbde90d944264dad2336c50d4c23f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7622038091706896977, guid: 801cbde90d944264dad2336c50d4c23f, type: 3}
       propertyPath: playerRb

@@ -71,6 +71,13 @@ public class Movement : MonoBehaviour
     int ledgeClimbTimer_max = 20;
 
     public bool forceLedgeClimb = false;
+
+    public bool touchingWater = false;
+
+    int healthTimer;
+    int healthTimer_max = 50;
+
+    public HealthModel health;
     [System.Serializable] public class MovementDebug
     {
         [System.NonSerialized] public Vector2 buttonLiftPosition;
@@ -143,6 +150,16 @@ public class Movement : MonoBehaviour
     private void FixedUpdate() 
     {
         movementDebug.Update(transform.position);
+
+        if(touchingWater)
+        {
+            healthTimer++;
+            if(healthTimer>=healthTimer_max)
+            {
+                healthTimer = 0;
+                health.Heal(1);
+            }
+        }
         
         TriggerDismount();
         
@@ -396,6 +413,11 @@ public class Movement : MonoBehaviour
         jumpTimer = jumpLimit; // TODO: should only happen if you have a jump left ( if jumps == maxjumps )
         jumpBufferTimer = 0;
 
+    }
+    public void ExitWater()
+    {
+        touchingWater = false;
+        healthTimer = 0;
     }
 
     private void OnDrawGizmos()

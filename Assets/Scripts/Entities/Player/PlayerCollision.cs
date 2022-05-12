@@ -1,0 +1,23 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerCollision : MonoBehaviour
+{
+    public Movement movement;
+
+    void OnTriggerEnter2D(Collider2D other) 
+    {
+        if(other.CompareTag("Water"))
+        {
+            movement.touchingWater = true;
+        }
+    }
+    void OnTriggerExit2D(Collider2D other) 
+    {
+        if(other.CompareTag("Water"))
+        {
+            movement.ExitWater();
+        }
+    }
+}

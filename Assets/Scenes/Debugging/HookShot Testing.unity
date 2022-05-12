@@ -178,26 +178,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 268163676, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1619570743, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
       propertyPath: m_BoundingShape2D
       value: 
       objectReference: {fileID: 2119815600}
-    - target: {fileID: 188234763291894568, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
-      propertyPath: m_NormalizedViewPortRect.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 188234763291894568, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
-      propertyPath: m_NormalizedViewPortRect.width
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 188234763291894568, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
-      propertyPath: m_NormalizedViewPortRect.height
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2746695563079856852, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -247,24 +231,12 @@ PrefabInstance:
       value: Game
       objectReference: {fileID: 0}
     - target: {fileID: 4833482493718479274, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4833482493718479274, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4833482493718479274, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4833482493718479274, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
       propertyPath: m_SortingLayer
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4833482493718479274, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
       propertyPath: m_SortingLayerID
-      value: 310259863
+      value: 248161659
       objectReference: {fileID: 0}
     - target: {fileID: 7930587439771505710, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
       propertyPath: m_Follow
@@ -396,6 +368,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 646877433892070586, guid: 7108319037d013048acb130722723263, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 646877433892070586, guid: 7108319037d013048acb130722723263, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 248161659
+      objectReference: {fileID: 0}
     - target: {fileID: 2866837049075620533, guid: 7108319037d013048acb130722723263, type: 3}
       propertyPath: m_Name
       value: Player
@@ -451,6 +431,14 @@ PrefabInstance:
     - target: {fileID: 6394174152480973880, guid: 7108319037d013048acb130722723263, type: 3}
       propertyPath: m_IsTrigger
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464575115285595999, guid: 7108319037d013048acb130722723263, type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464575115285595999, guid: 7108319037d013048acb130722723263, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -2042492703
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7108319037d013048acb130722723263, type: 3}

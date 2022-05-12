@@ -7,6 +7,7 @@ TagManager:
   - Shield
   - PassThrough
   - DontDraw
+  - Water
   layers:
   - Default
   - TransparentFX
