@@ -17,8 +17,8 @@ public class Movement : MonoBehaviour
 
     [System.NonSerialized] public const float groundedRadius = .05f;
     [System.NonSerialized] public float gravityVelocity;
-    [System.NonSerialized] public float movingDirection = 0; //The direction you're currently moving in. If not moving, the direction is 0
-    [System.NonSerialized] public float verticalDirection = 0; //This is only used when swimming! If not swimming, vertical directon is 0
+    public float movingDirection = 0; //The direction you're currently moving in. If not moving, the direction is 0
+    public float verticalDirection = 0; //This is only used when swimming! If not swimming, vertical directon is 0
     [System.NonSerialized] public float facingDirection = 0; //The direction you last looked in. It's set to something even if not moving
     
     [System.NonSerialized] public int amntOfJumps = 0;
@@ -43,6 +43,7 @@ public class Movement : MonoBehaviour
     [SerializeField] public int jumpLimit;
     [SerializeField] public int amntOfJumpsMax;
     [SerializeField] public LayerMask whatIsGround;
+    [SerializeField] public LayerMask whatIsWater;
     [SerializeField] public Transform groundCheck;
 
     public MovementDebug movementDebug;
@@ -58,7 +59,9 @@ public class Movement : MonoBehaviour
     public bool ledgeDetected;
     public Transform ledgeCheck;
     public Transform wallCheck;
+    public Transform surfaceCheck; //Will check if there's air over the water 
     public float wallCheckDistance;
+    public float surfaceCheckDistance;
     public Vector2 ledgePosBot;
     public Vector2 ledgePos1;
     public Vector2 ledgePos2;
@@ -69,12 +72,13 @@ public class Movement : MonoBehaviour
 
     public Collider2D mainCollider;
 
-    int ledgeClimbTimer;
-    int ledgeClimbTimer_max = 20;
+    public int ledgeClimbTimer;
+    int ledgeClimbTimer_max = 10;
 
     public bool forceLedgeClimb = false;
 
     public bool touchingWater = false;
+    public bool touchingSurface = false;
 
     int healthTimer;
     int healthTimer_max = 50;
@@ -133,14 +137,21 @@ public class Movement : MonoBehaviour
     private void Update()
     {
         currentVelocity = body.velocity;
-        GroundCollisionCheck();
 
-        CheckLedgeClimb();
-
-        
-        if(!grounded && !hangingFromLedge && Mathf.Abs(body.velocity.y) < 1 && jumpTimer > 0 && actionBuffer == false) //!If the down velocity or the up velocity is less than a threshold
+        if(!touchingWater) //Underwater you cant walk on the ground nor ledgeclimb
         {
-            body.gravityScale = normGrav * gravityModifier;
+            GroundCollisionCheck();
+            CheckLedgeClimb();
+            Fall();
+        }
+        else if(touchingWater && !touchingSurface)
+        {
+            CheckSurfaceClose();
+        }
+        else if(touchingWater && touchingSurface)
+        {
+            CheckLedgeClimb();
+            CheckSurfaceClose();
         }
         
         TryJump();
@@ -186,11 +197,11 @@ public class Movement : MonoBehaviour
         {
             Move(speedMod);
         }
-        else if(hangingFromLedge && (facingDirection == movingDirection || forceLedgeClimb))
+        else if(hangingFromLedge && (facingDirection == movingDirection || forceLedgeClimb || touchingSurface))
         {
-            if(ledgeClimbTimer >= ledgeClimbTimer_max || forceLedgeClimb)
+            if(ledgeClimbTimer >= ledgeClimbTimer_max || forceLedgeClimb || touchingSurface)
             {
-                ledgeClimbTimer = 0;
+                Debug.Log("I got in here because " + ledgeClimbTimer + " was over " + ledgeClimbTimer_max);
                 playerAnimator.SetTrigger("ledgeClimb");
                 forceLedgeClimb = false;
             }
@@ -211,8 +222,16 @@ public class Movement : MonoBehaviour
         }
         else
         {
+            if(touchingSurface && verticalDirection == 1){verticalDirection = 0;}
             Vector2 swimmingDirection = (new Vector2(movingDirection, verticalDirection)).normalized;
             transform.position +=  new Vector3(swimmingDirection.x * swimmingSpeed * speedMod,swimmingDirection.y * swimmingSpeed * speedMod,0); //The normal movement
+        }
+    }
+    void Fall()
+    {
+        if(!grounded && !hangingFromLedge && Mathf.Abs(body.velocity.y) < 1 && jumpTimer > 0 && actionBuffer == false) //!If the down velocity or the up velocity is less than a threshold
+        {
+            body.gravityScale = normGrav * gravityModifier;
         }
     }
 
@@ -257,10 +276,18 @@ public class Movement : MonoBehaviour
         mainCollider.gameObject.SetActive(true);
         ledgeDetected = false;
         body.gravityScale = normGrav;
+        ledgeClimbTimer = 0;
+        playerAnimator.ResetTrigger("ledgeClimb");
+    }
+    public void CheckSurfaceClose()
+    {
+        touchingSurface = !Physics2D.Raycast(surfaceCheck.position, new Vector2(0, 1), surfaceCheckDistance, whatIsGround) &&
+        !Physics2D.Raycast(surfaceCheck.position, new Vector2(0, 1), surfaceCheckDistance, whatIsWater);
     }
 
     void GroundCollisionCheck()
     {
+        if(hangingFromLedge){return;}
         if(body.velocity.y == 0 || pulka.state == Pulka.PulkaState.SITTING) //!if falling ( if you are not moving in y and if you just jumped and you arent on the ground)
         {
             Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundedRadius, whatIsGround); //* make a collider on the feet and see what it hits
@@ -360,8 +387,9 @@ public class Movement : MonoBehaviour
 
     private void TryJump()
     {
-        if(actionBuffer) {return;} //! if hookshotting, don't try to jump
         if(jumpBufferTimer <= 0) {return;} //! you can't jump unless you've pressed jump
+        if(touchingWater && !touchingSurface) {return;} //! cant jump if you're swimming, unless you're at the surface
+        if(actionBuffer) {return;} //! if hookshotting, don't try to jump
         if(jumpTimer < jumpLimit) {return;} // ! you can't jump unless it's been a while since you last jumped
         if(pulka.state == Pulka.PulkaState.SITTING) { return; }
         
@@ -377,7 +405,7 @@ public class Movement : MonoBehaviour
             bodyTransform.localScale = new Vector3(-facingDirection,1,1);
         }
         
-        if (grounded || amntOfJumps < amntOfJumpsMax) // * if you are on the ground OR you are double jumping :)
+        if (grounded || amntOfJumps < amntOfJumpsMax || touchingSurface) // * if you are on the ground OR you are double jumping :) OR at the surface of the water
         {
             if(movementDebug.debugMessages){Debug.Log("Jump");}
             playerAnimator.SetTrigger("jump");
@@ -402,7 +430,7 @@ public class Movement : MonoBehaviour
 
     public void RequestJump()
     {
-        if(touchingWater){return;}
+        if(touchingWater && !touchingSurface){return;}
         //When you press the jump button, make a request for a jump
         if(movementDebug.debugMessages){Debug.Log("Jump pressed");}
         jumpBufferTimer = jumpBufferMax;
@@ -411,7 +439,7 @@ public class Movement : MonoBehaviour
     }
     public void StopJump()
     {
-        if(touchingWater){return;}
+        if((touchingWater && !touchingSurface) || hangingFromLedge){return;}
         if(movementDebug.debugMessages){Debug.Log("Cancel jump");}
 
         if(jumpBufferTimer == 0)
@@ -434,12 +462,15 @@ public class Movement : MonoBehaviour
     public void EnterWater()
     {
         touchingWater = true;
+        body.velocity = Vector2.zero;
         body.gravityScale = 0;
+        grounded = false;
     }
     public void ExitWater()
     {
         touchingWater = false;
         healthTimer = 0;
+        Debug.Log("Exited water");
         body.gravityScale = normGrav;
     }
 
@@ -460,6 +491,13 @@ public class Movement : MonoBehaviour
             Gizmos.DrawSphere(movementDebug.trajectory[i], 0.1f);
             if(i != 0) {Gizmos.DrawLine(movementDebug.trajectory[i-1], movementDebug.trajectory[i]);}
         }
+
+        Gizmos.color = ledgeDetected ? Color.green : Color.red;
+        Gizmos.DrawLine(ledgeCheck.position, ledgeCheck.position + new Vector3(wallCheckDistance, 0,0));
+        Gizmos.DrawLine(wallCheck.position, wallCheck.position + new Vector3(wallCheckDistance, 0,0));
+
+        Gizmos.color = touchingSurface ? Color.green : Color.red;
+        Gizmos.DrawLine(surfaceCheck.position, surfaceCheck.position + new Vector3(0, surfaceCheckDistance,0));
     }
 }
     
