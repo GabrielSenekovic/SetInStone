@@ -35,6 +35,22 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": ""Press(behavior=1)""
                 },
                 {
+                    ""name"": ""MoveVertical"",
+                    ""type"": ""Button"",
+                    ""id"": ""501d4f70-edb2-4c19-9c05-f87afd38a95b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""StopMoveVertical"",
+                    ""type"": ""Button"",
+                    ""id"": ""1e59c7e9-bdfb-4f83-ba86-f584a1fb0ed9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=1)""
+                },
+                {
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""f7949efb-0dd4-42aa-96d8-49a52c079782"",
@@ -628,6 +644,72 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""StopSpecial"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""MoveVertical - Keyboard"",
+                    ""id"": ""85015770-4070-4e46-95f6-a05c25901823"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveVertical"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""9400cf5a-370c-4920-8d0c-6ab33aed45fc"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveVertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""10281c07-9670-4b36-a6a5-5ee585d7d5ef"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveVertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""StopMoveVertical - Keyboard"",
+                    ""id"": ""a2bb3260-8981-4c08-af6b-8f1c8de8887e"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StopMoveVertical"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""80077d02-a3e0-4442-833e-e514176b88b9"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StopMoveVertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""1d58265b-cd5c-461e-93ba-53cdf6817397"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StopMoveVertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -676,6 +758,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Land = asset.FindActionMap("Land", throwIfNotFound: true);
         m_Land_Move = m_Land.FindAction("Move", throwIfNotFound: true);
         m_Land_StopMove = m_Land.FindAction("StopMove", throwIfNotFound: true);
+        m_Land_MoveVertical = m_Land.FindAction("MoveVertical", throwIfNotFound: true);
+        m_Land_StopMoveVertical = m_Land.FindAction("StopMoveVertical", throwIfNotFound: true);
         m_Land_Jump = m_Land.FindAction("Jump", throwIfNotFound: true);
         m_Land_StopJump = m_Land.FindAction("StopJump", throwIfNotFound: true);
         m_Land_Special = m_Land.FindAction("Special", throwIfNotFound: true);
@@ -742,6 +826,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private ILandActions m_LandActionsCallbackInterface;
     private readonly InputAction m_Land_Move;
     private readonly InputAction m_Land_StopMove;
+    private readonly InputAction m_Land_MoveVertical;
+    private readonly InputAction m_Land_StopMoveVertical;
     private readonly InputAction m_Land_Jump;
     private readonly InputAction m_Land_StopJump;
     private readonly InputAction m_Land_Special;
@@ -763,6 +849,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public LandActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Land_Move;
         public InputAction @StopMove => m_Wrapper.m_Land_StopMove;
+        public InputAction @MoveVertical => m_Wrapper.m_Land_MoveVertical;
+        public InputAction @StopMoveVertical => m_Wrapper.m_Land_StopMoveVertical;
         public InputAction @Jump => m_Wrapper.m_Land_Jump;
         public InputAction @StopJump => m_Wrapper.m_Land_StopJump;
         public InputAction @Special => m_Wrapper.m_Land_Special;
@@ -793,6 +881,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @StopMove.started -= m_Wrapper.m_LandActionsCallbackInterface.OnStopMove;
                 @StopMove.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnStopMove;
                 @StopMove.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnStopMove;
+                @MoveVertical.started -= m_Wrapper.m_LandActionsCallbackInterface.OnMoveVertical;
+                @MoveVertical.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnMoveVertical;
+                @MoveVertical.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnMoveVertical;
+                @StopMoveVertical.started -= m_Wrapper.m_LandActionsCallbackInterface.OnStopMoveVertical;
+                @StopMoveVertical.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnStopMoveVertical;
+                @StopMoveVertical.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnStopMoveVertical;
                 @Jump.started -= m_Wrapper.m_LandActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnJump;
@@ -848,6 +942,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @StopMove.started += instance.OnStopMove;
                 @StopMove.performed += instance.OnStopMove;
                 @StopMove.canceled += instance.OnStopMove;
+                @MoveVertical.started += instance.OnMoveVertical;
+                @MoveVertical.performed += instance.OnMoveVertical;
+                @MoveVertical.canceled += instance.OnMoveVertical;
+                @StopMoveVertical.started += instance.OnStopMoveVertical;
+                @StopMoveVertical.performed += instance.OnStopMoveVertical;
+                @StopMoveVertical.canceled += instance.OnStopMoveVertical;
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
@@ -919,6 +1019,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnStopMove(InputAction.CallbackContext context);
+        void OnMoveVertical(InputAction.CallbackContext context);
+        void OnStopMoveVertical(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnStopJump(InputAction.CallbackContext context);
         void OnSpecial(InputAction.CallbackContext context);

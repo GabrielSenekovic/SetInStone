@@ -61,7 +61,7 @@ public class Input : MonoBehaviour
     private void OnMove(InputValue value) //! input stuff
     {
         if (!controllable || movement.actionBuffer) {return;}
-        playerAnimator.SetBool("walking", true);
+        if(!movement.touchingWater){playerAnimator.SetBool("walking", true);}
         movement.movingDirection = value.Get<float>(); //! how we get stick direction
         //Quaternion.Euler(new Vector3(0, 90 - 90 * movement.movingDirection, 0));
         if(!movement.hangingFromLedge)
@@ -71,16 +71,23 @@ public class Input : MonoBehaviour
         }
     }
 
-    void OnZoom(InputValue value)
-    {
-        Game.Instance.Zoom(value.Get<Vector2>());
-    }
-
     void OnStopMove()
     {
         if(debug){Debug.Log("Stopping Movement");}
         movement.movingDirection = 0;
-        playerAnimator.SetBool("walking", false);
+        if(!movement.touchingWater){playerAnimator.SetBool("walking", false);}
+    }
+    void OnMoveVertical(InputValue value)
+    {
+        movement.verticalDirection = value.Get<float>();
+    }
+    void OnStopMoveVertical()
+    {
+        movement.verticalDirection = 0;
+    }
+    void OnZoom(InputValue value)
+    {
+        Game.Instance.Zoom(value.Get<Vector2>());
     }
 
     private void OnAttack()

@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Butterfly
-  m_Shader: {fileID: -6465566751694194690, guid: 86835afb351d2de45a47e773252d8f22, type: 3}
+  m_Name: Waterfall
+  m_Shader: {fileID: -6465566751694194690, guid: 000c7d565a7ea1d439a181194be2b9c6, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,8 +19,8 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Texture2D_e70acba9249e4adf91ed72aac805bd45:
-        m_Texture: {fileID: 2800000, guid: 4bd4b1e4a56568246a353b5c3f57183d, type: 3}
+    - Texture2D_6613c5c930ac4771863171d21d8b07bd:
+        m_Texture: {fileID: 2800000, guid: 129a057a84875094c84f8726436d3065, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -36,13 +36,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_0d7eb4d84ff8491d8f858733ec4817eb: 0.5
-    - Vector1_31d83cf1a9dc44eaa1ed5c5c2eea5e3b: 0.1
-    - Vector1_b24c1e2fbf89438f9e608de7f18005f1: 500
-    m_Colors:
-    - Color_018db16edf9c4a8caa65653c55ee3cc1: {r: 0.25, g: 0.25, b: 0.25, a: 0}
-    - Color_7fb6843ee30f4d3e804de6d0f2f0480b: {r: 1, g: 1, b: 1, a: 1}
-    - Color_c762f314e48e442683c2dc571c264e55: {r: 0, g: 0, b: 0, a: 1}
-    - Vector3_558b4f61bdfd47579562124e0eea42b2: {r: 0.1, g: 0.1, b: 0.1, a: 0}
-    - Vector3_deaf8d95944146278fa4cc5e056d1214: {r: 0, g: 0, b: 0, a: 0}
+    - Vector1_a1d90b9417684aef86ffc784b6365f4e: 1
+    - Vector1_dfefb6452fba4f9b804fe69f5ce98ecd: 5
+    m_Colors: []
   m_BuildTextureStacks: []

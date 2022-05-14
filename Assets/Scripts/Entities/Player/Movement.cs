@@ -18,6 +18,7 @@ public class Movement : MonoBehaviour
     [System.NonSerialized] public const float groundedRadius = .05f;
     [System.NonSerialized] public float gravityVelocity;
     [System.NonSerialized] public float movingDirection = 0; //The direction you're currently moving in. If not moving, the direction is 0
+    [System.NonSerialized] public float verticalDirection = 0; //This is only used when swimming! If not swimming, vertical directon is 0
     [System.NonSerialized] public float facingDirection = 0; //The direction you last looked in. It's set to something even if not moving
     
     [System.NonSerialized] public int amntOfJumps = 0;
@@ -37,6 +38,7 @@ public class Movement : MonoBehaviour
     [SerializeField] public float jumpForce;
     [SerializeField] public float airJumpForce;
     [SerializeField] public float speed;
+    [SerializeField] public float swimmingSpeed;
     [SerializeField] public int jumpBufferMax; //This timer should count down to 0
     [SerializeField] public int jumpLimit;
     [SerializeField] public int amntOfJumpsMax;
@@ -182,7 +184,7 @@ public class Movement : MonoBehaviour
         }
         if(!hangingFromLedge)
         {
-            transform.position +=  new Vector3(movingDirection * speed * speedMod,0,0);
+            Move(speedMod);
         }
         else if(hangingFromLedge && (facingDirection == movingDirection || forceLedgeClimb))
         {
@@ -200,6 +202,18 @@ public class Movement : MonoBehaviour
 
         if(jumping) {jumpTimer++;}
         if(jumpBufferTimer > 0) {jumpBufferTimer--;}
+    }
+    void Move(float speedMod)
+    {
+        if(!touchingWater)
+        {
+            transform.position +=  new Vector3(movingDirection * speed * speedMod,0,0); //The normal movement
+        }
+        else
+        {
+            Vector2 swimmingDirection = (new Vector2(movingDirection, verticalDirection)).normalized;
+            transform.position +=  new Vector3(swimmingDirection.x * swimmingSpeed * speedMod,swimmingDirection.y * swimmingSpeed * speedMod,0); //The normal movement
+        }
     }
 
     void CheckLedgeClimb()
@@ -388,6 +402,7 @@ public class Movement : MonoBehaviour
 
     public void RequestJump()
     {
+        if(touchingWater){return;}
         //When you press the jump button, make a request for a jump
         if(movementDebug.debugMessages){Debug.Log("Jump pressed");}
         jumpBufferTimer = jumpBufferMax;
@@ -396,6 +411,7 @@ public class Movement : MonoBehaviour
     }
     public void StopJump()
     {
+        if(touchingWater){return;}
         if(movementDebug.debugMessages){Debug.Log("Cancel jump");}
 
         if(jumpBufferTimer == 0)
@@ -414,10 +430,17 @@ public class Movement : MonoBehaviour
         jumpBufferTimer = 0;
 
     }
+
+    public void EnterWater()
+    {
+        touchingWater = true;
+        body.gravityScale = 0;
+    }
     public void ExitWater()
     {
         touchingWater = false;
         healthTimer = 0;
+        body.gravityScale = normGrav;
     }
 
     private void OnDrawGizmos()

@@ -2540,8 +2540,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 366.0,
-            "y": -1853.0,
+            "x": 476.0,
+            "y": -1871.0,
             "width": 159.0,
             "height": 34.0
         }
@@ -3154,7 +3154,7 @@
         "m_SerializableColors": []
     },
     "m_TextureType": 0,
-    "m_NormalMapSpace": 0
+    "m_NormalMapSpace": 1
 }
 
 {

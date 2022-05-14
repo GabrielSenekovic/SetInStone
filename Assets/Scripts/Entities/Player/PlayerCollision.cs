@@ -10,7 +10,7 @@ public class PlayerCollision : MonoBehaviour
     {
         if(other.CompareTag("Water"))
         {
-            movement.touchingWater = true;
+            movement.EnterWater();
         }
     }
     void OnTriggerExit2D(Collider2D other) 
