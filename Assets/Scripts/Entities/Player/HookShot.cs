@@ -153,7 +153,6 @@ public class HookShot : MonoBehaviour
         {
             movement.actionBuffer = false;
             body.gravityScale = movement.normGrav;
-            hook.hitEffect.Stop();
         }
 
         Vector2 Dir = (movement.gameObject.transform.position - hook.transform.position).normalized;

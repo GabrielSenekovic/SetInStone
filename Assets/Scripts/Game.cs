@@ -22,8 +22,6 @@ public class Game : MonoBehaviour
     GameObject player;
     Volume volume;
 
-    [System.NonSerialized] public VFXManager visualEffects;
-
     public CinemachineVirtualCamera cinemachineVirtualCamera;
 
     public InputChange inputChange;
@@ -76,8 +74,6 @@ public class Game : MonoBehaviour
 
             Debug.Log("Getting Volume");
             instance.volume = instance.GetComponentInChildren<Volume>();
-            Debug.Log("Getting VFXManager");
-            instance.visualEffects = instance.GetComponentInChildren<VFXManager>();
 
             mapCanvas = mapScript.GetComponent<CanvasGroup>();
 

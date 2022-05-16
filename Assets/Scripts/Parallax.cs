@@ -8,6 +8,7 @@ public class Parallax : MonoBehaviour
     float length, startPos;
     public float parallaxFactor;
     public bool loop;
+    public Transform parallaxPoint;
 
     private void Start() {
         startPos = transform.position.x;
@@ -25,7 +26,7 @@ public class Parallax : MonoBehaviour
     private void Update() {
        // float temp = cam.transform.position.x * (1 - parallaxFactor);
 
-        float distance = Camera.main.transform.position.x * parallaxFactor;
+        float distance = (parallaxPoint.position.x - Camera.main.transform.position.x) * parallaxFactor;
         Vector3 newPosition = new Vector3(startPos + distance, transform.position.y, transform.position.z);
         transform.position = newPosition;
 

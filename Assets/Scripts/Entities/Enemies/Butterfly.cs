@@ -26,7 +26,7 @@ public class Butterfly : MonoBehaviour, Attackable
         currentHealth = maxHealth;
 
         deathCloud.effect = Instantiate(VFX_prefab, transform.position, Quaternion.identity, transform);
-        Game.Instance.visualEffects.Add(deathCloud, false);
+       // Game.Instance.visualEffects.Add(deathCloud, false);
 
         if(!pathPrefab){return;}
         pathFollow = GetComponent<PathFollower>();
@@ -59,7 +59,7 @@ public class Butterfly : MonoBehaviour, Attackable
         currentHealth -= value;
         if(currentHealth == 0)
         {
-            Game.Instance.visualEffects.ChangePosition(deathCloud, transform.position);
+           // Game.Instance.visualEffects.ChangePosition(deathCloud, transform.position);
             deathCloud.effect.Play();
             Instantiate(bubble, transform.position, transform.rotation);
             AudioManager.PlaySFX("ButterflyDeath");

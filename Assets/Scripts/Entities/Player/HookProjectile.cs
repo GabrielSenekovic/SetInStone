@@ -5,9 +5,9 @@ using UnityEngine.VFX;
 
 public class HookProjectile : MonoBehaviour
 {
-    public Rigidbody2D body;
+    [System.NonSerialized]public Rigidbody2D body;
     public HookShot hookScript;
-    public VisualEffect hitEffect;
+    public ParticleSystem particles;
     public Rigidbody2D playerRb;
 
 
@@ -57,8 +57,7 @@ public class HookProjectile : MonoBehaviour
             {
                 hookScript.hitPoint_color = Color.red;
             }
-
-            hitEffect.Play();
+            particles.Play();
             if(!hookScript.shooting)
             {
                 hookScript.PullPlayer(body.position);

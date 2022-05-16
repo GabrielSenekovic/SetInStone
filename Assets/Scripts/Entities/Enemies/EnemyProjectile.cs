@@ -19,7 +19,6 @@ public class EnemyProjectile : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         VFX.effect = GetComponentInChildren<VisualEffect>();
         myLight.light = GetComponentInChildren<Light>();
-        Game.Instance.visualEffects.Add(myLight, VFX);
     }
     public void Shoot(Vector2 atkDir, float atkSpeed, float atkAngle, Vector2 bodyPosition)
     {
@@ -27,8 +26,6 @@ public class EnemyProjectile : MonoBehaviour
         transform.position = bodyPosition;
         transform.rotation = Quaternion.Euler(0, 0, atkAngle * Mathf.Rad2Deg);
         GetComponent<Rigidbody2D>().velocity = atkDir.normalized * atkSpeed; //* give it velocity in that direction
-        Game.Instance.visualEffects.SetFollowSource(VFX, true);
-        Game.Instance.visualEffects.ToggleVFXAndLight(VFX, myLight, true);
     }
 
     private void OnTriggerEnter2D(Collider2D other) 
@@ -45,8 +42,6 @@ public class EnemyProjectile : MonoBehaviour
         }
         //AudioManager.PlaySFX("SnailShotHit");
         Debug.Log("Snail projectile hit: " + other.gameObject.name);
-        Game.Instance.visualEffects.SetFollowSource(VFX, false);
-        Game.Instance.visualEffects.ToggleVFXAndLight(VFX, myLight, false);
         gameObject.SetActive(false);
     }
 
@@ -60,8 +55,6 @@ public class EnemyProjectile : MonoBehaviour
         }
         //AudioManager.PlaySFX("SnailShotHit");
         Debug.Log("Snail projectile hit: " + other.gameObject.name);
-        Game.Instance.visualEffects.SetFollowSource(VFX, false);
-        Game.Instance.visualEffects.ToggleVFXAndLight(VFX, myLight, false);
         AudioManager.PlaySFX("SnailShotHit");
         gameObject.SetActive(false);
     }

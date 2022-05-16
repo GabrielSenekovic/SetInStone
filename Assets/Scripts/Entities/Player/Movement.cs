@@ -131,7 +131,6 @@ public class Movement : MonoBehaviour
         hangingFromLedge = false;
 
         doubleJumpVFX.effect = Instantiate(doubleJump_prefab, transform.position, Quaternion.identity, transform);
-        Game.Instance.visualEffects.Add(doubleJumpVFX, false);
     }
 
     private void Update()
@@ -415,7 +414,7 @@ public class Movement : MonoBehaviour
             jumping = true; grounded = false; //* if you jump, you are jumping, and you are not on the ground *taps head*
             if(amntOfJumps > 0)
             {
-                Game.Instance.visualEffects.ChangePosition(doubleJumpVFX, transform.position);
+               // Game.Instance.visualEffects.ChangePosition(doubleJumpVFX, transform.position);
                 doubleJumpVFX.effect.Play();
             }
             StopVelocity();
