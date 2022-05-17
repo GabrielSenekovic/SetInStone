@@ -7,6 +7,7 @@ using UnityEngine.VFX;
 public class Movement : MonoBehaviour
 {
     Animator playerAnimator;
+    public Animator bubbleAnimator;
     public bool grounded = true;
     public bool ducking;
     public float cancelJumpSpeed = 5.0f;
@@ -49,9 +50,8 @@ public class Movement : MonoBehaviour
     public MovementDebug movementDebug;
 
     public Transform bodyTransform;
-    public VisualEffectEntry doubleJumpVFX;
 
-    public VisualEffect doubleJump_prefab;
+    public ParticleSystem doubleJump;
 
     public Vector2 currentVelocity;
     public bool isFlung; //Used for hookshotting. If moving in the opposite direction of velocity you break it but if you move in the same direction nothing happens
@@ -82,6 +82,8 @@ public class Movement : MonoBehaviour
 
     int healthTimer;
     int healthTimer_max = 50;
+
+    [SerializeField] bool onFire = false;
 
     public HealthModel health;
     [System.Serializable] public class MovementDebug
@@ -129,8 +131,6 @@ public class Movement : MonoBehaviour
         actionBuffer = false;
         ducking = false;
         hangingFromLedge = false;
-
-        doubleJumpVFX.effect = Instantiate(doubleJump_prefab, transform.position, Quaternion.identity, transform);
     }
 
     private void Update()
@@ -170,6 +170,11 @@ public class Movement : MonoBehaviour
             {
                 healthTimer = 0;
                 health.Heal(1);
+            }
+            if(body.gravityScale > 0)
+            {
+                body.gravityScale = Mathf.Lerp(body.gravityScale, 0, 0.05f);
+                body.velocity = new Vector2(body.velocity.x, Mathf.Lerp(body.velocity.y, 0, 0.05f));
             }
         }
         
@@ -414,8 +419,7 @@ public class Movement : MonoBehaviour
             jumping = true; grounded = false; //* if you jump, you are jumping, and you are not on the ground *taps head*
             if(amntOfJumps > 0)
             {
-               // Game.Instance.visualEffects.ChangePosition(doubleJumpVFX, transform.position);
-                doubleJumpVFX.effect.Play();
+                doubleJump.Play();
             }
             StopVelocity();
             body.velocity = new Vector2(body.velocity.x, 0);
@@ -457,13 +461,26 @@ public class Movement : MonoBehaviour
         jumpBufferTimer = 0;
 
     }
+    public void EnterFire()
+    {
+        onFire = true;
+        bubbleAnimator.SetBool("Fire", true);
+    }
+    public bool OnFire()
+    {
+        return onFire;
+    }
 
     public void EnterWater()
     {
         touchingWater = true;
-        body.velocity = Vector2.zero;
-        body.gravityScale = 0;
         grounded = false;
+        onFire = false;
+        bubbleAnimator.SetBool("Fire", false);
+        if(body.velocity.y > -5)
+        {
+            body.velocity = new Vector2(body.velocity.x,-5);
+        }
     }
     public void ExitWater()
     {

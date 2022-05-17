@@ -21,9 +21,18 @@ public class HookProjectile : MonoBehaviour
     {
         if(!hookScript.hit && !(other.CompareTag("Player") || other.CompareTag("PassThrough") ) && other.gameObject.layer != LayerMask.NameToLayer("Pickup"))
         {
-            Debug.Log(other.name);
-            hookScript.hit = true;
             body.gravityScale = 0; body.velocity = Vector2.zero; //Stop the hook
+            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 0.25f);
+            for(int i = 0; i < hits.Length; i++)
+            {
+                if(hits[i].GetComponent<Ivy>())
+                {
+                    hookScript.StopPull();
+                    hookScript.retract = true;
+                    return;
+                }
+            }
+            hookScript.hit = true;
 
             playerRb.gravityScale = 0;
             playerRb.velocity = Vector2.zero;

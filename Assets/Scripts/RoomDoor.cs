@@ -12,6 +12,11 @@ public class RoomDoor : MonoBehaviour
     Animator anim;
     public Room roomBehind;
 
+    bool jammed = false;
+    public bool locked;
+    public int jamCounter = 0;
+    bool open = false;
+
     [SerializeField] GameObject collider;
 
     void Awake()
@@ -34,8 +39,25 @@ public class RoomDoor : MonoBehaviour
             OpenDoor();
         }
     }
+    public bool CanOpen()
+    {
+        return !jammed && !locked && !open;
+    }
+    public void Jam()
+    {
+        jammed = true;
+        jamCounter++;
+    }
+    public void UnJam()
+    {
+        jamCounter--;
+        if(jamCounter <= 0)
+        {
+            jammed = false;
+        }
+    }
 
-    void OpenDoor()
+    public void OpenDoor()
     {
         if(currentPosition.y <= (startingPosition.y - transform.localScale.y)*2)
         {
@@ -50,6 +72,7 @@ public class RoomDoor : MonoBehaviour
             body.AddForce(Vector3.up * moveSpeed);
             currentPosition = body.transform.position;
             roomBehind.Discover();
+            open = true;
         }
     }
 }
