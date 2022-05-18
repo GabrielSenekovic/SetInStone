@@ -26,6 +26,20 @@ public class HealthBar : MonoBehaviour
             SetHeartFillAmount(currentHealth, i);
         }
     }
+    public void SetOnFire()
+    {
+        for(int i = 0; i < hearts.Count; i++)
+        {
+            hearts[i].GetComponent<Animator>().SetBool("Burning", true);
+        }
+    }
+    public void UnSetOnFire()
+    {
+        for(int i = 0; i < hearts.Count; i++)
+        {
+            hearts[i].GetComponent<Animator>().SetBool("Burning", false);
+        }
+    }
 
     public void HeartContainerPickedUp()
     {

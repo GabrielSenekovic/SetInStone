@@ -5243,6 +5243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 712838b5fea173540a818ac96a137fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bubbleAnimator: {fileID: 0}
   grounded: 1
   ducking: 0
   cancelJumpSpeed: 5
