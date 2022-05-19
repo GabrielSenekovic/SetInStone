@@ -5,14 +5,17 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Game/Start Menu/Start Menu.unity
     guid: 57f9fd26b67df20469f66ddf6e182683
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Game/LoadGame.unity
     guid: 1090290fdf68f9e44a5e2b6a4c002ac9
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Game/Other/GameScene.unity
     guid: 7e2d852e174de76469f89841f7988a84
+  - enabled: 1
+    path: Assets/Scenes/Game/ForestDungeon/Forest Dungeon.unity
+    guid: cdba0fc05286f6a4da55408b4d490a9f
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 51d8ed1a93a9d9247973530e569a9c23, type: 2}
