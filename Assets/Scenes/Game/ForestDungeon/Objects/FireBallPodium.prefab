@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 4886108922114196470}
   - component: {fileID: 3703984336177524134}
   - component: {fileID: 8935031740573036463}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FireBallPodium
   m_TagString: Untagged
   m_Icon: {fileID: 0}

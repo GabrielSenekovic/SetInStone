@@ -20,7 +20,7 @@ public class ParticleLight : MonoBehaviour
             lights[i].intensity = 0;
         }
     }
-    private void FixedUpdate() 
+    private void Update() 
     {
         ParticleSystem.Particle[] particles = new ParticleSystem.Particle[particleSystem.particleCount];
         particleSystem.GetParticles(particles);

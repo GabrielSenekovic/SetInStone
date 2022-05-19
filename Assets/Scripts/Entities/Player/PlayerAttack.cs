@@ -16,43 +16,33 @@ public class PlayerAttack : MonoBehaviour
     Rigidbody2D playerBody;
 
     [SerializeField] GameObject cane;
-    [SerializeField] GameObject animatedCane;
-    public GameObject caneStartPos;
 
     Vector2 caneNextPosition;
 
     Vector2 mousePositionSaved;
 
-    Vector2 temp;
-
     public float attackRange = 2;
 
     int elapsedFrames;
 
+    public Animator caneAnimator;
+
     void Start()
     {
         playerBody = GetComponent<Rigidbody2D>();
-        originalCanePosition = caneStartPos.transform.localPosition;
     }
 
     void FixedUpdate()
     {
         if (atkCooldown < atkCooldownMax) 
         {
-            MoveCane();
             atkCooldown++; 
-        }
-        else
-        {
-            cane.SetActive(false);
         }
     }
 
     public void AimAttack(Vector2 mousePosition) //! input stuff
     {
         atkPos = mousePosition + (Vector2)transform.position;
-        //Vector2 offsetMouesPos = (mousePosition);
-        //save magnitude
         Vector2 clickPos = mousePositionSaved;
         Vector2 headPos = originalCanePosition;
         Vector2 headToClick = clickPos - headPos;
@@ -64,28 +54,12 @@ public class PlayerAttack : MonoBehaviour
         }
         else { atkAngle = 90 * Mathf.Sign(mousePosition.y); }
 
-        //if (mousePosition.x != 0)
-        //{
-        //    atkAngle = Mathf.Atan2(mousePosition.y + originalCanePosition.y, mousePosition.x) * Mathf.Rad2Deg;
-        //}
-        //else { atkAngle = 90 * Mathf.Sign(mousePosition.y); }
-
-        //cane.transform.position = mousePosition + (Vector2)transform.position;
+        if(transform.localScale.x == -1)
+        {
+            atkAngle = -atkAngle + 180;
+        }
 
         mousePositionSaved = mousePosition;
-    }
-
-    void MoveCane()
-    {
-        float stepAmount = (float)elapsedFrames / (atkCooldownMax/2);// atkCooldownMax;
-        stepAmount = stepAmount * stepAmount * (3f - 2f * stepAmount);
-        Vector2 startPos = (Vector2)transform.position + originalCanePosition;
-        Vector2 endPos = caneNextPosition;
-
-        Vector3 interpolatedPosition = Vector3.Lerp(startPos,endPos , stepAmount);
-        cane.transform.position = interpolatedPosition;
-        elapsedFrames += (atkCooldown > atkCooldownMax / 2) ? -1 : 1;   // reset elapsedFrames to zero after it reached (interpolationFramesCount + 1)
-        MoveHitBox(interpolatedPosition);
     }
 
     void MoveHitBox(Vector2 point)
@@ -115,18 +89,14 @@ public class PlayerAttack : MonoBehaviour
         Debug.Log("Attacking");
         AudioManager.PlaySFX("Attack");
 
-        //Debug.Log(mousePositionSaved.normalized);
-
-        //caneNextPosition = (new Vector2(Mathf.Cos(atkAngle * Mathf.Deg2Rad),
-        //      Mathf.Sin(atkAngle * Mathf.Deg2Rad)) * attackRange); // mouse pos is 0,0 over the player pos. so you have to ofset it. then we dont want the full length. we want the attack range to be the magnitute 
         Vector2 clickPos = mousePositionSaved + (Vector2)transform.position;
         Vector2 headPos =(Vector2)transform.position + originalCanePosition;
         caneNextPosition = headPos + (clickPos - headPos).normalized * attackRange;
 
-        //cane.transform.localPosition = (new Vector2(Mathf.Cos(atkAngle * Mathf.Deg2Rad),
-        //       Mathf.Sin(atkAngle * Mathf.Deg2Rad)) * attackRange);
+        cane.transform.localPosition = (new Vector2(Mathf.Cos(atkAngle * Mathf.Deg2Rad),
+              Mathf.Sin(atkAngle * Mathf.Deg2Rad)) * attackRange);
 
-        cane.transform.localPosition = originalCanePosition;
+        //cane.transform.localPosition = originalCanePosition;
 
         float angle = Vector2.Angle(Vector2.up, mousePositionSaved + originalCanePosition); // *2
 
@@ -141,9 +111,12 @@ public class PlayerAttack : MonoBehaviour
         //        : Vector2.Angle(Vector2.right, mousePositionSaved);
         //}
         //else { atkAngle = 90 * Mathf.Sign(mousePositionSaved.y); }
-        cane.transform.rotation = Quaternion.Euler(0, 0, atkAngle - 90.0f);
+        cane.transform.rotation = Quaternion.Euler(0, 0, atkAngle);
+       // cane.transform.localScale = new Vector3(transform.localScale.x,1,1);
 
-        cane.SetActive(true);
+        caneAnimator.SetTrigger("Attack");
+        MoveHitBox(cane.transform.position + (Vector3)(new Vector2(Mathf.Cos(atkAngle * Mathf.Deg2Rad),
+              Mathf.Sin(atkAngle * Mathf.Deg2Rad))));
 
         atkCooldown = 0; // * is on cooldown
         elapsedFrames = 0;

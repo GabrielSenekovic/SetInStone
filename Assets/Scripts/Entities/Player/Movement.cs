@@ -52,6 +52,7 @@ public class Movement : MonoBehaviour
     public Transform bodyTransform;
 
     public ParticleSystem doubleJump;
+    public ParticleSystem caneVFX;
 
     public Vector2 currentVelocity;
     public bool isFlung; //Used for hookshotting. If moving in the opposite direction of velocity you break it but if you move in the same direction nothing happens
@@ -389,7 +390,7 @@ public class Movement : MonoBehaviour
         body.transform.localRotation = Quaternion.identity;
     }
 
-    private void TryJump()
+    public void TryJump()
     {
         if(jumpBufferTimer <= 0) {return;} //! you can't jump unless you've pressed jump
         if(touchingWater && !touchingSurface) {return;} //! cant jump if you're swimming, unless you're at the surface
@@ -412,6 +413,8 @@ public class Movement : MonoBehaviour
         if (grounded || amntOfJumps < amntOfJumpsMax || touchingSurface) // * if you are on the ground OR you are double jumping :) OR at the surface of the water
         {
             if(movementDebug.debugMessages){Debug.Log("Jump");}
+            if(amntOfJumps == 0){caneVFX.Play();}
+            playerAnimator.SetBool("swimming", false);
             playerAnimator.SetTrigger("jump");
             AudioManager.PlaySFX("Jump");
             AudioManager.PlaySFX("VoiceJump");
@@ -461,6 +464,10 @@ public class Movement : MonoBehaviour
         jumpBufferTimer = 0;
 
     }
+    public void PlayCaneVFX()
+    {
+        caneVFX.Play();   
+    }
     public void EnterFire()
     {
         onFire = true;
@@ -477,6 +484,8 @@ public class Movement : MonoBehaviour
         grounded = false;
         onFire = false;
         bubbleAnimator.SetBool("Fire", false);
+        Debug.Log("Swim");
+        playerAnimator.SetBool("swimming", true);
         if(body.velocity.y > -5)
         {
             body.velocity = new Vector2(body.velocity.x,-5);
@@ -486,7 +495,7 @@ public class Movement : MonoBehaviour
     {
         touchingWater = false;
         healthTimer = 0;
-        Debug.Log("Exited water");
+        playerAnimator.SetBool("swimming", false);
         body.gravityScale = normGrav;
     }
 

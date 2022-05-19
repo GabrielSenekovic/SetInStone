@@ -9,4 +9,8 @@ public class PlayerAnimationListener : MonoBehaviour
     {
         movement.FinishLedgeClimb();
     }
+    public void PlayCaneVFX()
+    {
+        movement.PlayCaneVFX();
+    }
 }
