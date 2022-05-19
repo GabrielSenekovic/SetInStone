@@ -7,7 +7,6 @@ using UnityEngine.Rendering.Universal;
 public class CutsceneTrigger : MonoBehaviour
 {
     // Start is called before the first frame update
-    public AudioClip clip;
 
     ColorAdjustments color;
 
@@ -27,7 +26,8 @@ public class CutsceneTrigger : MonoBehaviour
 
     private void Start() 
     {
-        Game.GetVolume().sharedProfile.TryGet<ColorAdjustments>(out color);
+        VolumeProfile profile = Game.GetVolume().sharedProfile;
+        profile.TryGet<ColorAdjustments>(out color);
         color.colorFilter.value = Color.white;
     }
 
@@ -63,11 +63,11 @@ public class CutsceneTrigger : MonoBehaviour
             Input input = other.GetComponent<Input>();
             if(input == null)
             {
-                input = other.transform.parent.transform.parent.GetComponent<Input>();
+                input = other.transform.parent.GetComponent<Input>();
             }
             input.SetControllable(false);
             AudioManager.PlayMusic("Dungeon Clear Last", false);
-            StartCoroutine(Game.WaitForLoad(AudioManager.GetMusic("Dungeon Clear Last").theme.length));
+            //StartCoroutine(Game.WaitForLoad(AudioManager.GetMusic("Dungeon Clear Last").theme.length));
             Game.SetHUDVisibility(0);
         }
     }

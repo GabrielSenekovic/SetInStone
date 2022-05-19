@@ -206,7 +206,6 @@ public class Movement : MonoBehaviour
         {
             if(ledgeClimbTimer >= ledgeClimbTimer_max || forceLedgeClimb || touchingSurface)
             {
-                Debug.Log("I got in here because " + ledgeClimbTimer + " was over " + ledgeClimbTimer_max);
                 playerAnimator.SetTrigger("ledgeClimb");
                 forceLedgeClimb = false;
             }

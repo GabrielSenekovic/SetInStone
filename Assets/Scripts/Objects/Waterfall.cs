@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Waterfall : MonoBehaviour
 {
@@ -15,10 +16,15 @@ public class Waterfall : MonoBehaviour
 
     void Start()
     {
+        if(transform.parent.transform.parent.GetComponent<TilemapManager>())
+        {
+            Tilemap map = transform.parent.transform.parent.GetComponent<TilemapManager>().GetTilemap(TilemapManager.TilemapType.DECORATION);
+            map.SetColor(new Vector3Int((int)(transform.localPosition.x), (int)(transform.localPosition.y - 0.5f),0),  Color.clear);
+        }
         lineRenderer.positionCount = 2;
         for(int i = 0; i < 2; i++)
         {
-            lineRenderer.SetPosition(i, transform.position);
+            lineRenderer.SetPosition(i, transform.position + new Vector3(0, 0.5f, 0));
         }
     }
     private void Update() 

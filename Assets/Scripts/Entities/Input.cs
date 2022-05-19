@@ -98,7 +98,7 @@ public class Input : MonoBehaviour
 
     void OnSpecial()
     {
-        if (!controllable || movement.actionBuffer || !inventory.HasHookshot()) {return;}
+        if (!controllable || movement.actionBuffer || !inventory.HasHookshot() || movement.touchingWater) {return;}
         if(movement.hookShot.Shoot()) {movement.StopVelocity();}
     }
     void OnStopSpecial()

@@ -43,6 +43,8 @@ public sealed class AudioManager : MonoBehaviour
     [SerializeField]bool debug;
 
     static int nextSFX_source = 0;
+
+    static bool interrupt = false;
     private void Awake() 
     {
         instance = this;
@@ -103,11 +105,21 @@ public sealed class AudioManager : MonoBehaviour
             music_source.clip = music.intro;
             music_source.Play();
             yield return new WaitForSecondsRealtime(music_source.clip.length);
-            music_source.Stop();
+            if(!interrupt)
+            {
+                music_source.Stop();
+            }
         }
-        music_source.loop = loop;
-        music_source.clip = music.theme;
-        music_source.Play();
+        if(!interrupt)
+        {
+            music_source.loop = loop;
+            music_source.clip = music.theme;
+            music_source.Play();
+        }
+        if(music.intro == null)
+        {
+            interrupt = true;
+        }
     }
 
     public static void ChangeSFXVolume(float value)

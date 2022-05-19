@@ -32,16 +32,17 @@ public class InputChange : MonoBehaviour
             switch (buttons[i].action)
             {
                 case "Jump":
-                    buttons[i].SetButtonText(map.actions[2].bindings[map.actions[2].GetBindingIndex(currentScheme)].path);
-                    break;
-                case "Hookshot":
+                    Debug.Log(map.actions[4].name);
                     buttons[i].SetButtonText(map.actions[4].bindings[map.actions[4].GetBindingIndex(currentScheme)].path);
                     break;
+                case "Hookshot":
+                    buttons[i].SetButtonText(map.actions[6].bindings[map.actions[6].GetBindingIndex(currentScheme)].path);
+                    break;
                 case "Attack":
-                    buttons[i].SetButtonText(map.actions[7].bindings[map.actions[7].GetBindingIndex(currentScheme)].path);
+                    buttons[i].SetButtonText(map.actions[12].bindings[map.actions[12].GetBindingIndex(currentScheme)].path);
                     break;
                 case "Pulka":
-                    buttons[i].SetButtonText(map.actions[5].bindings[map.actions[5].GetBindingIndex(currentScheme)].path);
+                    buttons[i].SetButtonText(map.actions[8].bindings[map.actions[8].GetBindingIndex(currentScheme)].path);
                     break;
                 case "Left":
                     buttons[i].SetButtonText(map.actions[0].bindings[map.actions[0].GetBindingIndex(currentScheme)].path);
@@ -50,13 +51,13 @@ public class InputChange : MonoBehaviour
                     buttons[i].SetButtonText(map.actions[0].bindings[map.actions[0].GetBindingIndex(currentScheme) + 1].path);
                     break;
                 case "Down":
-                    buttons[i].SetButtonText(map.actions[8].bindings[map.actions[8].GetBindingIndex(currentScheme)].path);
+                    buttons[i].SetButtonText(map.actions[13].bindings[map.actions[13].GetBindingIndex(currentScheme)].path);
                     break;
                 case "Map":
-                    buttons[i].SetButtonText(map.actions[11].bindings[map.actions[11].GetBindingIndex(currentScheme)].path);
+                    buttons[i].SetButtonText(map.actions[16].bindings[map.actions[16].GetBindingIndex(currentScheme)].path);
                     break;
                 case "Pause":
-                    buttons[i].SetButtonText(map.actions[10].bindings[map.actions[10].GetBindingIndex(currentScheme)].path);
+                    buttons[i].SetButtonText(map.actions[15].bindings[map.actions[15].GetBindingIndex(currentScheme)].path);
                     break;
                 default:
                     Debug.Break(); break;
@@ -68,13 +69,13 @@ public class InputChange : MonoBehaviour
     {
         switch(function)
         {
-            case "Jump": OnRebind(new List<InputAction>() { map.actions[2], map.actions[3] }, function);
+            case "Jump": OnRebind(new List<InputAction>() { map.actions[4], map.actions[5] }, function);
                 break;
-            case "Hookshot":OnRebind(new List<InputAction>() { map.actions[4]}, function);
+            case "Hookshot":OnRebind(new List<InputAction>() { map.actions[6]}, function);
                 break;
-            case "Attack": OnRebind(new List<InputAction>() { map.actions[7] }, function); 
+            case "Attack": OnRebind(new List<InputAction>() { map.actions[12] }, function); 
                 break;
-            case "Pulka": OnRebind(new List<InputAction>() { map.actions[5], map.actions[6] }, function);
+            case "Pulka": OnRebind(new List<InputAction>() { map.actions[8], map.actions[9] }, function);
                 break;
             case "Left": OnRebind(new List<InputAction>() { map.actions[0], map.actions[1] }, function, "negative");
                 break;
@@ -82,9 +83,9 @@ public class InputChange : MonoBehaviour
                 break;
             case "Down": OnRebind(new List<InputAction>() { map.actions[8], map.actions[9] }, function);
                 break;
-            case "Map": OnRebind(new List<InputAction>() { map.actions[11]}, function);
+            case "Map": OnRebind(new List<InputAction>() { map.actions[16]}, function);
                 break;
-            case "Pause": OnRebind(new List<InputAction>() { map.actions[10]}, function);
+            case "Pause": OnRebind(new List<InputAction>() { map.actions[15]}, function);
                 break;
             default: Debug.Break(); break;
         }

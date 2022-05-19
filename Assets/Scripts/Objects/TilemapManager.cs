@@ -7,7 +7,8 @@ public class TilemapManager : MonoBehaviour
 {
     public enum TilemapType
     {
-        IVY
+        IVY, //For checking for adjacent ivies
+        DECORATION //For waterfalls to make their source disappear
     }
     [System.Serializable]public struct TilemapEntry
     {

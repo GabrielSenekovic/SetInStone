@@ -64,7 +64,7 @@ public class PlayerAttack : MonoBehaviour
 
     void MoveHitBox(Vector2 point)
     {
-        Collider2D[] hitObjects = Physics2D.OverlapCircleAll(point, 1.0f, LayerMask.GetMask("Entity"), playerBody.transform.position.z,
+        Collider2D[] hitObjects = Physics2D.OverlapCircleAll(point, 1.5f, LayerMask.GetMask("Entity"), playerBody.transform.position.z,
        playerBody.transform.position.z);
 
         foreach (Collider2D obj in hitObjects)
@@ -96,23 +96,13 @@ public class PlayerAttack : MonoBehaviour
         cane.transform.localPosition = (new Vector2(Mathf.Cos(atkAngle * Mathf.Deg2Rad),
               Mathf.Sin(atkAngle * Mathf.Deg2Rad)) * attackRange);
 
-        //cane.transform.localPosition = originalCanePosition;
-
         float angle = Vector2.Angle(Vector2.up, mousePositionSaved + originalCanePosition); // *2
 
         if(caneNextPosition.x > transform.position.x)
         {
             angle *= -1;
         }
-
-        //if (mousePositionSaved.x != 0)
-        //{
-        //    atkAngle = mousePositionSaved.y < 0 ? -1 * Vector2.Angle(Vector2.right, mousePositionSaved)
-        //        : Vector2.Angle(Vector2.right, mousePositionSaved);
-        //}
-        //else { atkAngle = 90 * Mathf.Sign(mousePositionSaved.y); }
         cane.transform.rotation = Quaternion.Euler(0, 0, atkAngle);
-       // cane.transform.localScale = new Vector3(transform.localScale.x,1,1);
 
         caneAnimator.SetTrigger("Attack");
         MoveHitBox(cane.transform.position + (Vector3)(new Vector2(Mathf.Cos(atkAngle * Mathf.Deg2Rad),
@@ -128,8 +118,6 @@ public class PlayerAttack : MonoBehaviour
         Vector3 mPos = Mouse.current.position.ReadValue();
         mPos.z = 18; // cam z *-1
 
-        //mPos = Game.Instance.mouseCamera.ScreenToWorldPoint(mPos);
-
         Vector2 lookdir = mPos - transform.position;
 
         float angle = Mathf.Atan2(lookdir.y, lookdir.x) * Mathf.Rad2Deg;
@@ -138,17 +126,11 @@ public class PlayerAttack : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(cane.transform.position, 0.3f);
-        //Gizmos.DrawLine(cane.transform.position, (Vector2)cane.transform.position + caneNextPosition);
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere((Vector2)transform.position + mousePositionSaved, 0.1f);
-        //Gizmos.DrawSphere(cane.transform.localPosition + transform.position, 0.1f);
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(transform.position + (Vector3)originalCanePosition, 0.2f);
-        //Gizmos.DrawWireSphere(lookdir, 0.2f);
         Gizmos.color = Color.blue;
         Gizmos.DrawSphere(transform.position - new Vector3(0,0,5), 0.2f);
-        //Gizmos.DrawWireSphere(temp + (Vector2)transform.position, 0.2f);
-        //Gizmos.DrawLine(transform.position, Vector3.up * 1000 + transform.position);
-        //Gizmos.DrawLine(transform.position, mousePositionSaved - originalCanePosition);
     }
 }

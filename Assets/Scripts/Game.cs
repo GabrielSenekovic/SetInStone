@@ -20,7 +20,7 @@ public class Game : MonoBehaviour
     }
 
     GameObject player;
-    Volume volume;
+    public Volume volume;
 
     public CinemachineVirtualCamera cinemachineVirtualCamera;
 

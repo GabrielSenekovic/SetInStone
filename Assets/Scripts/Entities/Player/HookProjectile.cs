@@ -19,7 +19,7 @@ public class HookProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(!hookScript.hit && !(other.CompareTag("Player") || other.CompareTag("PassThrough") ) && other.gameObject.layer != LayerMask.NameToLayer("Pickup"))
+        if(!hookScript.hit && !(other.CompareTag("Player") || other.CompareTag("PassThrough") ||  other.CompareTag("Water")) && other.gameObject.layer != LayerMask.NameToLayer("Pickup"))
         {
             body.gravityScale = 0; body.velocity = Vector2.zero; //Stop the hook
             Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 0.25f);

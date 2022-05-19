@@ -79,6 +79,13 @@ public class Ivy : MonoBehaviour
                     StartCoroutine("DoorOpenCutscene");
                 }
             }
+            else if(door == null)
+            {
+                if(fire.particleCount == 0)
+                {
+                    map.SetTile(new Vector3Int((int)(transform.localPosition.x), (int)(transform.localPosition.y - 0.5f), 0), null);
+                }
+            }
         }
     }
     private void OnTriggerEnter2D(Collider2D other) 
@@ -110,5 +117,6 @@ public class Ivy : MonoBehaviour
         yield return new WaitForSeconds(0.8f);
         Game.Instance.cinemachineVirtualCamera.Follow = temp;
         Game.Instance.cinemachineVirtualCamera.gameObject.GetComponent<CinemachineConfiner>().m_ConfineScreenEdges = true;
+        map.SetTile(new Vector3Int((int)(transform.localPosition.x), (int)(transform.localPosition.y - 0.5f), 0), null);
     }
 }
