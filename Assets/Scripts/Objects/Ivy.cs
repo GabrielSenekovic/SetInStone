@@ -19,10 +19,16 @@ public class Ivy : MonoBehaviour
     private void Start() 
     {
         fireTimer_Max = Random.Range(30, 50);
+        Debug.Log("My fire time max is: " + fireTimer_Max);
         fire = GetComponentInChildren<ParticleSystem>();
         if(transform.parent.transform.parent.GetComponent<TilemapManager>())
         {
             map = transform.parent.transform.parent.GetComponent<TilemapManager>().GetTilemap(TilemapManager.TilemapType.IVY);
+            Debug.Log("I could find the Ivy map");
+        }
+        else
+        {
+            Debug.Log("There was no Ivy map to be found!");
         }
         if(map != null)
         {
@@ -35,6 +41,7 @@ public class Ivy : MonoBehaviour
                     adjacentIvy.Add(temp.GetComponent<Ivy>());
                 }
             }
+            Debug.Log("I found " + adjacentIvy.Count + " amount of adjacent ivy");
         }
     }
     private void FixedUpdate() 
@@ -83,7 +90,9 @@ public class Ivy : MonoBehaviour
             {
                 if(fire.particleCount == 0)
                 {
-                    map.SetTile(new Vector3Int((int)(transform.localPosition.x), (int)(transform.localPosition.y - 0.5f), 0), null);
+                    Debug.Log("Trying to remove myself");
+                    Destroy(this);
+                    //map.SetTile(new Vector3Int((int)(transform.localPosition.x), (int)(transform.localPosition.y - 0.5f), 0), null);
                 }
             }
         }
