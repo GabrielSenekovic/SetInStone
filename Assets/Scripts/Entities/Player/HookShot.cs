@@ -125,8 +125,6 @@ public class HookShot : MonoBehaviour
         hookAngle -= 90;
         if(hookDir == Vector2.zero)
         {
-            Debug.Log("2mousepos " + mousePosition.x + " " + mousePosition.y);
-            Debug.Log("2hookdir " + hookDir.x + " " + hookDir.y);
             hookDir = new Vector2(0,1);
         }
         //Debug.Log("3mousepos " + mousePosition.x + " " + mousePosition.y);
@@ -136,19 +134,13 @@ public class HookShot : MonoBehaviour
     public bool Shoot()
     {
         if(hook.gameObject.activeSelf) {return false;}
-          Debug.Log("Shooting on cooldown");
         if(GetComponent<Movement>().ducking){return false;}
         if(pulka.state != Pulka.PulkaState.NONE) {return false;}
-        Debug.Log("Shooting");
         hook.gameObject.SetActive(true);
-        Debug.Log("sethookactive");
         hit = false;
         shooting = true;
-        Debug.Log("seting bools");
         hook.transform.position = hook.body.position;
-        Debug.Log("sethookpos");
         hook.transform.rotation = Quaternion.Euler(0, 0, hookAngle); // * rotate the hook in the direction of the stick and...
-        Debug.Log("sethookvel");
         hook.body.velocity = hookDir.normalized * hookSpeed; //* give it velocity in that direction
         AdjustSeaweed();
        
@@ -157,7 +149,6 @@ public class HookShot : MonoBehaviour
         body.velocity = Vector2.zero;
         playerAnimator.SetTrigger("throwhook");
         AudioManager.PlaySFX("HookThrow");
-        Debug.Log("return");
         return true;
     }
     public void Retract()
@@ -179,7 +170,6 @@ public class HookShot : MonoBehaviour
     }
     public void FinishRetraction()
     {
-        Debug.Log("Retracted fully!");
         hook.gameObject.SetActive(false);
         hook.transform.rotation = Quaternion.identity;
         retract = false;
