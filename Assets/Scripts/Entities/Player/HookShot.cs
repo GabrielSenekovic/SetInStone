@@ -32,7 +32,6 @@ public class HookShot : MonoBehaviour
         movement = gameObject.GetComponent<Movement>();
         //hook = Instantiate(hookPrefab, transform.position, Quaternion.identity).GetComponent<HookProjectile>();
         hook.hookScript = this;
-        hook.gameObject.SetActive(false);
         pulka = GetComponent<Pulka>();
         retract = false;
     }
@@ -109,7 +108,14 @@ public class HookShot : MonoBehaviour
 
     public void Aim(Vector2 mousePosition) //! input stuff
     {
+        //Debug.Log("0mousepos " + mousePosition.x + " " + mousePosition.y);
+        //Debug.Log("0hookdir " + hookDir.x + " " + hookDir.y);
+
         hookDir = mousePosition.normalized;
+
+        //Debug.Log("1mousepos " + mousePosition.x + " " + mousePosition.y);
+        //Debug.Log("1hookdir " + hookDir.x + " " + hookDir.y);
+
         if (mousePosition.x != 0)
         {
             hookAngle = mousePosition.y < 0 ? -1 * Vector2.Angle(Vector2.right, mousePosition)
@@ -119,8 +125,12 @@ public class HookShot : MonoBehaviour
         hookAngle -= 90;
         if(hookDir == Vector2.zero)
         {
+            Debug.Log("2mousepos " + mousePosition.x + " " + mousePosition.y);
+            Debug.Log("2hookdir " + hookDir.x + " " + hookDir.y);
             hookDir = new Vector2(0,1);
         }
+        //Debug.Log("3mousepos " + mousePosition.x + " " + mousePosition.y);
+        //Debug.Log("3hookdir " + hookDir.x + " " + hookDir.y);
     }
 
     public bool Shoot()
@@ -131,11 +141,14 @@ public class HookShot : MonoBehaviour
         if(pulka.state != Pulka.PulkaState.NONE) {return false;}
         Debug.Log("Shooting");
         hook.gameObject.SetActive(true);
-
+        Debug.Log("sethookactive");
         hit = false;
         shooting = true;
+        Debug.Log("seting bools");
         hook.transform.position = hook.body.position;
+        Debug.Log("sethookpos");
         hook.transform.rotation = Quaternion.Euler(0, 0, hookAngle); // * rotate the hook in the direction of the stick and...
+        Debug.Log("sethookvel");
         hook.body.velocity = hookDir.normalized * hookSpeed; //* give it velocity in that direction
         AdjustSeaweed();
        
@@ -144,7 +157,7 @@ public class HookShot : MonoBehaviour
         body.velocity = Vector2.zero;
         playerAnimator.SetTrigger("throwhook");
         AudioManager.PlaySFX("HookThrow");
-
+        Debug.Log("return");
         return true;
     }
     public void Retract()
@@ -156,10 +169,10 @@ public class HookShot : MonoBehaviour
         }
 
         Vector2 Dir = (movement.gameObject.transform.position - hook.transform.position).normalized;
-        hook.body.velocity = Dir * 30 * 2; //* give it velocity in that direction (hookspeed * 2)
+        hook.body.velocity = Dir * 30.0f * 2.0f; //* give it velocity in that direction (hookspeed * 2)
         AdjustSeaweed();
 
-        if((hook.transform.position - movement.gameObject.transform.position).magnitude < 1)
+        if((hook.transform.position - movement.gameObject.transform.position).magnitude < 1.0f)
         {
             FinishRetraction();
         }
