@@ -253,17 +253,18 @@ public class Movement : MonoBehaviour
         if(ledgeDetected && !hangingFromLedge)
         {
             hangingFromLedge = true;
-            if(transform.localScale.x > 0)
+            if(bodyTransform.transform.localScale.x > 0)
             {
                 ledgePos1 = new Vector2(Mathf.Floor(ledgePosBot.x + wallCheckDistance) - ledgeClimbXOffset1, Mathf.Floor(ledgePosBot.y) + ledgeClimbYOffset1);
                 ledgePos2 = new Vector2(Mathf.Floor(ledgePosBot.x + wallCheckDistance) + ledgeClimbXOffset2, Mathf.Floor(ledgePosBot.y) + ledgeClimbYOffset2);
             }
-            else if(transform.localScale.x < 0)
+            else if(bodyTransform.transform.localScale.x < 0)
             {
                 ledgePos1 = new Vector2(Mathf.Ceil(ledgePosBot.x - wallCheckDistance) + ledgeClimbXOffset1, Mathf.Floor(ledgePosBot.y) + ledgeClimbYOffset1);
                 ledgePos2 = new Vector2(Mathf.Ceil(ledgePosBot.x - wallCheckDistance) - ledgeClimbXOffset2, Mathf.Floor(ledgePosBot.y) + ledgeClimbYOffset2);
             }
             body.gravityScale = 0; body.velocity = Vector2.zero;
+            Debug.Log("Gravity turned off by check ledge climb");
             mainCollider.gameObject.SetActive(false);
             playerAnimator.SetTrigger("ledgeHang");
             transform.position = ledgePos1;
@@ -274,12 +275,14 @@ public class Movement : MonoBehaviour
 
     public void FinishLedgeClimb()
     {
+        Debug.Log("Climb ledge");
         if(!hangingFromLedge){return;}
         hangingFromLedge = false;
         transform.position = ledgePos2;
         mainCollider.gameObject.SetActive(true);
         ledgeDetected = false;
         body.gravityScale = normGrav;
+        Debug.Log("Gravity set normal by ledge climb");
         ledgeClimbTimer = 0;
         playerAnimator.ResetTrigger("ledgeClimb");
     }
@@ -372,6 +375,7 @@ public class Movement : MonoBehaviour
         if (!ducking) {body.velocity = Vector2.zero;}
         else {body.AddForce( new Vector2(movingDirection * speed * 20, 0), ForceMode2D.Impulse);}
         body.gravityScale = normGrav;
+        Debug.Log("Gravity set normal by grounding");
         isFlung = false;
     }
 
@@ -430,6 +434,7 @@ public class Movement : MonoBehaviour
             amntOfJumps++; // * you jumped one more time :-o
             jumpTimer = 0; // ? reset timer!
             body.gravityScale = normGrav; // ? Otherwise gravity is still big when trying to double jump
+            Debug.Log("Gravity set normal by try jump");
         }
     }
 
@@ -458,6 +463,7 @@ public class Movement : MonoBehaviour
         }
         body.AddForce(new Vector2(0, -cancelJumpSpeed));
         body.gravityScale = normGrav * gravityModifier;
+        Debug.Log("Gravity set normal by stop jump");
         playerAnimator.SetBool("falling", true);
         jumpTimer = jumpLimit; // TODO: should only happen if you have a jump left ( if jumps == maxjumps )
         jumpBufferTimer = 0;
@@ -483,7 +489,6 @@ public class Movement : MonoBehaviour
         grounded = false;
         onFire = false;
         bubbleAnimator.SetBool("Fire", false);
-        Debug.Log("Swim");
         playerAnimator.SetBool("swimming", true);
         if(body.velocity.y > -5)
         {
@@ -493,9 +498,10 @@ public class Movement : MonoBehaviour
     public void ExitWater()
     {
         touchingWater = false;
+        touchingSurface = false;
         healthTimer = 0;
         playerAnimator.SetBool("swimming", false);
-        body.gravityScale = normGrav;
+        if(!hangingFromLedge){body.gravityScale = normGrav; Debug.Log("Gravity set normal by exit water");}
     }
 
     private void OnDrawGizmos()
