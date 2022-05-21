@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,6 +123,68 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &276612662
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 276612665}
+  - component: {fileID: 276612664}
+  - component: {fileID: 276612663}
+  m_Layer: 0
+  m_Name: WinTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &276612663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276612662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3a6f84e04e70d347b31af35680c0f1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  writeTimerMax: 1
+  text: Dungeon Cleared
+--- !u!58 &276612664
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276612662}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0000036135314, y: -0.0017642452}
+  serializedVersion: 2
+  m_Radius: 0.17655672
+--- !u!4 &276612665
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276612662}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 234, y: 9, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!60 &369321342 stripped
 PolygonCollider2D:
   m_CorrespondingSourceObject: {fileID: 2683769657914381755, guid: d9b205d03f618dd48b0c17873ab1fed0, type: 3}
@@ -426,6 +488,10 @@ PrefabInstance:
     - target: {fileID: 2746695563079856854, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
       propertyPath: m_Name
       value: Game
+      objectReference: {fileID: 0}
+    - target: {fileID: 5475919697387334953, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -545
       objectReference: {fileID: 0}
     - target: {fileID: 7930587439771505710, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
       propertyPath: m_Follow
@@ -757,7 +823,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114614159971222385, guid: 4a6af180be6835942ae73bf782c454ac, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2782462263395057035, guid: 4a6af180be6835942ae73bf782c454ac, type: 3}
       propertyPath: myRoom
@@ -825,12 +891,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6525618657457029538}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b3a6f84e04e70d347b31af35680c0f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  writeTimerMax: 0
+  writeTimerMax: 1
   text: Dungeon Cleared
 --- !u!114 &7273207313275243709 stripped
 MonoBehaviour:

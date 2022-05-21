@@ -15,6 +15,8 @@ public class HookProjectile : MonoBehaviour
     {
         body = GetComponent<Rigidbody2D>();
         playerRb = hookScript.gameObject.GetComponent<Rigidbody2D>();
+        Debug.Log("bababuey");
+        gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

@@ -493,6 +493,7 @@ public class Movement : MonoBehaviour
     public void ExitWater()
     {
         touchingWater = false;
+        touchingSurface = false;
         healthTimer = 0;
         playerAnimator.SetBool("swimming", false);
         body.gravityScale = normGrav;
