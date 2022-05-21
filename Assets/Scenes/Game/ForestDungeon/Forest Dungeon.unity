@@ -190,26 +190,6 @@ PolygonCollider2D:
   m_CorrespondingSourceObject: {fileID: 2683769657914381755, guid: d9b205d03f618dd48b0c17873ab1fed0, type: 3}
   m_PrefabInstance: {fileID: 2683769657545339077}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &882019785 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5912733885819781227, guid: bfe1a2e852bb5f54cb7f9fd7123b3c3c, type: 3}
-  m_PrefabInstance: {fileID: 5912733885694861238}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &882019788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 882019785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84fecba46848e9b40b9e902ae2956773, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tileMaps:
-  - tilemap: {fileID: 2139660435}
-    type: 1
 --- !u!95 &965285857 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5110154857784678183, guid: 7108319037d013048acb130722723263, type: 3}
@@ -330,6 +310,10 @@ PrefabInstance:
       propertyPath: bubbleAnimator
       value: 
       objectReference: {fileID: 965285857}
+    - target: {fileID: -6437868355953878240, guid: 7108319037d013048acb130722723263, type: 3}
+      propertyPath: whatIsWater.m_Bits
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 10348963, guid: 7108319037d013048acb130722723263, type: 3}
       propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
       value: 5
@@ -511,16 +495,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
---- !u!1839735485 &2120222428 stripped
-Tilemap:
-  m_CorrespondingSourceObject: {fileID: 8604860786647898788, guid: 17ff2126589afc24a912dc468f020086, type: 3}
-  m_PrefabInstance: {fileID: 8579360556743332}
-  m_PrefabAsset: {fileID: 0}
---- !u!1839735485 &2139660435 stripped
-Tilemap:
-  m_CorrespondingSourceObject: {fileID: 561778894, guid: bfe1a2e852bb5f54cb7f9fd7123b3c3c, type: 3}
-  m_PrefabInstance: {fileID: 5912733885694861238}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2147104776 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2866837049075620558, guid: 7108319037d013048acb130722723263, type: 3}
@@ -533,18 +507,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1950750808, guid: 17ff2126589afc24a912dc468f020086, type: 3}
-      propertyPath: tileMaps.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1950750808, guid: 17ff2126589afc24a912dc468f020086, type: 3}
-      propertyPath: tileMaps.Array.data[1].type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1950750808, guid: 17ff2126589afc24a912dc468f020086, type: 3}
-      propertyPath: tileMaps.Array.data[1].tilemap
-      value: 
-      objectReference: {fileID: 2120222428}
     - target: {fileID: 689984081053045912, guid: 17ff2126589afc24a912dc468f020086, type: 3}
       propertyPath: roomBehind
       value: 
@@ -683,10 +645,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 561778891, guid: bfe1a2e852bb5f54cb7f9fd7123b3c3c, type: 3}
-      propertyPath: m_Name
-      value: Decoration
-      objectReference: {fileID: 0}
     - target: {fileID: 2485691247874741470, guid: bfe1a2e852bb5f54cb7f9fd7123b3c3c, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -821,14 +779,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114614159971222385, guid: 4a6af180be6835942ae73bf782c454ac, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 234
-      objectReference: {fileID: 0}
-    - target: {fileID: 114614159971222385, guid: 4a6af180be6835942ae73bf782c454ac, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 2782462263395057035, guid: 4a6af180be6835942ae73bf782c454ac, type: 3}
       propertyPath: myRoom
       value: 
@@ -883,25 +833,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a6af180be6835942ae73bf782c454ac, type: 3}
---- !u!1 &6525618657457029538 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 114614159971222381, guid: 4a6af180be6835942ae73bf782c454ac, type: 3}
-  m_PrefabInstance: {fileID: 6525618657457029537}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6525618657457029539
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6525618657457029538}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3a6f84e04e70d347b31af35680c0f1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  writeTimerMax: 1
-  text: Dungeon Cleared
 --- !u!114 &7273207313275243709 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7273847100099081753, guid: 17ff2126589afc24a912dc468f020086, type: 3}

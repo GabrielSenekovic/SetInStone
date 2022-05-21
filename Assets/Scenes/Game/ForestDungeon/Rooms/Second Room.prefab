@@ -2735,9 +2735,8 @@ GameObject:
   - component: {fileID: 4943069268378011416}
   - component: {fileID: 1207270202}
   - component: {fileID: 1207270201}
-  - component: {fileID: 1563033429783774795}
   - component: {fileID: 1207270200}
-  m_Layer: 12
+  m_Layer: 4
   m_Name: Water
   m_TagString: Water
   m_Icon: {fileID: 0}
@@ -3094,8 +3093,8 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 248161659
+  m_SortingLayer: 3
   m_SortingOrder: -1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -3105,19 +3104,6 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
---- !u!114 &1563033429783774795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1207270199}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShowMaskGraphic: 1
 --- !u!19719996 &1207270200
 TilemapCollider2D:
   m_ObjectHideFlags: 0
@@ -5543,13 +5529,13 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 1906187216197110649, guid: e937b574f8ed6d54ebab3b2b1297ed5d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e937b574f8ed6d54ebab3b2b1297ed5d, type: 3}
---- !u!4 &6216205931791917137 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 153492696530379513, guid: e937b574f8ed6d54ebab3b2b1297ed5d, type: 3}
-  m_PrefabInstance: {fileID: 6081326896072442536}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6216205931791917141 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 153492696530379517, guid: e937b574f8ed6d54ebab3b2b1297ed5d, type: 3}
+  m_PrefabInstance: {fileID: 6081326896072442536}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6216205931791917137 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 153492696530379513, guid: e937b574f8ed6d54ebab3b2b1297ed5d, type: 3}
   m_PrefabInstance: {fileID: 6081326896072442536}
   m_PrefabAsset: {fileID: 0}

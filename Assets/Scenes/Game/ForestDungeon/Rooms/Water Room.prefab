@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 70619540}
   - component: {fileID: 70619539}
   - component: {fileID: 70619538}
-  m_Layer: 12
+  m_Layer: 4
   m_Name: Water
   m_TagString: Water
   m_Icon: {fileID: 0}
@@ -6352,8 +6352,8 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 248161659
+  m_SortingLayer: 3
   m_SortingOrder: -1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -12454,7 +12454,7 @@ GameObject:
   - component: {fileID: 561778894}
   - component: {fileID: 561778893}
   m_Layer: 0
-  m_Name: Foreground
+  m_Name: Decoration
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25271,6 +25271,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5912733885819781220}
   - component: {fileID: 5912733885819781221}
+  - component: {fileID: 882019788}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -25309,6 +25310,21 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
+--- !u!114 &882019788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5912733885819781227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84fecba46848e9b40b9e902ae2956773, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileMaps:
+  - tilemap: {fileID: 561778894}
+    type: 1
 --- !u!1 &7499078063545278710
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 969035930}
   - component: {fileID: 969035929}
   - component: {fileID: 969035928}
-  m_Layer: 12
+  m_Layer: 4
   m_Name: Water
   m_TagString: Water
   m_Icon: {fileID: 0}
@@ -11737,6 +11737,8 @@ MonoBehaviour:
   tileMaps:
   - tilemap: {fileID: 8715707630525548992}
     type: 0
+  - tilemap: {fileID: 8604860786647898788}
+    type: 1
 --- !u!1 &5167446771571384119
 GameObject:
   m_ObjectHideFlags: 0

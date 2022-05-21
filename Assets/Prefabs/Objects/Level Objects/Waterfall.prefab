@@ -4980,5 +4980,5 @@ MonoBehaviour:
   coll: {fileID: 3387242506950950221}
   mask:
     serializedVersion: 2
-    m_Bits: 5376
+    m_Bits: 1296
   splashEffectObject: {fileID: 1317965191488544010}
