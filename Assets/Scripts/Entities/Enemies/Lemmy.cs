@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
+using System.Linq;
 
 public class Lemmy : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class Lemmy : MonoBehaviour
 
     float atkAngle;
 
-    public float armDistanceRad;
+    public float armDistanceRad; //The distance radius of the arm from the Lemmy main body
 
     Vector2 nextPosition;
     float currentAngle;
@@ -30,12 +31,17 @@ public class Lemmy : MonoBehaviour
 
     public float atkPush;
 
-    public float chargeDuration;
-
     public int damageDealt;
 
     public bool canHitDown;
     Animator anim;
+
+    public Transform side1;
+    public Transform side2;
+    public LayerMask whatIsGround;
+
+   // Vector3 pos1;
+    //Vector3 pos2;
 
     private void Start() 
     {
@@ -45,12 +51,6 @@ public class Lemmy : MonoBehaviour
         charging = false;
         currentRadius = 0;
         anim = GetComponent<Animator>();
-        if(chargeDuration == 0)
-        {
-            chargeDuration = 1; //otherwise it will divide by 0
-        }
-       // shieldHit.effect = Instantiate(VFX_prefab, transform.position, Quaternion.identity, transform);
-       // Game.Instance.visualEffects.Add(shieldHit, false);
     }
     private void Update() 
     {
@@ -152,32 +152,8 @@ public class Lemmy : MonoBehaviour
                 charging = true;
             }
         }
-
-       /* float speed = 10;
-        currentRadius = armDistanceRad + Mathf.Tan(atkTimer/speed) - Mathf.Sin(atkTimer/speed) * 1.5f;
-
-        arm.transform.localPosition = (new Vector2(Mathf.Cos(currentAngle), 
-                    Mathf.Sin(currentAngle)) * currentRadius);*/
     }
-   /* void Charge()
-    {
-        atkTimer++; //It's now being used as a chargeTimer
-        
-        float differenceToInterpolate = currentRadius - armDistanceRad;
-        float increment = differenceToInterpolate / chargeDuration;
-        float totalIncrement = increment * atkTimer;
-        float middleRadius = currentRadius - totalIncrement;
-
-        if(middleRadius <= armDistanceRad)
-        {
-            middleRadius = armDistanceRad;
-            atkTimer = 0;
-            charging = false;
-        }
-        arm.transform.localPosition = (new Vector2(Mathf.Cos(currentAngle), 
-                    Mathf.Sin(currentAngle)) * middleRadius);
-    }*/
-    public void FinishCharge()
+    public void FinishCharge() //Called from animation
     {
         attacking = false;
         charging = false; atkTimer = 0;
@@ -187,9 +163,22 @@ public class Lemmy : MonoBehaviour
         float angleBetween = Vector2.Angle(armPivot.transform.localPosition, nextPosition) / armMovementSpeed; //Only works from right to left, not left to right
 
         angleBetween = armPivot.transform.localPosition.x < nextPosition.x ? -angleBetween : angleBetween;
+        //If anglebetween is positive, it goes counterclockwise, which would be side1
+        Transform transformToUse = angleBetween > 0 ? side1:side2;
+
+        Vector3 previousPositionOfTransform = transformToUse.position;
+        Vector3 previousPositionOfPivot = armPivot.transform.position;
 
         armPivot.transform.localPosition = (new Vector2(Mathf.Cos(atkAngle* Mathf.Deg2Rad - angleBetween * Mathf.Deg2Rad), 
                     Mathf.Sin(atkAngle* Mathf.Deg2Rad - angleBetween * Mathf.Deg2Rad)) * armDistanceRad);
+
+        if(Physics2D.LinecastAll(transformToUse.position, previousPositionOfTransform).Any(e => e.collider.gameObject.layer == Mathf.Log(whatIsGround.value,2)) || //If there is ground between the two movement points
+            Physics2D.OverlapCircleAll(transformToUse.position, 1.0f/16.0f*2.0f).Any(e => e.gameObject.layer == Mathf.Log(whatIsGround.value,2))) //Or if the chosen point collides with ground
+        {
+            armPivot.transform.position = previousPositionOfPivot;
+        }
+
+        //armPivot.transform.localPosition = Vector2.zero;
 
         armPivot.transform.localRotation = Quaternion.Euler(0, 0, atkAngle - angleBetween);
        // shieldHit.effect.transform.localRotation = Quaternion.Euler(0, 0, atkAngle - angleBetween + 90);
@@ -204,5 +193,8 @@ public class Lemmy : MonoBehaviour
         Gizmos.DrawWireSphere(armPivot.transform.position, atkRadius);
         Gizmos.color = Color.magenta;
         Gizmos.DrawSphere(transform.position, 0.2f);
+        //Gizmos.color = Color.green;
+
+       // Gizmos.DrawLine(pos1, pos2);
     }
 }

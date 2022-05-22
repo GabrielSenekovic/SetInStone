@@ -5202,9 +5202,9 @@ MonoBehaviour:
   ledgePos1: {x: 0, y: 0}
   ledgePos2: {x: 0, y: 0}
   ledgeClimbXOffset1: 0.625
-  ledgeClimbYOffset1: -0.75
+  ledgeClimbYOffset1: 0.125
   ledgeClimbXOffset2: 0.5
-  ledgeClimbYOffset2: 1
+  ledgeClimbYOffset2: 2
   mainCollider: {fileID: 7255899783724612402}
   ledgeClimbTimer: 0
   forceLedgeClimb: 0
@@ -5516,7 +5516,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4447035480035119739}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.59, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2866837049075620558}
@@ -5535,8 +5535,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.13534546}
-  m_Size: {x: 0.74, y: 1.7293091}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.75, y: 2}
   m_Direction: 0
 --- !u!114 &689410654
 MonoBehaviour:
@@ -10498,7 +10498,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6151977624328815987}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.875, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 922298325204530038}

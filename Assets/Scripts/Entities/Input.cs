@@ -61,7 +61,7 @@ public class Input : MonoBehaviour
     private void OnMove(InputValue value) //! input stuff
     {
         if (!controllable || movement.actionBuffer) {return;}
-        if(!movement.touchingWater){playerAnimator.SetBool("walking", true);}
+        if(!movement.submerged){playerAnimator.SetBool("walking", true);}
         movement.movingDirection = value.Get<float>(); //! how we get stick direction
         //Quaternion.Euler(new Vector3(0, 90 - 90 * movement.movingDirection, 0));
         if(!movement.hangingFromLedge)
@@ -75,7 +75,7 @@ public class Input : MonoBehaviour
     {
         if(debug){Debug.Log("Stopping Movement");}
         movement.movingDirection = 0;
-        if(!movement.touchingWater){playerAnimator.SetBool("walking", false);}
+        if(!movement.submerged){playerAnimator.SetBool("walking", false);}
     }
     void OnMoveVertical(InputValue value)
     {
@@ -98,7 +98,7 @@ public class Input : MonoBehaviour
 
     void OnSpecial()
     {
-        if (!controllable || movement.actionBuffer || !inventory.HasHookshot() || movement.touchingWater) {return;}
+        if (!controllable || movement.actionBuffer || !inventory.HasHookshot() || movement.submerged) {return;}
         if(movement.hookShot.Shoot()) {movement.StopVelocity();}
     }
     void OnStopSpecial()

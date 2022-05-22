@@ -19,29 +19,22 @@ public class Ivy : MonoBehaviour
     private void Start() 
     {
         fireTimer_Max = Random.Range(30, 50);
-        Debug.Log("My fire time max is: " + fireTimer_Max);
         fire = GetComponentInChildren<ParticleSystem>();
-        if(transform.parent.transform.parent.GetComponent<TilemapManager>())
+        if(transform.parent.transform.parent.TryGetComponent<TilemapManager>(out TilemapManager manager))
         {
-            map = transform.parent.transform.parent.GetComponent<TilemapManager>().GetTilemap(TilemapManager.TilemapType.IVY);
-            Debug.Log("I could find the Ivy map");
-        }
-        else
-        {
-            Debug.Log("There was no Ivy map to be found!");
-        }
-        if(map != null)
-        {
-            Vector2Int[] directions = {new Vector2Int(1,0), new Vector2Int(1,1), new Vector2Int(0,1), new Vector2Int(-1,1), new Vector2Int(-1,0), new Vector2Int(-1,-1), new Vector2Int(0,-1), new Vector2Int(1,-1)};
-            for(int i = 0; i < 8; i++)
+            map = manager.GetTilemap(TilemapManager.TilemapType.IVY);
+            if(map != null)
             {
-                GameObject temp = map.GetInstantiatedObject(new Vector3Int((int)(transform.localPosition.x) + directions[i].x, (int)(transform.localPosition.y - 0.5f) + directions[i].y, 0));
-                if(temp)
+                Vector2Int[] directions = {new Vector2Int(1,0), new Vector2Int(1,1), new Vector2Int(0,1), new Vector2Int(-1,1), new Vector2Int(-1,0), new Vector2Int(-1,-1), new Vector2Int(0,-1), new Vector2Int(1,-1)};
+                for(int i = 0; i < 8; i++)
                 {
-                    adjacentIvy.Add(temp.GetComponent<Ivy>());
+                    GameObject temp = map.GetInstantiatedObject(new Vector3Int((int)(transform.localPosition.x) + directions[i].x, (int)(transform.localPosition.y - 0.5f) + directions[i].y, 0));
+                    if(temp)
+                    {
+                        adjacentIvy.Add(temp.GetComponent<Ivy>());
+                    }
                 }
             }
-            Debug.Log("I found " + adjacentIvy.Count + " amount of adjacent ivy");
         }
     }
     private void FixedUpdate() 
@@ -90,7 +83,6 @@ public class Ivy : MonoBehaviour
             {
                 if(fire.particleCount == 0)
                 {
-                    Debug.Log("Trying to remove myself");
                     Destroy(this);
                     //map.SetTile(new Vector3Int((int)(transform.localPosition.x), (int)(transform.localPosition.y - 0.5f), 0), null);
                 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
 using UnityEngine.VFX;
+using System.Linq;
 public class Movement : MonoBehaviour
 {
     Animator playerAnimator;
@@ -78,6 +79,7 @@ public class Movement : MonoBehaviour
 
     public bool forceLedgeClimb = false;
 
+    public bool submerged = false;
     public bool touchingWater = false;
     public bool touchingSurface = false;
 
@@ -138,17 +140,22 @@ public class Movement : MonoBehaviour
     {
         currentVelocity = body.velocity;
 
-        if(!touchingWater) //Underwater you cant walk on the ground nor ledgeclimb
+        if(!submerged) //Underwater you cant walk on the ground nor ledgeclimb
         {
             GroundCollisionCheck();
             CheckLedgeClimb();
             Fall();
+            if(touchingWater && Physics2D.OverlapCircleAll(surfaceCheck.transform.position, 0.5f).Any(e => e.gameObject.layer == LayerMask.NameToLayer("Water")))
+            {
+                submerged = true;
+                playerAnimator.SetBool("swimming", true);
+            }
         }
-        else if(touchingWater && !touchingSurface)
+        else if(submerged && !touchingSurface)
         {
             CheckSurfaceClose();
         }
-        else if(touchingWater && touchingSurface)
+        else if(submerged && touchingSurface)
         {
             CheckLedgeClimb();
             CheckSurfaceClose();
@@ -164,7 +171,7 @@ public class Movement : MonoBehaviour
     {
         movementDebug.Update(transform.position);
 
-        if(touchingWater)
+        if(submerged)
         {
             healthTimer++;
             if(healthTimer>=healthTimer_max)
@@ -220,7 +227,7 @@ public class Movement : MonoBehaviour
     }
     void Move(float speedMod)
     {
-        if(!touchingWater)
+        if(!submerged)
         {
             transform.position +=  new Vector3(movingDirection * speed * speedMod,0,0); //The normal movement
         }
@@ -275,7 +282,6 @@ public class Movement : MonoBehaviour
 
     public void FinishLedgeClimb()
     {
-        Debug.Log("Climb ledge");
         if(!hangingFromLedge){return;}
         hangingFromLedge = false;
         transform.position = ledgePos2;
@@ -290,6 +296,11 @@ public class Movement : MonoBehaviour
     {
         touchingSurface = !Physics2D.Raycast(surfaceCheck.position, new Vector2(0, 1), surfaceCheckDistance, whatIsGround) &&
         !Physics2D.Raycast(surfaceCheck.position, new Vector2(0, 1), surfaceCheckDistance, whatIsWater);
+        if(!touchingSurface)
+        { //This is a patch. Previously, when jumping out of water flush against a wall for a bit, swimming would be set to false and you wouldnt be far out of the water enough to exit it and reenter it
+        //So when you fell back into the water, you were in a constant state of falling animation
+            playerAnimator.SetBool("swimming", true);
+        }
     }
 
     void GroundCollisionCheck()
@@ -396,7 +407,7 @@ public class Movement : MonoBehaviour
     public void TryJump()
     {
         if(jumpBufferTimer <= 0) {return;} //! you can't jump unless you've pressed jump
-        if(touchingWater && !touchingSurface) {return;} //! cant jump if you're swimming, unless you're at the surface
+        if(submerged && !touchingSurface) {return;} //! cant jump if you're swimming, unless you're at the surface
         if(actionBuffer) {return;} //! if hookshotting, don't try to jump
         if(jumpTimer < jumpLimit) {return;} // ! you can't jump unless it's been a while since you last jumped
         if(pulka.state == Pulka.PulkaState.SITTING) { return; }
@@ -440,7 +451,7 @@ public class Movement : MonoBehaviour
 
     public void RequestJump()
     {
-        if(touchingWater && !touchingSurface){return;}
+        if(submerged && !touchingSurface){return;}
         //When you press the jump button, make a request for a jump
         if(movementDebug.debugMessages){Debug.Log("Jump pressed");}
         jumpBufferTimer = jumpBufferMax;
@@ -449,7 +460,7 @@ public class Movement : MonoBehaviour
     }
     public void StopJump()
     {
-        if((touchingWater && !touchingSurface) || hangingFromLedge){return;}
+        if((submerged && !touchingSurface) || hangingFromLedge){return;}
         if(movementDebug.debugMessages){Debug.Log("Cancel jump");}
 
         if(jumpBufferTimer == 0)
@@ -485,11 +496,11 @@ public class Movement : MonoBehaviour
 
     public void EnterWater()
     {
+        Debug.Log("Entered water");
         touchingWater = true;
         grounded = false;
         onFire = false;
         bubbleAnimator.SetBool("Fire", false);
-        playerAnimator.SetBool("swimming", true);
         if(body.velocity.y > -5)
         {
             body.velocity = new Vector2(body.velocity.x,-5);
@@ -497,6 +508,8 @@ public class Movement : MonoBehaviour
     }
     public void ExitWater()
     {
+        Debug.Log("Exited water");
+        submerged = false;
         touchingWater = false;
         touchingSurface = false;
         healthTimer = 0;
