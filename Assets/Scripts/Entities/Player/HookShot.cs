@@ -17,6 +17,7 @@ public class HookShot : MonoBehaviour
 
     public Movement movement;
     [SerializeField] Transform seaweed;
+    public Transform hookOrigin;
     public bool retract;
     public bool shooting;
     [System.NonSerialized] public bool hit;
@@ -139,7 +140,7 @@ public class HookShot : MonoBehaviour
         hook.gameObject.SetActive(true);
         hit = false;
         shooting = true;
-        hook.transform.position = hook.body.position;
+        hook.transform.position = (Vector3)hook.body.position + hookOrigin.position;
         hook.transform.rotation = Quaternion.Euler(0, 0, hookAngle); // * rotate the hook in the direction of the stick and...
         hook.body.velocity = hookDir.normalized * hookSpeed; //* give it velocity in that direction
         AdjustSeaweed();
