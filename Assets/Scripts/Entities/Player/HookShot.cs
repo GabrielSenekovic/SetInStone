@@ -111,7 +111,7 @@ public class HookShot : MonoBehaviour
     {
         //Debug.Log("0mousepos " + mousePosition.x + " " + mousePosition.y);
         //Debug.Log("0hookdir " + hookDir.x + " " + hookDir.y);
-
+        mousePosition -= (Vector2)hookOrigin.localPosition;
         hookDir = mousePosition.normalized;
 
         //Debug.Log("1mousepos " + mousePosition.x + " " + mousePosition.y);
@@ -140,7 +140,7 @@ public class HookShot : MonoBehaviour
         hook.gameObject.SetActive(true);
         hit = false;
         shooting = true;
-        hook.transform.position = (Vector3)hook.body.position + hookOrigin.position;
+        hook.transform.position = (Vector3)hook.body.position + hookOrigin.localPosition;
         hook.transform.rotation = Quaternion.Euler(0, 0, hookAngle); // * rotate the hook in the direction of the stick and...
         hook.body.velocity = hookDir.normalized * hookSpeed; //* give it velocity in that direction
         AdjustSeaweed();
@@ -178,10 +178,10 @@ public class HookShot : MonoBehaviour
 
     public void AdjustSeaweed()
     {
-        seaweed.transform.position = new Vector2((hook.transform.position.x + transform.position.x)/2, 
-            (hook.transform.position.y + transform.position.y)/2);
+        seaweed.transform.position = new Vector2((hook.transform.position.x + transform.position.x + hookOrigin.localPosition.x)/2, 
+            (hook.transform.position.y + transform.position.y + hookOrigin.localPosition.y)/2);
         
-        Vector2 vectorToTarget = seaweed.transform.position - gameObject.transform.position;
+        Vector2 vectorToTarget = seaweed.transform.position - transform.position - hookOrigin.localPosition;
         float seaweedAngle = 90 * Mathf.Deg2Rad;
         
         if(vectorToTarget.x != 0) 
