@@ -69,7 +69,7 @@ public class PlayerAttack : MonoBehaviour
 
         foreach (Collider2D obj in hitObjects)
         {
-            if (!obj.CompareTag("Player"))
+            if (!obj.CompareTag("Player") && !obj.CompareTag("PassThrough"))
             {
                 Debug.Log("Hit object " + obj.ToString());
                 AudioManager.PlaySFX("CaneHit");

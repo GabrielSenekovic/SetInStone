@@ -1,19 +1,25 @@
 fileFormatVersion: 2
-guid: 316f9a6eea5271c41ae76e9dc2562dd4
+guid: e84bcdf6c845bc94e836ebf02ebc015f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4023387663032400700
-    second: Butterfly_Green_0
+      213: -2435939547408138109
+    second: Niyo_IdleToWalk_0
   - first:
-      213: -7487911849497698034
-    second: Butterfly_Green_1
+      213: 819647536794043166
+    second: Niyo_IdleToWalk_1
   - first:
-      213: 7049462561971078635
-    second: Butterfly_Green_2
+      213: 663330165891881881
+    second: Niyo_IdleToWalk_2
   - first:
-      213: -3137739851986604551
-    second: Butterfly_Green_3
+      213: 2053136048721676423
+    second: Niyo_IdleToWalk_3
+  - first:
+      213: 1898500781430371957
+    second: Niyo_IdleToWalk_4
+  - first:
+      213: 8290872745103701334
+    second: Niyo_IdleToWalk_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -115,12 +121,75 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Butterfly_Green_0
+      name: Niyo_IdleToWalk_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 64
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 380896643edc13ed0800000000000000
+      internalID: -2435939547408138109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Niyo_IdleToWalk_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 64
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1302af8719ff5b00800000000000000
+      internalID: 819647536794043166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Niyo_IdleToWalk_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 48
+        width: 64
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99b59ca754f943900800000000000000
+      internalID: 663330165891881881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Niyo_IdleToWalk_3
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 48
+        width: 64
         height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -129,19 +198,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c3b3cb043c1f5d730800000000000000
-      internalID: 4023387663032400700
+      spriteID: 788ca9bbb543e7c10800000000000000
+      internalID: 2053136048721676423
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Butterfly_Green_1
+      name: Niyo_IdleToWalk_4
       rect:
         serializedVersion: 2
-        x: 48
+        x: 64
         y: 0
-        width: 48
+        width: 64
         height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -150,19 +219,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e01604578d7951890800000000000000
-      internalID: -7487911849497698034
+      spriteID: 57675fae664d85a10800000000000000
+      internalID: 1898500781430371957
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Butterfly_Green_2
+      name: Niyo_IdleToWalk_5
       rect:
         serializedVersion: 2
-        x: 96
+        x: 128
         y: 0
-        width: 48
+        width: 64
         height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -171,29 +240,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: be583b7b9d8b4d160800000000000000
-      internalID: 7049462561971078635
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Butterfly_Green_3
-      rect:
-        serializedVersion: 2
-        x: 144
-        y: 0
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9fd60c4aa328474d0800000000000000
-      internalID: -3137739851986604551
+      spriteID: 655bfd1b5d81f0370800000000000000
+      internalID: 8290872745103701334
       vertices: []
       indices: 
       edges: []
