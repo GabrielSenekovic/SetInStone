@@ -6,27 +6,37 @@ using System.Linq;
 [RequireComponent(typeof(Rigidbody2D))]
 public class ChasePlayer : MonoBehaviour
 {
-    public Transform target;
+    Transform target;
     Rigidbody2D body;
-    LayerMask whatIsWater;
+    public LayerMask whatIsWater;
 
     public float radius;
     public float followSpeed;
 
+    Vector2 startPosition;
+
     private void Start() {
         body = GetComponent<Rigidbody2D>();
+        startPosition = transform.position;
     }
 
     private void FixedUpdate() 
     {
+        Vector2 destination = Vector2.zero;
         if(GetTarget())
         {
-            if(IsTargetOutOfRange() && IsTargetAccessible())
+            if(IsTargetOutOfRange() || IsTargetInaccessible())
             {
                 target = null; return;
             }
-            body.MovePosition(transform.position + (target.position - transform.position).normalized * followSpeed);
+            destination = (target.position - transform.position).normalized;
         }
+        else
+        {
+            destination = (startPosition - (Vector2)transform.position).normalized;
+        }
+        transform.localScale = new Vector3(Mathf.Sign(destination.x), 1,1);
+        body.MovePosition((Vector2)transform.position + destination * followSpeed);
     }
     bool GetTarget()
     {
@@ -42,10 +52,10 @@ public class ChasePlayer : MonoBehaviour
     {
         return (target.position - transform.position).magnitude > radius;
     }
-    bool IsTargetAccessible()
+    bool IsTargetInaccessible()
     {
         //Check if water is in the way
-        return !Physics2D.LinecastAll(transform.position, target.position).Any(e => e.collider.gameObject.layer == Mathf.Log(whatIsWater.value,2));
+        return Physics2D.LinecastAll(transform.position, target.position).Any(e => e.collider.gameObject.layer == Mathf.Log(whatIsWater.value,2));
     }
     private void OnDrawGizmos() 
     {

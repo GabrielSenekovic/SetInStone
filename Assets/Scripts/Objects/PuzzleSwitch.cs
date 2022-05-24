@@ -25,7 +25,7 @@ public class PuzzleSwitch : MonoBehaviour, Attackable
         anim.SetTrigger("Activate");
     }
 
-    public void OnBeAttacked(int value)
+    public void OnBeAttacked(int value, Vector2 dir)
     {
         if(!isHit)
         {

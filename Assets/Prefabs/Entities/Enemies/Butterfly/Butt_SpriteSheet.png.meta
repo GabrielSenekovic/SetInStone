@@ -1,13 +1,19 @@
 fileFormatVersion: 2
-guid: 66f28e55b1e17654cbe10da26e3e15c5
+guid: 3c0d3f0b1e5ea8b449dd8fcea362acf8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4530433918361379743
-    second: Butterfly_0
+      213: -1007417016355024791
+    second: Butt_SpriteSheet_0
   - first:
-      213: 4699623745766655208
-    second: Butterfly_1
+      213: -929808521969206584
+    second: Butt_SpriteSheet_1
+  - first:
+      213: 6078291610761802047
+    second: Butt_SpriteSheet_2
+  - first:
+      213: 4797903071893422220
+    second: Butt_SpriteSheet_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -43,7 +49,7 @@ TextureImporter:
     mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: 0
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -109,7 +115,49 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Butterfly_0
+      name: Butt_SpriteSheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9609977af8fe402f0800000000000000
+      internalID: -1007417016355024791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Butt_SpriteSheet_1
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8caf4ea5318a813f0800000000000000
+      internalID: -929808521969206584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Butt_SpriteSheet_2
       rect:
         serializedVersion: 2
         x: 0
@@ -123,14 +171,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f93af4e35a55fde30800000000000000
-      internalID: 4530433918361379743
+      spriteID: f31b1bc040e6a5450800000000000000
+      internalID: 6078291610761802047
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Butterfly_1
+      name: Butt_SpriteSheet_3
       rect:
         serializedVersion: 2
         x: 48
@@ -144,8 +192,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e48968a5ea683140800000000000000
-      internalID: 4699623745766655208
+      spriteID: c8086fa6c63959240800000000000000
+      internalID: 4797903071893422220
       vertices: []
       indices: 
       edges: []

@@ -1,29 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Pickupable : MonoBehaviour
 {
     HealthModel healthModel;
     [SerializeField] int value;
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    private void FixedUpdate() 
     {
-        if(collision.gameObject.CompareTag("Player"))
+        Collider2D hit = Physics2D.OverlapCircleAll(transform.position, 0.5f).FirstOrDefault(c => c.CompareTag("Player"));
+        if(hit != null)
         {
-            if(collision.GetComponent<HealthModel>())
-            {
-                pickUP(collision, false);
-            }
-            else if (collision.GetComponentInParent<HealthModel>())
-            {
-                pickUP(collision, true);
-            }
+            pickUP(hit);
         }
     }
 
-    void pickUP(Collider2D collision, bool parent)
+    void pickUP(Collider2D collision)
     {
-        healthModel = parent ? collision.GetComponentInParent<HealthModel>() : collision.GetComponent<HealthModel>();
+        healthModel = collision.GetComponentInParent<HealthModel>();
         if(healthModel.currentHealth == healthModel.maxHealth)
         {
             return;
@@ -31,11 +27,16 @@ public class Pickupable : MonoBehaviour
         if(healthModel.Damaged())
         {
             healthModel.Heal(value);
-            Destroy(transform.parent.gameObject);
+            Destroy(gameObject);
         }
         else if(healthModel.currentHealth == healthModel.maxHealth)
         {
-            Destroy(transform.parent.gameObject);
+            Destroy(gameObject);
         }
+    }
+    private void OnDrawGizmos() 
+    {
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position, 0.5f);
     }
 }

@@ -51,7 +51,7 @@ public class EnemyProjectile : MonoBehaviour
         {
             hit = true;
             Debug.Log("Shot player!");
-            other.gameObject.GetComponent<Attackable>().OnBeAttacked(damageDealt);
+            other.gameObject.GetComponent<Attackable>().OnBeAttacked(damageDealt, transform.position - other.transform.position);
         }
         //AudioManager.PlaySFX("SnailShotHit");
         Debug.Log("Snail projectile hit: " + other.gameObject.name);

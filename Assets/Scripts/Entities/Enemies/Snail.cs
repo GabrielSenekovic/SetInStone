@@ -79,7 +79,7 @@ public class Snail : MonoBehaviour, Attackable
         }
     }
 
-    public void OnBeAttacked(int value)
+    public void OnBeAttacked(int value, Vector2 dir)
     {
         currentHealth -= value;
         if(currentHealth == 0)

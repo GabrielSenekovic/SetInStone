@@ -44,9 +44,13 @@ public class HealthModel : MonoBehaviour, Attackable
         AudioManager.PlaySFX("VoiceHeal");
     }
 
-    public void OnBeAttacked(int value)
+    public void OnBeAttacked(int value, Vector2 dir)
     {
         TakeDamage(value);
+        if(GetComponent<Rigidbody2D>())
+        {
+            GetComponent<Rigidbody2D>().AddForce(dir, ForceMode2D.Impulse);
+        }
     }
 
     public bool Damaged()

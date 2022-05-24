@@ -151,9 +151,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.43, y: 0.66}
+  m_Offset: {x: -0.5, y: -0.125}
   serializedVersion: 2
-  m_Radius: 0.36
+  m_Radius: 0.5
 --- !u!95 &6952438863254278621
 Animator:
   serializedVersion: 3
@@ -164,7 +164,7 @@ Animator:
   m_GameObject: {fileID: 5238763340529372882}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f847341ed11274c4db2bf38d793080b5, type: 2}
+  m_Controller: {fileID: 22100000, guid: 375d131eb38fe2046837935ccb6c6eac, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -193,7 +193,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 7
+  m_Constraints: 4
 --- !u!114 &2709003143280168381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,5 +206,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70393280865ad7d4db0176a2fad81440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  radius: 0
+  whatIsWater:
+    serializedVersion: 2
+    m_Bits: 16
+  radius: 5
+  followSpeed: 0.08

@@ -77,7 +77,7 @@ public class PlayerAttack : MonoBehaviour
                 {
                     obj.gameObject.GetComponent<PuzzleSwitch>().SwitchHit();
                 }
-                obj.gameObject.GetComponent<Attackable>().OnBeAttacked(baseAtkDamage);
+                obj.gameObject.GetComponent<Attackable>().OnBeAttacked(baseAtkDamage, Vector2.zero);
             }
         }
 

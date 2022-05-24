@@ -25,15 +25,14 @@ public class Bloodfly : MonoBehaviour, Attackable
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Butterfly collided with: " + collision.gameObject.name);
         if(collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Attackable>().OnBeAttacked(contactDamage);
+            collision.gameObject.GetComponent<Attackable>().OnBeAttacked(contactDamage, (collision.transform.position-transform.position ).normalized * 4);
             AudioManager.PlaySFX("ButterflyTouch");
         }
     }
 
-    public void OnBeAttacked(int value)
+    public void OnBeAttacked(int value, Vector2 dir)
     {
         currentHealth -= value;
         if(currentHealth == 0)
