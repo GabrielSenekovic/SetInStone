@@ -83,7 +83,8 @@ public class Ivy : MonoBehaviour
             {
                 if(fire.particleCount == 0)
                 {
-                    Destroy(this);
+                    Debug.Log("Destroying");
+                    Destroy(gameObject);
                     //map.SetTile(new Vector3Int((int)(transform.localPosition.x), (int)(transform.localPosition.y - 0.5f), 0), null);
                 }
             }

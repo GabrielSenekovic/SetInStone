@@ -58,11 +58,6 @@ public sealed class AudioManager : MonoBehaviour
         music_source.volume = music_volume * global_volume;
     }
 
-    private void Start()
-    {
-        StartCoroutine(PlayMusic(music[0], true));
-    }
-
 
     public static void PlaySFX(string name)
     {

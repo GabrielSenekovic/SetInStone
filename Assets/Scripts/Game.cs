@@ -205,6 +205,7 @@ public class Game : MonoBehaviour
         SceneManager.LoadScene(1, LoadSceneMode.Single);
         Instance.startMenuOn = false;
         SetHUDVisibility(1);
+        AudioManager.PlayMusic("ForestDungeonTheme", true);
     }
 
     public static Volume GetVolume()

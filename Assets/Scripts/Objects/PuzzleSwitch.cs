@@ -29,7 +29,7 @@ public class PuzzleSwitch : MonoBehaviour, Attackable
     {
         if(!isHit)
         {
-            SwitchHit();
+            SwitchHit(); //This dowes noting atm the switch is activated in playerattack
         }
     }
     public IEnumerator ActivationCutscene()

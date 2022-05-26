@@ -8,15 +8,17 @@ public class ParticleLight : MonoBehaviour
     ParticleSystem particleSystem;
 
     public Light2D lightPrefab;
-    Light2D[] lights = new Light2D[50];
+
+    public int amountOfLights;
+    List<Light2D> lights = new List<Light2D>();
 
     
     private void Start() 
     {
         particleSystem = GetComponent<ParticleSystem>();
-        for(int i = 0; i < lights.Length; i++)
+        for(int i = 0; i < amountOfLights; i++)
         {
-            lights[i] = Instantiate(lightPrefab, Vector2.zero, Quaternion.identity, transform);
+            lights.Add(Instantiate(lightPrefab, transform.position, Quaternion.identity, transform));
             lights[i].intensity = 0;
         }
     }
@@ -24,7 +26,7 @@ public class ParticleLight : MonoBehaviour
     {
         ParticleSystem.Particle[] particles = new ParticleSystem.Particle[particleSystem.particleCount];
         particleSystem.GetParticles(particles);
-        for(int i = 0; i < lights.Length; i++)
+        for(int i = 0; i < lights.Count; i++)
         {
             if(i >= particles.Length)
             {

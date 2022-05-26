@@ -212,9 +212,44 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 380258644, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
+      propertyPath: m_Text
+      value: "Sound Effects\r\nThe original recordings for all sound effects\n that
+        are not voiced by Turnip\n or composed by Gabriel Senekovic are public domain
+        \nand was obtained from Freesound - Freesound \r\n\r\nFreesound users:\r\ncaiogracco\r\nlighteningjimmy88\r\nalegemaate\r\nGameAudio\r\ntommy_mooney\r\ndeleted-user2104797\r\nWavjunction.com\r\ndiakunik\r\n14GPanskaMuzatko_Matej\r\ncalebrankin\r\nmrickey13\r\njjxmf\r\nkyles\r\nbrittmosel\r\nagaxly\r\njergonda\r\nvic5555\r\nsheyvan\r\nanuj
+        shrestha\r\nGenerallydrawing\r\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 380258646, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 808633912, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 450
+      objectReference: {fileID: 0}
+    - target: {fileID: 808633913, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
+      propertyPath: m_Text
+      value: "Set in Stone\r\n-Amalgamates-\r\nAlex Andersson - Level Design / QA\r\nTurnip
+        - Programmer / Code reviewer / voice actor\r\nGabriel Senekovic - Product
+        Owner / Programmer / Composer / 2D Artist\nJohannes Larsson - 3D Graphics
+        / QA  / Level Design\r\nMattis Lindqvist - 3D Graphics / Animation\r\nNicolas
+        Hammar - Scrum Master / Sound Designer / Level Design / QA\r\nSophia Al-Nawasreh
+        - Programmer\r / Web Designer\nTom Idril - 3D Graphics / 2D Graphics / Animation\r
+        / Market Asset Producer\nJasper D'aniello - 2D Artist / Project Manager\nTheo
+        Flejmer - Level Designer\n\r\nUnity Assets\r\nB\xE9zier Path Creator - Sebastian
+        Lague\r\n\r"
+      objectReference: {fileID: 0}
+    - target: {fileID: 808633915, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1069954869, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069954870, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1603739927, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
       propertyPath: m_AnchorMax.y
@@ -238,6 +273,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1603739927, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630911051, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 188234763291894575, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
@@ -303,6 +342,18 @@ PrefabInstance:
     - target: {fileID: 2746695563079856854, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
       propertyPath: m_Name
       value: Game
+      objectReference: {fileID: 0}
+    - target: {fileID: 5475919697387334953, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -545
+      objectReference: {fileID: 0}
+    - target: {fileID: 5475919697387334954, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5475919697387334954, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
+      propertyPath: m_FontData.m_Alignment
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6351063396627422635, guid: 3f18e9a10666cf947b5823250ac848b4, type: 3}
       propertyPath: m_Enabled

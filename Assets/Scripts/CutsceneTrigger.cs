@@ -67,7 +67,7 @@ public class CutsceneTrigger : MonoBehaviour
             }
             input.SetControllable(false);
             AudioManager.PlayMusic("Dungeon Clear Last", false);
-            //StartCoroutine(Game.WaitForLoad(AudioManager.GetMusic("Dungeon Clear Last").theme.length));
+            StartCoroutine(Game.WaitForLoad(AudioManager.GetMusic("Dungeon Clear Last").theme.length));
             Game.SetHUDVisibility(0);
         }
     }

@@ -12,6 +12,8 @@ public class HealthModel : MonoBehaviour, Attackable
 
     int reviveAmount = 0;
 
+    Animator anim;
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -19,6 +21,7 @@ public class HealthModel : MonoBehaviour, Attackable
         healthBar.Initialize(maxHealth, currentHealth);
         Game.AttachPlayer(gameObject);
         safePos = transform.position;
+        anim = GetComponent<Animator>();
     }
 
     public void TakeDamage(int damage)
@@ -30,14 +33,15 @@ public class HealthModel : MonoBehaviour, Attackable
         AudioManager.PlaySFX("VoiceHurt");
         if (currentHealth <= 0 && reviveAmount <= 0)
         {
-            //GetComponent<Input>().SetControllable(false);
-            Heal(12);
-            ReturnToSafe();
+            GetComponent<Input>().SetControllable(false);
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            anim.SetTrigger("death");
             Game.GameOver();
         }
     }
     public void Heal(int heal)
     {
+        if(currentHealth == maxHealth){return;}
         currentHealth = currentHealth + heal > maxHealth ? maxHealth : currentHealth + heal;
         healthBar.UpdateHealthBar(currentHealth);
         AudioManager.PlaySFX("PickUpHeart");
@@ -60,9 +64,10 @@ public class HealthModel : MonoBehaviour, Attackable
 
     public void ReturnToSafe()
     {
+        Heal(12);
         transform.position = safePos;
-        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         AudioManager.PlaySFX("VoiceDeath");
+        GetComponent<Input>().SetControllable(true);
         // fade in and out black thingy
     }
 }
