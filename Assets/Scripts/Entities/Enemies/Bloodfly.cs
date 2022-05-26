@@ -15,6 +15,7 @@ public class Bloodfly : MonoBehaviour, Attackable
     [SerializeField]VisualEffectEntry deathCloud;
 
     public VisualEffect VFX_prefab;
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -29,6 +30,11 @@ public class Bloodfly : MonoBehaviour, Attackable
         {
             collision.gameObject.GetComponent<Attackable>().OnBeAttacked(contactDamage, (collision.transform.position-transform.position ).normalized * 4);
             AudioManager.PlaySFX("ButterflyTouch");
+            if(TryGetComponent<ChasePlayer>(out ChasePlayer chase))
+            {
+                chase.leave = true;
+                GetComponent<Collider2D>().enabled = false;
+            }
         }
     }
 

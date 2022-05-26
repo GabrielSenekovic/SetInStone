@@ -124,7 +124,6 @@ public class Lemmy : MonoBehaviour
                 atkTimer = 0;
                 obj.transform.parent.transform.parent.gameObject.GetComponent<Rigidbody2D>().AddForce
                 (armPivot.transform.localPosition.normalized * atkPush, ForceMode2D.Impulse);
-                Debug.Log("Lemmy added force");
                 AudioManager.PlaySFX("LemmyBounce");
 
                // Game.Instance.visualEffects.ChangePosition(shieldHit, arm.transform.position);

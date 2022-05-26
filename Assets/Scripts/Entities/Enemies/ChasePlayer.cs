@@ -15,6 +15,11 @@ public class ChasePlayer : MonoBehaviour
 
     Vector2 startPosition;
 
+    public bool leave = false;
+
+    int returnTimer = 0;
+    int returnTimer_max = 40;
+
     private void Start() {
         body = GetComponent<Rigidbody2D>();
         startPosition = transform.position;
@@ -35,8 +40,19 @@ public class ChasePlayer : MonoBehaviour
         {
             destination = (startPosition - (Vector2)transform.position).normalized;
         }
+        destination *= leave ? -1:1;
         transform.localScale = new Vector3(Mathf.Sign(destination.x), 1,1);
         body.MovePosition((Vector2)transform.position + destination * followSpeed);
+        if(leave)
+        {
+            returnTimer++;
+            if(returnTimer >= returnTimer_max)
+            {
+                returnTimer = 0;
+                leave = false;
+                GetComponent<Collider2D>().enabled = true;
+            }
+        }
     }
     bool GetTarget()
     {

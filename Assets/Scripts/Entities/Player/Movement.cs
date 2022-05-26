@@ -271,7 +271,6 @@ public class Movement : MonoBehaviour
                 ledgePos2 = new Vector2(Mathf.Ceil(ledgePosBot.x - wallCheckDistance) - ledgeClimbXOffset2, Mathf.Floor(ledgePosBot.y) + ledgeClimbYOffset2);
             }
             body.gravityScale = 0; body.velocity = Vector2.zero;
-            Debug.Log("Gravity turned off by check ledge climb");
             mainCollider.gameObject.SetActive(false);
             playerAnimator.SetTrigger("ledgeHang");
             transform.position = ledgePos1;
@@ -288,7 +287,6 @@ public class Movement : MonoBehaviour
         mainCollider.gameObject.SetActive(true);
         ledgeDetected = false;
         body.gravityScale = normGrav;
-        Debug.Log("Gravity set normal by ledge climb");
         ledgeClimbTimer = 0;
         playerAnimator.ResetTrigger("ledgeClimb");
     }
@@ -348,7 +346,6 @@ public class Movement : MonoBehaviour
             if(movementDebug.debugMessages){Debug.Log("Sliding");}
 
             body.AddForce( new Vector2(movingDirection * speed * 20, 0), ForceMode2D.Impulse);
-           // Debug.Log("Force from slide: " + movingDirection * speed * 20);
             slideRequest = false;
         
         }
@@ -360,7 +357,6 @@ public class Movement : MonoBehaviour
         if(dismountRequest && grounded) //* triggers when on the pulka on ground, so that you get pushed up
         {
             body.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-            //Debug.Log("Force from discmount");
             grounded = false;
             dismountRequest = false;
             pulka.state = Pulka.PulkaState.NONE;
@@ -375,7 +371,6 @@ public class Movement : MonoBehaviour
         if(movementDebug.debugMessages){Debug.Log("Ground");}
 
         grounded = true; //! ...
-       // Debug.Log(grounded);
         playerAnimator.SetTrigger("land");
         playerAnimator.SetBool("falling", false);
         amntOfJumps = 0; //? reset jumps when you hit the floor
@@ -386,7 +381,6 @@ public class Movement : MonoBehaviour
         if (!ducking) {body.velocity = Vector2.zero;}
         else {body.AddForce( new Vector2(movingDirection * speed * 20, 0), ForceMode2D.Impulse);}
         body.gravityScale = normGrav;
-        Debug.Log("Gravity set normal by grounding");
         isFlung = false;
     }
 
@@ -441,11 +435,9 @@ public class Movement : MonoBehaviour
             StopVelocity();
             body.velocity = new Vector2(body.velocity.x, 0);
             body.AddForce( new Vector2(0, (amntOfJumps == 0 ? jumpForce : airJumpForce)), ForceMode2D.Impulse);
-           // Debug.Log("Jump added force");
             amntOfJumps++; // * you jumped one more time :-o
             jumpTimer = 0; // ? reset timer!
             body.gravityScale = normGrav; // ? Otherwise gravity is still big when trying to double jump
-            Debug.Log("Gravity set normal by try jump");
         }
     }
 
@@ -474,7 +466,6 @@ public class Movement : MonoBehaviour
         }
         body.AddForce(new Vector2(0, -cancelJumpSpeed));
         body.gravityScale = normGrav * gravityModifier;
-        Debug.Log("Gravity set normal by stop jump");
         playerAnimator.SetBool("falling", true);
         jumpTimer = jumpLimit; // TODO: should only happen if you have a jump left ( if jumps == maxjumps )
         jumpBufferTimer = 0;
@@ -496,7 +487,6 @@ public class Movement : MonoBehaviour
 
     public void EnterWater()
     {
-        Debug.Log("Entered water");
         touchingWater = true;
         grounded = false;
         onFire = false;
@@ -508,13 +498,12 @@ public class Movement : MonoBehaviour
     }
     public void ExitWater()
     {
-        Debug.Log("Exited water");
         submerged = false;
         touchingWater = false;
         touchingSurface = false;
         healthTimer = 0;
         playerAnimator.SetBool("swimming", false);
-        if(!hangingFromLedge){body.gravityScale = normGrav; Debug.Log("Gravity set normal by exit water");}
+        if(!hangingFromLedge){body.gravityScale = normGrav;}
     }
 
     private void OnDrawGizmos()

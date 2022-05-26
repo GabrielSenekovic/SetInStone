@@ -93,7 +93,6 @@ public class Map : MonoBehaviour
         // set the pixel values
         for(int i = 0; i < rooms.Count; i++)
         {
-            Debug.Log("Room number: " + i + " Room name: " + rooms[i].name);
             if(!rooms[i].discovered){continue;}
             for(int j = 0; j < rooms[i].tiles.Count; j++)
             {

@@ -54,7 +54,6 @@ public class Game : MonoBehaviour
     {
         if(instance == null)
         {
-            Debug.Log("Awake called on Game script");
             instance = this;
         }
         else
@@ -64,13 +63,9 @@ public class Game : MonoBehaviour
 
         if(!gameStarted)
         {
-            Debug.Log("loaded game scene");
             gameStarted = true;
             audioManager = Instantiate(audioManagerPrefab, transform.position, Quaternion.identity);
 
-            Debug.Log("Initialized Game Script");
-
-            Debug.Log("Getting Volume");
             instance.volume = instance.GetComponentInChildren<Volume>();
 
             mapCanvas = mapScript.GetComponent<CanvasGroup>();
@@ -80,6 +75,8 @@ public class Game : MonoBehaviour
             instance.options.VolumeSlider.value = AudioManager.global_volume;
         }
         
+    }
+    private void FixedUpdate() {
     }
 
     public static void AttachPlayer(GameObject playerIn)
@@ -94,7 +91,6 @@ public class Game : MonoBehaviour
     }
     public static void GameOver()
     {
-        Debug.Log("Game Over");
         //Trigger game over screen
     }
 
@@ -187,11 +183,19 @@ public class Game : MonoBehaviour
         DontDestroyOnLoad(audioManager);
         DontDestroyOnLoad(this);
         Instance.startMenuOn = true;
+        Instance.cinemachineVirtualCamera.m_Follow = null;
+        Instance.cinemachineVirtualCamera.gameObject.SetActive(false);
         hUD.TurnOff();
         titleText.text = "";
+        Time.timeScale = 1;
         SceneManager.LoadScene("Start Menu", LoadSceneMode.Single);
         SetHUDVisibility(0);
         startMenu.SetActive(true);
+        transform.position = Vector2.zero;
+        cameraFollowsMainCamera.transform.position = new Vector3(-11.58f, -6.46f, -10);
+        ColorAdjustments color;
+        volume.sharedProfile.TryGet<ColorAdjustments>(out color);
+        color.colorFilter.value = Color.white;
     }
 
     public void LoadLevel()

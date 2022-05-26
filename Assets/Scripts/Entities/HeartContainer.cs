@@ -51,7 +51,6 @@ public class HeartContainer : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && swaySpeed > 0)
         {
-            Debug.Log("Collided");
             healthModel = collision.GetComponent<HealthModel>();
             if(healthModel == null)
             {

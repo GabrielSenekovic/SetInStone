@@ -35,7 +35,12 @@ public class HealthModel : MonoBehaviour, Attackable
         {
             GetComponent<Input>().SetControllable(false);
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            anim.SetTrigger("death");
+            if(GetComponent<Movement>().submerged)
+            {
+                anim.SetBool("swimming", false);
+            }
+            anim.SetBool("death", true);
+            AudioManager.PlaySFX("VoiceDeath");
             Game.GameOver();
         }
     }
@@ -66,8 +71,8 @@ public class HealthModel : MonoBehaviour, Attackable
     {
         Heal(12);
         transform.position = safePos;
-        AudioManager.PlaySFX("VoiceDeath");
         GetComponent<Input>().SetControllable(true);
+        anim.SetBool("death", false);
         // fade in and out black thingy
     }
 }

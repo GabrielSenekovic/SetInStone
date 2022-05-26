@@ -37,11 +37,9 @@ public class EnemyProjectile : MonoBehaviour
             hit = true;
             other.transform.parent.transform.parent.gameObject.GetComponent<Rigidbody2D>().AddForce
                 (GetComponent<Rigidbody2D>().velocity, ForceMode2D.Impulse);
-                Debug.Log("Projectile added force");
             AudioManager.PlaySFX("Block");
         }
         //AudioManager.PlaySFX("SnailShotHit");
-        Debug.Log("Snail projectile hit: " + other.gameObject.name);
         gameObject.SetActive(false);
     }
 
@@ -50,11 +48,9 @@ public class EnemyProjectile : MonoBehaviour
         if(!hit && other.gameObject.CompareTag("Player"))
         {
             hit = true;
-            Debug.Log("Shot player!");
             other.gameObject.GetComponent<Attackable>().OnBeAttacked(damageDealt, transform.position - other.transform.position);
         }
         //AudioManager.PlaySFX("SnailShotHit");
-        Debug.Log("Snail projectile hit: " + other.gameObject.name);
         AudioManager.PlaySFX("SnailShotHit");
         gameObject.SetActive(false);
     }

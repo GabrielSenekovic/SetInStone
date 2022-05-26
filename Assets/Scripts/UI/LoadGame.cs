@@ -15,6 +15,7 @@ public class LoadGame : MonoBehaviour
     IEnumerator LoadLevelAsync()
     {
         AsyncOperation load = SceneManager.LoadSceneAsync(2);
+        Game.Instance.cinemachineVirtualCamera.gameObject.SetActive(true);
 
         while(!load.isDone)
         {

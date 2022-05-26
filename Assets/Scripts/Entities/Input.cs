@@ -93,7 +93,7 @@ public class Input : MonoBehaviour
     private void OnAttack()
     {
         if (!controllable || movement.actionBuffer || movement.hangingFromLedge) {return;}
-        if(attack.Attack()) {playerAnimator.SetTrigger("attack"); movement.StopVelocity();}
+        if(!movement.grounded && attack.Attack()) {playerAnimator.SetTrigger("attack"); movement.StopVelocity();}
     }
 
     void OnSpecial()

@@ -58,7 +58,6 @@ public class Pulka : MonoBehaviour
 
     public void Dismount()
     {
-        Debug.Log("Dismounting");
         //*If you stop holding the shield, it goes away. Dont set it riding pulka, because it should dismount only when you hit the ground
         state = PulkaState.NONE;
         pulka.SetActive(false);

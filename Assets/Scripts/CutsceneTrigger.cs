@@ -28,7 +28,6 @@ public class CutsceneTrigger : MonoBehaviour
     {
         VolumeProfile profile = Game.GetVolume().sharedProfile;
         profile.TryGet<ColorAdjustments>(out color);
-        color.colorFilter.value = Color.white;
     }
 
     private void FixedUpdate() 
@@ -59,7 +58,6 @@ public class CutsceneTrigger : MonoBehaviour
         if (other.gameObject.CompareTag("Player") && cutsceneState == 0)
         {
             cutsceneState = 1;
-            Debug.Log("Collided");
             Input input = other.GetComponent<Input>();
             if(input == null)
             {

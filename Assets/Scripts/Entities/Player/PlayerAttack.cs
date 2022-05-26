@@ -71,7 +71,6 @@ public class PlayerAttack : MonoBehaviour
         {
             if (!obj.CompareTag("Player") && !obj.CompareTag("PassThrough"))
             {
-                Debug.Log("Hit object " + obj.ToString());
                 AudioManager.PlaySFX("CaneHit");
                 if (obj.gameObject.GetComponent<PuzzleSwitch>() && !obj.gameObject.GetComponent<PuzzleSwitch>().isHit)
                 {
@@ -86,7 +85,6 @@ public class PlayerAttack : MonoBehaviour
     public bool Attack()
     {
         if(atkCooldown < atkCooldownMax) {return false;}
-        Debug.Log("Attacking");
         AudioManager.PlaySFX("Attack");
 
         Vector2 clickPos = mousePositionSaved + (Vector2)transform.position;

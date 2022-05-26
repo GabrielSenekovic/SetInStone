@@ -29,10 +29,10 @@ public class InputChange : MonoBehaviour
         currentScheme = currentScheme_in;
         for (int i = 0; i < buttons.Count; i++)
         {
+            Debug.Log(buttons[i].action);
             switch (buttons[i].action)
             {
                 case "Jump":
-                    Debug.Log(map.actions[4].name);
                     buttons[i].SetButtonText(map.actions[4].bindings[map.actions[4].GetBindingIndex(currentScheme)].path);
                     break;
                 case "Hookshot":
@@ -51,7 +51,11 @@ public class InputChange : MonoBehaviour
                     buttons[i].SetButtonText(map.actions[0].bindings[map.actions[0].GetBindingIndex(currentScheme) + 1].path);
                     break;
                 case "Down":
-                    buttons[i].SetButtonText(map.actions[13].bindings[map.actions[13].GetBindingIndex(currentScheme)].path);
+                    buttons[i].SetButtonText(map.actions[2].bindings[map.actions[2].GetBindingIndex(currentScheme)].path);
+                    Debug.Log("Binding down");
+                    break;
+                case "Up":
+                    buttons[i].SetButtonText(map.actions[2].bindings[map.actions[2].GetBindingIndex(currentScheme) + 2].path);
                     break;
                 case "Map":
                     buttons[i].SetButtonText(map.actions[16].bindings[map.actions[16].GetBindingIndex(currentScheme)].path);
@@ -71,7 +75,7 @@ public class InputChange : MonoBehaviour
         {
             case "Jump": OnRebind(new List<InputAction>() { map.actions[4], map.actions[5] }, function);
                 break;
-            case "Hookshot":OnRebind(new List<InputAction>() { map.actions[6]}, function);
+            case "Hookshot":OnRebind(new List<InputAction>() { map.actions[6], map.actions[7]}, function);
                 break;
             case "Attack": OnRebind(new List<InputAction>() { map.actions[12] }, function); 
                 break;
@@ -81,7 +85,10 @@ public class InputChange : MonoBehaviour
                 break;
             case "Right": OnRebind(new List<InputAction>() { map.actions[0], map.actions[1] }, function, "positive");
                 break;
-            case "Down": OnRebind(new List<InputAction>() { map.actions[8], map.actions[9] }, function);
+            case "Down": OnRebind(new List<InputAction>() { map.actions[8], map.actions[9], map.actions[13]}, function);
+            OnRebind(new List<InputAction>() { map.actions[2], map.actions[3] }, function, "negative");
+                break;
+            case "Up": OnRebind(new List<InputAction>() { map.actions[2], map.actions[3] }, function, "positive");
                 break;
             case "Map": OnRebind(new List<InputAction>() { map.actions[16]}, function);
                 break;
@@ -96,21 +103,19 @@ public class InputChange : MonoBehaviour
         rebindingOperation = actions[0].PerformInteractiveRebinding()
                 .WithBindingGroup(currentScheme) //Only bind if has this scheme
                 .OnMatchWaitForAnother(0.2f)
-                .OnCancel(operation => { Debug.Log("Cancel"); })
+                .OnCancel(operation => { })
                 .OnComplete(operation => RebindComplete(actions, name))
                 .Start();
     }
     public void OnRebind(List<InputAction> actions, string name, string compositeName)
     {
-        Debug.Log("Called");
         actions[0].Disable();
         var bindingIndex = actions[0].bindings.IndexOf(x => x.isPartOfComposite && x.groups.Contains(currentScheme) && x.name == compositeName);
-        Debug.Log(bindingIndex);
 
         rebindingOperation = actions[0].PerformInteractiveRebinding(bindingIndex)
             .WithBindingGroup(currentScheme) //Only bind if has this scheme
             .OnMatchWaitForAnother(0.2f)
-            .OnCancel(operation => { Debug.Log("Cancel"); })
+            .OnCancel(operation => { })
             .OnComplete(operation => RebindComplete(actions, name, bindingIndex))
             .Start();
     }
@@ -130,7 +135,6 @@ public class InputChange : MonoBehaviour
                 actions[i].ApplyBindingOverride(path);
             }
         }
-        Debug.Log("Applying binding");
         ApplyChangesToButtons(path, name);
     }
 
@@ -150,10 +154,6 @@ public class InputChange : MonoBehaviour
                 actions[i].ApplyBindingOverride(bindingIndex, path);
             }
         }
-        Debug.Log(map.actions[1].bindings[map.actions[0].GetBindingIndex(currentScheme)].name + map.actions[1].bindings[map.actions[0].GetBindingIndex(currentScheme)].overridePath);
-        Debug.Log(map.actions[1].bindings[map.actions[0].GetBindingIndex(currentScheme) + 1].name + map.actions[1].bindings[map.actions[0].GetBindingIndex(currentScheme) + 1].overridePath);
-
-        Debug.Log("Applying binding");
         ApplyChangesToButtons(path, name);
     }
 
@@ -178,7 +178,6 @@ public class InputChange : MonoBehaviour
                 buttons[i].SetConflict(true);
                 Game.Instance.keybindConflict = true;
                 returnButton.gameObject.SetActive(false);
-                Debug.Log("Conflict found");
             }
             else
             {

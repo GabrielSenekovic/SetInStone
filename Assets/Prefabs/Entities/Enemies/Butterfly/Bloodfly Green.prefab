@@ -209,5 +209,5 @@ MonoBehaviour:
   whatIsWater:
     serializedVersion: 2
     m_Bits: 16
-  radius: 5
+  radius: 8
   followSpeed: 0.08

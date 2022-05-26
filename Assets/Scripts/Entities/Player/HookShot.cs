@@ -98,7 +98,6 @@ public class HookShot : MonoBehaviour
 
         /*if((transform.position - playerMov.gameObject.transform.position).magnitude < 1)
         {
-            Debug.Log("Retracted fully!");
             gameObject.SetActive(false);
             transform.rotation = Quaternion.identity;
             retract = false;
@@ -109,13 +108,8 @@ public class HookShot : MonoBehaviour
 
     public void Aim(Vector2 mousePosition) //! input stuff
     {
-        //Debug.Log("0mousepos " + mousePosition.x + " " + mousePosition.y);
-        //Debug.Log("0hookdir " + hookDir.x + " " + hookDir.y);
         mousePosition -= (Vector2)hookOrigin.localPosition;
         hookDir = mousePosition.normalized;
-
-        //Debug.Log("1mousepos " + mousePosition.x + " " + mousePosition.y);
-        //Debug.Log("1hookdir " + hookDir.x + " " + hookDir.y);
 
         if (mousePosition.x != 0)
         {
@@ -128,8 +122,6 @@ public class HookShot : MonoBehaviour
         {
             hookDir = new Vector2(0,1);
         }
-        //Debug.Log("3mousepos " + mousePosition.x + " " + mousePosition.y);
-        //Debug.Log("3hookdir " + hookDir.x + " " + hookDir.y);
     }
 
     public bool Shoot()
