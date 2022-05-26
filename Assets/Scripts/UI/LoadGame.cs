@@ -10,7 +10,6 @@ public class LoadGame : MonoBehaviour
 
     private void Start() 
     {
-        Game.Instance.background.gameObject.SetActive(false);
         StartCoroutine(LoadLevelAsync());
     }
     IEnumerator LoadLevelAsync()

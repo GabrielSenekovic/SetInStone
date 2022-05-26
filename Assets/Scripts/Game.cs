@@ -45,8 +45,6 @@ public class Game : MonoBehaviour
     static GameObject audioManager;
     static bool gameStarted = false;
 
-    public Image background;
-
     public bool startMenuOn;
 
     public HUD hUD;
@@ -186,7 +184,6 @@ public class Game : MonoBehaviour
 
     public void StartMenu()
     {
-        background.gameObject.SetActive(true);
         DontDestroyOnLoad(audioManager);
         DontDestroyOnLoad(this);
         Instance.startMenuOn = true;
