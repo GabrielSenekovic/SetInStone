@@ -18,6 +18,8 @@ public class InputChange : MonoBehaviour
     List<KeybindButton> buttons = new List<KeybindButton>();
     [SerializeField]Button returnButton;
 
+    bool initialized = false;
+
     private void Awake()
     {
         map = inputAction.actionMaps[0];
@@ -26,6 +28,7 @@ public class InputChange : MonoBehaviour
     }
     public void Initialize(string currentScheme_in)
     {
+        if (initialized) { return; }
         currentScheme = currentScheme_in;
         for (int i = 0; i < buttons.Count; i++)
         {
@@ -66,6 +69,7 @@ public class InputChange : MonoBehaviour
                     Debug.Break(); break;
             }
         }
+        initialized = true;
     }
 
     public void Rebind(string function)
