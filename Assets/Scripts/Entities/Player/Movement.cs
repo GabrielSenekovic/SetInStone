@@ -75,7 +75,7 @@ public class Movement : MonoBehaviour
     public Collider2D mainCollider;
 
     public int ledgeClimbTimer;
-    int ledgeClimbTimer_max = 10;
+    int ledgeClimbTimer_max = 2;
 
     public bool forceLedgeClimb = false;
 
@@ -87,6 +87,8 @@ public class Movement : MonoBehaviour
     int healthTimer_max = 50;
 
     [SerializeField] bool onFire = false;
+
+    public PolygonCollider2D room;
 
     public HealthModel health;
     [System.Serializable] public class MovementDebug
@@ -181,8 +183,14 @@ public class Movement : MonoBehaviour
             }
             if(body.gravityScale > 0)
             {
-                body.gravityScale = Mathf.Lerp(body.gravityScale, 0, 0.05f);
-                body.velocity = new Vector2(body.velocity.x, Mathf.Lerp(body.velocity.y, 0, 0.05f));
+                float modifier = verticalDirection > 0?0.2f:0.05f;
+                body.gravityScale = Mathf.Lerp(body.gravityScale, 0, modifier);
+                body.velocity = new Vector2(body.velocity.x, Mathf.Lerp(body.velocity.y, 0, modifier));
+                if(body.gravityScale < 0.01f)
+                {
+                    body.gravityScale = 0;
+                    body.velocity = Vector2.zero;
+                }
             }
         }
         
@@ -233,7 +241,7 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            if(touchingSurface && verticalDirection == 1){verticalDirection = 0;}
+            if(touchingSurface && submerged && verticalDirection == 1){verticalDirection = 0;}
             Vector2 swimmingDirection = (new Vector2(movingDirection, verticalDirection)).normalized;
             transform.position +=  new Vector3(swimmingDirection.x * swimmingSpeed * speedMod,swimmingDirection.y * swimmingSpeed * speedMod,0); //The normal movement
         }
@@ -292,6 +300,7 @@ public class Movement : MonoBehaviour
     }
     public void CheckSurfaceClose()
     {
+        if(body.gravityScale > 0){return;} //If still going down from water enter gravity, then dont check for surface
         touchingSurface = !Physics2D.Raycast(surfaceCheck.position, new Vector2(0, 1), surfaceCheckDistance, whatIsGround) &&
         !Physics2D.Raycast(surfaceCheck.position, new Vector2(0, 1), surfaceCheckDistance, whatIsWater);
         if(!touchingSurface)
@@ -502,6 +511,7 @@ public class Movement : MonoBehaviour
         touchingWater = false;
         touchingSurface = false;
         healthTimer = 0;
+        amntOfJumps = 0;
         playerAnimator.SetBool("swimming", false);
         if(!hangingFromLedge){body.gravityScale = normGrav;}
     }
