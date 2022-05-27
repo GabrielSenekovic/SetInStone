@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-//using UnityEditor;
-//using UnityEditor.UI;
+/*using UnityEditor;
+using UnityEditor.UI;
 
-/*[CustomEditor(typeof(KeybindButton))]
+[CustomEditor(typeof(KeybindButton))]
 public class KeybindButtonEditor : UnityEditor.UI.ButtonEditor
 {
     SerializedProperty text;

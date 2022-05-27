@@ -18,7 +18,7 @@ public class InputChange : MonoBehaviour
     List<KeybindButton> buttons = new List<KeybindButton>();
     [SerializeField]Button returnButton;
 
-    private void Start()
+    private void Awake()
     {
         map = inputAction.actionMaps[0];
 
@@ -52,10 +52,9 @@ public class InputChange : MonoBehaviour
                     break;
                 case "Down":
                     buttons[i].SetButtonText(map.actions[2].bindings[map.actions[2].GetBindingIndex(currentScheme)].path);
-                    Debug.Log("Binding down");
                     break;
                 case "Up":
-                    buttons[i].SetButtonText(map.actions[2].bindings[map.actions[2].GetBindingIndex(currentScheme) + 2].path);
+                    buttons[i].SetButtonText(map.actions[2].bindings[map.actions[2].GetBindingIndex(currentScheme) + 1].path);
                     break;
                 case "Map":
                     buttons[i].SetButtonText(map.actions[16].bindings[map.actions[16].GetBindingIndex(currentScheme)].path);
@@ -85,8 +84,8 @@ public class InputChange : MonoBehaviour
                 break;
             case "Right": OnRebind(new List<InputAction>() { map.actions[0], map.actions[1] }, function, "positive");
                 break;
-            case "Down": OnRebind(new List<InputAction>() { map.actions[8], map.actions[9], map.actions[13]}, function);
-            OnRebind(new List<InputAction>() { map.actions[2], map.actions[3] }, function, "negative");
+            case "Down":// OnRebind(new List<InputAction>() { map.actions[8], map.actions[9], map.actions[13]}, function);
+                        OnRebind(new List<InputAction>() { map.actions[2], map.actions[3] }, function, "negative");
                 break;
             case "Up": OnRebind(new List<InputAction>() { map.actions[2], map.actions[3] }, function, "positive");
                 break;
