@@ -40,6 +40,8 @@ public class Lemmy : MonoBehaviour
     public Transform side2;
     public LayerMask whatIsGround;
 
+    public float speed;
+
    // Vector3 pos1;
     //Vector3 pos2;
 
@@ -51,6 +53,7 @@ public class Lemmy : MonoBehaviour
         charging = false;
         currentRadius = 0;
         anim = GetComponent<Animator>();
+        anim.speed = speed;
     }
     private void Update() 
     {
