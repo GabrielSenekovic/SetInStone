@@ -73,6 +73,8 @@ public class HealthModel : MonoBehaviour, Attackable
         transform.position = safePos;
         GetComponent<Input>().SetControllable(true);
         anim.SetBool("death", false);
+        anim.SetBool("swimming", false);
+        anim.SetTrigger("jump");
         // fade in and out black thingy
     }
 }

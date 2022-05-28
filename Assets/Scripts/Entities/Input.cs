@@ -70,7 +70,10 @@ public class Input : MonoBehaviour
             movement.facingDirection = movement.movingDirection == 0 ? movement.facingDirection : movement.movingDirection;
         }
     }
-
+    void OnDEBUGRESET()
+    {
+        movement.health.ReturnToSafe();
+    }
     void OnStopMove()
     {
         if(debug){Debug.Log("Stopping Movement");}

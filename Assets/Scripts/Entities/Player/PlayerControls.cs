@@ -169,6 +169,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""DEBUGRESET"",
+                    ""type"": ""Button"",
+                    ""id"": ""3fbc97f2-a54e-4ee9-a6e3-5144b324ae12"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -710,6 +718,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""StopMoveVertical"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6c6e418a-dfcf-4b0f-b868-6b99208fd337"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""DEBUGRESET"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -775,6 +794,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Land_Menu = m_Land.FindAction("Menu", throwIfNotFound: true);
         m_Land_Navigate = m_Land.FindAction("Navigate", throwIfNotFound: true);
         m_Land_Zoom = m_Land.FindAction("Zoom", throwIfNotFound: true);
+        m_Land_DEBUGRESET = m_Land.FindAction("DEBUGRESET", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -843,6 +863,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Land_Menu;
     private readonly InputAction m_Land_Navigate;
     private readonly InputAction m_Land_Zoom;
+    private readonly InputAction m_Land_DEBUGRESET;
     public struct LandActions
     {
         private @PlayerControls m_Wrapper;
@@ -866,6 +887,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Menu => m_Wrapper.m_Land_Menu;
         public InputAction @Navigate => m_Wrapper.m_Land_Navigate;
         public InputAction @Zoom => m_Wrapper.m_Land_Zoom;
+        public InputAction @DEBUGRESET => m_Wrapper.m_Land_DEBUGRESET;
         public InputActionMap Get() { return m_Wrapper.m_Land; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -932,6 +954,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Zoom.started -= m_Wrapper.m_LandActionsCallbackInterface.OnZoom;
                 @Zoom.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnZoom;
                 @Zoom.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnZoom;
+                @DEBUGRESET.started -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGRESET;
+                @DEBUGRESET.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGRESET;
+                @DEBUGRESET.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGRESET;
             }
             m_Wrapper.m_LandActionsCallbackInterface = instance;
             if (instance != null)
@@ -993,6 +1018,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Zoom.started += instance.OnZoom;
                 @Zoom.performed += instance.OnZoom;
                 @Zoom.canceled += instance.OnZoom;
+                @DEBUGRESET.started += instance.OnDEBUGRESET;
+                @DEBUGRESET.performed += instance.OnDEBUGRESET;
+                @DEBUGRESET.canceled += instance.OnDEBUGRESET;
             }
         }
     }
@@ -1036,5 +1064,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnMenu(InputAction.CallbackContext context);
         void OnNavigate(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
+        void OnDEBUGRESET(InputAction.CallbackContext context);
     }
 }

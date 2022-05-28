@@ -156,6 +156,14 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "DEBUGRESET",
+                    "type": "Button",
+                    "id": "3fbc97f2-a54e-4ee9-a6e3-5144b324ae12",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -697,6 +705,17 @@
                     "action": "StopMoveVertical",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "6c6e418a-dfcf-4b0f-b868-6b99208fd337",
+                    "path": "<Keyboard>/5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "DEBUGRESET",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
