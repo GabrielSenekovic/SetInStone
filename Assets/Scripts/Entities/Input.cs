@@ -47,7 +47,7 @@ public class Input : MonoBehaviour
         mousePosition -= transform.position;
         //Put the position of the mouse in world space relative to the players position
 
-        if (movement.grounded)
+        if (movement.GetGrounded())
         {
             //*Then limit the position to playerpositions y
             mousePosition.y = Mathf.Clamp(mousePosition.y, 0, Mathf.Infinity);
@@ -96,7 +96,7 @@ public class Input : MonoBehaviour
     private void OnAttack()
     {
         if (!controllable || movement.actionBuffer || movement.hangingFromLedge) {return;}
-        if(!movement.grounded && attack.Attack()) {playerAnimator.SetTrigger("attack"); movement.StopVelocity();}
+        if(!movement.GetGrounded() && attack.Attack()) {playerAnimator.SetTrigger("attack"); movement.StopVelocity();}
     }
 
     void OnSpecial()
@@ -119,23 +119,17 @@ public class Input : MonoBehaviour
         if(movement.ducking)
         {
             playerAnimator.SetBool("sitting", true);
-            if(debug){Debug.Log("Sitting in Pulka");}
-            movement.groundCheck.localPosition = movement.pulkaGroundCheck;
-            movement.SetCantRotate(false);
-            pulka.state = Pulka.PulkaState.SITTING;
-            movement.slideRequest = true;
-            movement.grounded = false;
+            pulka.SetState(Pulka.PulkaState.SITTING, movement);
         }
         else
         {
-            pulka.state = Pulka.PulkaState.SHIELD;
-            AudioManager.PlaySFX("Shield");
+            pulka.SetState(Pulka.PulkaState.SHIELD, movement);
         }
     }
 
     void OnDismount() // if you are sitting and you "dismount" you request dismount and set free rotation. and you arent ducking?
     {
-        if(pulka.state == Pulka.PulkaState.SITTING)
+        if(pulka.GetState() == Pulka.PulkaState.SITTING)
         {
             if(debug){Debug.Log("Put in dismount request");}
             movement.dismountRequest = true;
@@ -146,7 +140,7 @@ public class Input : MonoBehaviour
         else // if you arent sitting then dismount? maybe the state is changed right before
         {
             pulka.Dismount();
-            movement.groundCheck.localPosition = movement.caneGroundCheck;
+            movement.ResetGroundCheck();
             movement.ducking = false;
             playerAnimator.SetBool("sitting", false);
         }
@@ -161,7 +155,7 @@ public class Input : MonoBehaviour
 
     void OnStandUp()
     {
-        if(pulka.state != Pulka.PulkaState.SITTING)
+        if(pulka.GetState() != Pulka.PulkaState.SITTING)
         movement.ducking = false;
         AudioManager.PlaySFX("SitOnSled");
     }

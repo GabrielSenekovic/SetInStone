@@ -31,7 +31,6 @@ public class HookShot : MonoBehaviour
         playerAnimator = GetComponentInChildren<Animator>();
         body = GetComponent<Rigidbody2D>();
         movement = gameObject.GetComponent<Movement>();
-        //hook = Instantiate(hookPrefab, transform.position, Quaternion.identity).GetComponent<HookProjectile>();
         hook.hookScript = this;
         pulka = GetComponent<Pulka>();
         retract = false;
@@ -95,15 +94,6 @@ public class HookShot : MonoBehaviour
         }
         Vector2 Dir = (hitPoint - (Vector2)transform.position).normalized;
         body.velocity = Dir * hookSpeed;
-
-        /*if((transform.position - playerMov.gameObject.transform.position).magnitude < 1)
-        {
-            gameObject.SetActive(false);
-            transform.rotation = Quaternion.identity;
-            retract = false;
-            playerMov.actionBuffer = false;
-            playerRb.gravityScale = playerMov.normGrav;
-        }*/
     }
 
     public void Aim(Vector2 mousePosition) //! input stuff
@@ -128,7 +118,7 @@ public class HookShot : MonoBehaviour
     {
         if(hook.gameObject.activeSelf) {return false;}
         if(GetComponent<Movement>().ducking){return false;}
-        if(pulka.state != Pulka.PulkaState.NONE) {return false;}
+        if(pulka.GetState() != Pulka.PulkaState.NONE) {return false;}
         hook.gameObject.SetActive(true);
         hit = false;
         shooting = true;
@@ -181,8 +171,6 @@ public class HookShot : MonoBehaviour
 
         seaweed.rotation = Quaternion.Euler(0, 0, seaweedAngle * Mathf.Rad2Deg);
         seaweed.GetComponent<SpriteRenderer>().size = new Vector2(vectorToTarget.magnitude * 2 * (1 / hook.transform.localScale.x), seaweed.localScale.y);
-        //seaweed.localScale = new Vector3(vectorToTarget.magnitude * 2 * (1 / hook.transform.localScale.x), seaweed.localScale.y, 1);
-        //seaweed.GetComponent<MeshRenderer>().sharedMaterials[0].mainTextureScale = new Vector2(seaweed.localScale.x/2, 1);
     }
     public void ClimbLedge()
     {

@@ -19,7 +19,7 @@ public class DamageZone : MonoBehaviour
         Pulka temp;
         if(temp = collision.gameObject.GetComponent<Pulka>())
         {
-            sitting = ((int)temp.state == 2);
+            sitting = ((int)temp.GetState() == 2);
         }
 
         if (collision.gameObject.GetComponent<Movement>() && !(pos.y < colPos.y && sitting))

@@ -15,8 +15,28 @@ public class Pulka : MonoBehaviour
     public float pulkaDistanceRad;
     [SerializeField] GameObject pulka;
     [SerializeField] Vector2 sittingPosition;
+    Vector2 pulkaGroundCheck = new Vector2(0, -0.5f);
 
-    public PulkaState state;
+    PulkaState state;
+    public PulkaState GetState()
+    {
+        return state;
+    }
+    public void SetState(PulkaState value, Movement movement)
+    {
+        state = value;
+        switch(value)
+        {
+            case PulkaState.NONE: Dismount(); break;
+            case PulkaState.SITTING:
+                movement.SetGroundCheck(pulkaGroundCheck);
+                movement.SetCantRotate(false);
+                movement.slideRequest = true;
+                movement.SetGrounded(false);
+                break;
+            case PulkaState.SHIELD: AudioManager.PlaySFX("Shield"); break;
+        }
+    }
 
     void Start()
     {
@@ -55,7 +75,18 @@ public class Pulka : MonoBehaviour
             pulka.transform.localRotation = Quaternion.Euler(0, 0, pulkaAngle + 90);
         }
     }
-
+    public void TriggerDismount(Movement movement)
+    {
+        if (movement.dismountRequest && movement.GetGrounded()) //* triggers when on the pulka on ground, so that you get pushed up
+        {
+            movement.GetBody().AddForce(new Vector2(0, movement.jumpForce), ForceMode2D.Impulse);
+            movement.SetGrounded(false);
+            movement.dismountRequest = false;
+            SetState(PulkaState.NONE, movement);
+            movement.ResetGroundCheck();
+            movement.playerAnimator.SetBool("sitting", false);
+        }
+    }
     public void Dismount()
     {
         //*If you stop holding the shield, it goes away. Dont set it riding pulka, because it should dismount only when you hit the ground
