@@ -257,7 +257,7 @@ GameObject:
   - component: {fileID: 2790736966790888442}
   m_Layer: 0
   m_Name: Bug Attractor
-  m_TagString: Untagged
+  m_TagString: PassThrough
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -62,13 +62,8 @@ public class Input : MonoBehaviour
     {
         if (!controllable || movement.actionBuffer) {return;}
         if(!movement.submerged){playerAnimator.SetBool("walking", true);}
-        movement.movingDirection = value.Get<float>(); //! how we get stick direction
-        //Quaternion.Euler(new Vector3(0, 90 - 90 * movement.movingDirection, 0));
-        if(!movement.hangingFromLedge)
-        { //* If not climbing a ledge, turn around and move
-            movement.bodyTransform.localScale = new Vector3(movement.movingDirection,1,1);
-            movement.facingDirection = movement.movingDirection == 0 ? movement.facingDirection : movement.movingDirection;
-        }
+        movement.movingDirection = value.Get<float>();
+        movement.FaceMovingDirection();
     }
     void OnDEBUGRESET()
     {
@@ -103,6 +98,7 @@ public class Input : MonoBehaviour
     {
         if (!controllable || movement.actionBuffer || !inventory.HasHookshot() || movement.submerged) {return;}
         if(movement.hookShot.Shoot()) {movement.StopVelocity();}
+        movement.FaceMovingDirection();
     }
     void OnStopSpecial()
     {

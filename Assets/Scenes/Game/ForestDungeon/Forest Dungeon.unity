@@ -369,6 +369,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3274055201585924953, guid: 7108319037d013048acb130722723263, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3481088364908733299, guid: 7108319037d013048acb130722723263, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 4522415874210608547, guid: 1035244c5898cde45b224c607df5ad9b, type: 3}
     - target: {fileID: 4447867109422272356, guid: 7108319037d013048acb130722723263, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.75
@@ -8565,6 +8573,10 @@ PrefabInstance:
       propertyPath: myRoom
       value: 
       objectReference: {fileID: 8870667565785393023}
+    - target: {fileID: 2683769657697638393, guid: d9b205d03f618dd48b0c17873ab1fed0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 2683769657697638394, guid: d9b205d03f618dd48b0c17873ab1fed0, type: 3}
       propertyPath: m_Tiles.Array.size
       value: 219
@@ -19827,6 +19839,10 @@ PrefabInstance:
     - target: {fileID: 1987854769596371638, guid: fd7803adde9c83b4899ac209830f84ce, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238446291163871556, guid: fd7803adde9c83b4899ac209830f84ce, type: 3}
+      propertyPath: m_TagString
+      value: PassThrough
       objectReference: {fileID: 0}
     - target: {fileID: 3759523226422902649, guid: fd7803adde9c83b4899ac209830f84ce, type: 3}
       propertyPath: myRoom

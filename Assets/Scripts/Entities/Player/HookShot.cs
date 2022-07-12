@@ -62,10 +62,16 @@ public class HookShot : MonoBehaviour
     {
         playerAnimator.SetBool("hookpulling", true);
         body.velocity = Vector2.zero;
-        hookForce = (posIn - body.position).normalized * hookStrength; // * the vector from player to hook hit position normalized and scaled
-        body.AddForce(hookForce, ForceMode2D.Impulse); // * push player towards the hook hit position
-        //Cant do this, it has to be continuous
-        GetComponent<Movement>().isFlung = true;
+        if(!HasPulledInFully())
+        {
+            hookForce = (posIn - body.position).normalized * hookStrength; // * the vector from player to hook hit position normalized and scaled
+            body.AddForce(hookForce, ForceMode2D.Impulse); // * push player towards the hook hit position
+            GetComponent<Movement>().isFlung = true;
+        }
+        else
+        {
+            movement.UnCollideWithWalls();
+        }
         AudioManager.PlaySFX("HookHit");
         AudioManager.PlaySFX("HookReel");
 
@@ -86,14 +92,17 @@ public class HookShot : MonoBehaviour
     }
     public void PullIn()
     {
-        if((hitPoint - (Vector2)transform.position).magnitude < 0.2f)
+        if (HasPulledInFully())
         {
-            body.velocity = Vector2.zero;
             shooting = false;
             return;
         }
         Vector2 Dir = (hitPoint - (Vector2)transform.position).normalized;
         body.velocity = Dir * hookSpeed;
+    }
+    public bool HasPulledInFully()
+    {
+        return (hitPoint - (Vector2)transform.position).magnitude < 0.5f; //0.5f is the current margin
     }
 
     public void Aim(Vector2 mousePosition) //! input stuff
@@ -125,6 +134,7 @@ public class HookShot : MonoBehaviour
         hook.transform.position = (Vector3)hook.body.position + hookOrigin.localPosition;
         hook.transform.rotation = Quaternion.Euler(0, 0, hookAngle); // * rotate the hook in the direction of the stick and...
         hook.body.velocity = hookDir.normalized * hookSpeed; //* give it velocity in that direction
+        movement.facingDirection = Mathf.Sign(Vector2.Dot(Vector2.right, hookDir.normalized));
         AdjustSeaweed();
        
         body.gravityScale = 0;

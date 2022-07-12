@@ -237,7 +237,12 @@ public class Movement : MonoBehaviour
     {
         if(!submerged)
         {
-            transform.position +=  new Vector3(movingDirection * speed * speedMod,0,0); //The normal movement
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector2(facingDirection * 1.0f / 16 * 10, 0),
+                new Vector2(facingDirection * 1.0f / 16 * 10, 0).magnitude, whatIsGround);
+            if (!hit)
+            {
+                transform.position += new Vector3(movingDirection * speed * speedMod, 0, 0); //The normal movement
+            }
         }
         else
         {
@@ -246,11 +251,29 @@ public class Movement : MonoBehaviour
             transform.position +=  new Vector3(swimmingDirection.x * swimmingSpeed * speedMod,swimmingDirection.y * swimmingSpeed * speedMod,0); //The normal movement
         }
     }
+    public void UnCollideWithWalls()
+    {
+        //The point of this function is to prevent the player from getting stuck when gliding along walls. It happens, for some reason
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector2(facingDirection * 1.0f / 16 * 10, 0),
+                new Vector2(facingDirection * 1.0f / 16 * 10, 0).magnitude, whatIsGround);
+        if(hit)
+        {
+            transform.position = hit.point - new Vector2(facingDirection * 1.0f / 16 * 10, 0);
+        }
+    }
     void Fall()
     {
         if(!grounded && !hangingFromLedge && Mathf.Abs(body.velocity.y) < 1 && jumpTimer > 0 && actionBuffer == false) //!If the down velocity or the up velocity is less than a threshold
         {
             body.gravityScale = normGrav * gravityModifier;
+        }
+    }
+    public void FaceMovingDirection()
+    {
+        if (!hangingFromLedge)
+        { //* If not climbing a ledge, turn around and move
+            facingDirection = movingDirection == 0 ? facingDirection : movingDirection;
+            bodyTransform.localScale = new Vector3(facingDirection, 1, 1);
         }
     }
 
