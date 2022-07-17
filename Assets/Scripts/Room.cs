@@ -8,11 +8,19 @@ public class Room : MonoBehaviour
     [SerializeField] PolygonCollider2D myCollider;
     [SerializeField] List<GameObject> enemies;
     public bool discovered;
-   [SerializeField] GameObject door;
-   [SerializeField] Light2D roomLight;
+    [SerializeField] GameObject door;
+    [SerializeField] Light2D roomLight;
     public PolygonCollider2D GetCollider()
     {
         return myCollider;
+    }
+
+    void Awake()
+    {
+        if(!myCollider.gameObject.CompareTag("PassThrough"))
+        {
+            myCollider.gameObject.tag = "PassThrough";
+        }
     }
 
     void Update()

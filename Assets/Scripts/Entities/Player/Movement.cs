@@ -7,9 +7,9 @@ using UnityEngine.VFX;
 using System.Linq;
 public class Movement : MonoBehaviour
 {
-    Animator playerAnimator;
+    public Animator playerAnimator;
     public Animator bubbleAnimator;
-    public bool grounded = true;
+    bool grounded = true;
     public bool ducking;
     public float cancelJumpSpeed = 5.0f;
 
@@ -34,8 +34,7 @@ public class Movement : MonoBehaviour
     [System.NonSerialized] public float normGrav;
     [System.NonSerialized] public bool actionBuffer;
 
-    [SerializeField] public Vector2 caneGroundCheck;
-    [SerializeField] public Vector2 pulkaGroundCheck;
+    Vector2 caneGroundCheck = new Vector2(0, -0.2f);
     [SerializeField] public float gravityModifier; //Used to increase the gravity when falling
     [SerializeField] public float jumpForce;
     [SerializeField] public float airJumpForce;
@@ -46,7 +45,6 @@ public class Movement : MonoBehaviour
     [SerializeField] public int amntOfJumpsMax;
     [SerializeField] public LayerMask whatIsGround;
     [SerializeField] public LayerMask whatIsWater;
-    [SerializeField] public Transform groundCheck;
 
     public MovementDebug movementDebug;
 
@@ -56,12 +54,12 @@ public class Movement : MonoBehaviour
     public ParticleSystem caneVFX;
 
     public Vector2 currentVelocity;
-    public bool isFlung; //Used for hookshotting. If moving in the opposite direction of velocity you break it but if you move in the same direction nothing happens
-    public bool hangingFromLedge;
-    public bool ledgeDetected;
+
+    [SerializeField] Transform groundCheck;
     public Transform ledgeCheck;
     public Transform wallCheck;
     public Transform surfaceCheck; //Will check if there's air over the water 
+
     public float wallCheckDistance;
     public float surfaceCheckDistance;
     public Vector2 ledgePosBot;
@@ -78,10 +76,12 @@ public class Movement : MonoBehaviour
     int ledgeClimbTimer_max = 2;
 
     public bool forceLedgeClimb = false;
-
+    public bool hangingFromLedge;
+    public bool ledgeDetected;
     public bool submerged = false;
     public bool touchingWater = false;
     public bool touchingSurface = false;
+    public bool isFlung; //Used for hookshotting. If moving in the opposite direction of velocity you break it but if you move in the same direction nothing happens
 
     int healthTimer;
     int healthTimer_max = 50;
@@ -166,7 +166,7 @@ public class Movement : MonoBehaviour
         TryJump();
         PulkaRotate();
 
-        if(pulka.state != Pulka.PulkaState.NONE) {pulka.Use();}
+        if(pulka.GetState() != Pulka.PulkaState.NONE) {pulka.Use();}
     }
 
     private void FixedUpdate() 
@@ -194,7 +194,7 @@ public class Movement : MonoBehaviour
             }
         }
         
-        TriggerDismount();
+        pulka.TriggerDismount(this);
         
         TriggerSlide();
 
@@ -237,7 +237,12 @@ public class Movement : MonoBehaviour
     {
         if(!submerged)
         {
-            transform.position +=  new Vector3(movingDirection * speed * speedMod,0,0); //The normal movement
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector2(facingDirection * 1.0f / 16 * 10, 0),
+                new Vector2(facingDirection * 1.0f / 16 * 10, 0).magnitude, whatIsGround);
+            if (!hit)
+            {
+                transform.position += new Vector3(movingDirection * speed * speedMod, 0, 0); //The normal movement
+            }
         }
         else
         {
@@ -246,11 +251,29 @@ public class Movement : MonoBehaviour
             transform.position +=  new Vector3(swimmingDirection.x * swimmingSpeed * speedMod,swimmingDirection.y * swimmingSpeed * speedMod,0); //The normal movement
         }
     }
+    public void UnCollideWithWalls()
+    {
+        //The point of this function is to prevent the player from getting stuck when gliding along walls. It happens, for some reason
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector2(facingDirection * 1.0f / 16 * 10, 0),
+                new Vector2(facingDirection * 1.0f / 16 * 10, 0).magnitude, whatIsGround);
+        if(hit)
+        {
+            transform.position = hit.point - new Vector2(facingDirection * 1.0f / 16 * 10, 0);
+        }
+    }
     void Fall()
     {
         if(!grounded && !hangingFromLedge && Mathf.Abs(body.velocity.y) < 1 && jumpTimer > 0 && actionBuffer == false) //!If the down velocity or the up velocity is less than a threshold
         {
             body.gravityScale = normGrav * gravityModifier;
+        }
+    }
+    public void FaceMovingDirection()
+    {
+        if (!hangingFromLedge)
+        { //* If not climbing a ledge, turn around and move
+            facingDirection = movingDirection == 0 ? facingDirection : movingDirection;
+            bodyTransform.localScale = new Vector3(facingDirection, 1, 1);
         }
     }
 
@@ -313,7 +336,7 @@ public class Movement : MonoBehaviour
     void GroundCollisionCheck()
     {
         if(hangingFromLedge){return;}
-        if(body.velocity.y == 0 || pulka.state == Pulka.PulkaState.SITTING) //!if falling ( if you are not moving in y and if you just jumped and you arent on the ground)
+        if(body.velocity.y == 0 || pulka.GetState() == Pulka.PulkaState.SITTING) //!if falling ( if you are not moving in y and if you just jumped and you arent on the ground)
         {
             Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundedRadius, whatIsGround); //* make a collider on the feet and see what it hits
 
@@ -340,7 +363,7 @@ public class Movement : MonoBehaviour
 
     void PulkaRotate()
     {
-        if(ducking && pulka.state != Pulka.PulkaState.NONE)
+        if(ducking && pulka.GetState() != Pulka.PulkaState.NONE)
         {
             float rot = body.transform.localRotation.eulerAngles.z;
             rot = rot > 50 && rot < 90 ? 50 : rot < 310 && rot > 90 ? 310 : rot;
@@ -357,21 +380,6 @@ public class Movement : MonoBehaviour
             body.AddForce( new Vector2(movingDirection * speed * 20, 0), ForceMode2D.Impulse);
             slideRequest = false;
         
-        }
-    }
-
-    //TODO: This is probably redundant. Check later if it can be put into Pulka script.
-    void TriggerDismount()
-    {
-        if(dismountRequest && grounded) //* triggers when on the pulka on ground, so that you get pushed up
-        {
-            body.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-            grounded = false;
-            dismountRequest = false;
-            pulka.state = Pulka.PulkaState.NONE;
-            pulka.Dismount();
-            groundCheck.localPosition = caneGroundCheck;
-            playerAnimator.SetBool("sitting", false);
         }
     }
 
@@ -413,7 +421,7 @@ public class Movement : MonoBehaviour
         if(submerged && !touchingSurface) {return;} //! cant jump if you're swimming, unless you're at the surface
         if(actionBuffer) {return;} //! if hookshotting, don't try to jump
         if(jumpTimer < jumpLimit) {return;} // ! you can't jump unless it's been a while since you last jumped
-        if(pulka.state == Pulka.PulkaState.SITTING) { return; }
+        if(pulka.GetState() == Pulka.PulkaState.SITTING) { return; }
         
         if(hangingFromLedge) //If ledge hanging and trying to jump away from it
         {
@@ -492,6 +500,26 @@ public class Movement : MonoBehaviour
     public bool OnFire()
     {
         return onFire;
+    }
+    public bool GetGrounded()
+    {
+        return grounded;
+    }
+    public void SetGrounded(bool value)
+    {
+        grounded = value;
+    }
+    public Rigidbody2D GetBody()
+    {
+        return body;
+    }
+    public void SetGroundCheck(Vector2 value)
+    {
+        groundCheck.localPosition = value;
+    }
+    public void ResetGroundCheck()
+    {
+        groundCheck.localPosition = caneGroundCheck;
     }
 
     public void EnterWater()

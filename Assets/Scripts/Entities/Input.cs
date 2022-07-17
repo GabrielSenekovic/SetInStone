@@ -47,7 +47,7 @@ public class Input : MonoBehaviour
         mousePosition -= transform.position;
         //Put the position of the mouse in world space relative to the players position
 
-        if (movement.grounded)
+        if (movement.GetGrounded())
         {
             //*Then limit the position to playerpositions y
             mousePosition.y = Mathf.Clamp(mousePosition.y, 0, Mathf.Infinity);
@@ -62,13 +62,8 @@ public class Input : MonoBehaviour
     {
         if (!controllable || movement.actionBuffer) {return;}
         if(!movement.submerged){playerAnimator.SetBool("walking", true);}
-        movement.movingDirection = value.Get<float>(); //! how we get stick direction
-        //Quaternion.Euler(new Vector3(0, 90 - 90 * movement.movingDirection, 0));
-        if(!movement.hangingFromLedge)
-        { //* If not climbing a ledge, turn around and move
-            movement.bodyTransform.localScale = new Vector3(movement.movingDirection,1,1);
-            movement.facingDirection = movement.movingDirection == 0 ? movement.facingDirection : movement.movingDirection;
-        }
+        movement.movingDirection = value.Get<float>();
+        movement.FaceMovingDirection();
     }
     void OnDEBUGRESET()
     {
@@ -96,13 +91,14 @@ public class Input : MonoBehaviour
     private void OnAttack()
     {
         if (!controllable || movement.actionBuffer || movement.hangingFromLedge) {return;}
-        if(!movement.grounded && attack.Attack()) {playerAnimator.SetTrigger("attack"); movement.StopVelocity();}
+        if(!movement.GetGrounded() && attack.Attack()) {playerAnimator.SetTrigger("attack"); movement.StopVelocity();}
     }
 
     void OnSpecial()
     {
         if (!controllable || movement.actionBuffer || !inventory.HasHookshot() || movement.submerged) {return;}
         if(movement.hookShot.Shoot()) {movement.StopVelocity();}
+        movement.FaceMovingDirection();
     }
     void OnStopSpecial()
     {
@@ -119,23 +115,17 @@ public class Input : MonoBehaviour
         if(movement.ducking)
         {
             playerAnimator.SetBool("sitting", true);
-            if(debug){Debug.Log("Sitting in Pulka");}
-            movement.groundCheck.localPosition = movement.pulkaGroundCheck;
-            movement.SetCantRotate(false);
-            pulka.state = Pulka.PulkaState.SITTING;
-            movement.slideRequest = true;
-            movement.grounded = false;
+            pulka.SetState(Pulka.PulkaState.SITTING, movement);
         }
         else
         {
-            pulka.state = Pulka.PulkaState.SHIELD;
-            AudioManager.PlaySFX("Shield");
+            pulka.SetState(Pulka.PulkaState.SHIELD, movement);
         }
     }
 
     void OnDismount() // if you are sitting and you "dismount" you request dismount and set free rotation. and you arent ducking?
     {
-        if(pulka.state == Pulka.PulkaState.SITTING)
+        if(pulka.GetState() == Pulka.PulkaState.SITTING)
         {
             if(debug){Debug.Log("Put in dismount request");}
             movement.dismountRequest = true;
@@ -146,7 +136,7 @@ public class Input : MonoBehaviour
         else // if you arent sitting then dismount? maybe the state is changed right before
         {
             pulka.Dismount();
-            movement.groundCheck.localPosition = movement.caneGroundCheck;
+            movement.ResetGroundCheck();
             movement.ducking = false;
             playerAnimator.SetBool("sitting", false);
         }
@@ -161,7 +151,7 @@ public class Input : MonoBehaviour
 
     void OnStandUp()
     {
-        if(pulka.state != Pulka.PulkaState.SITTING)
+        if(pulka.GetState() != Pulka.PulkaState.SITTING)
         movement.ducking = false;
         AudioManager.PlaySFX("SitOnSled");
     }
