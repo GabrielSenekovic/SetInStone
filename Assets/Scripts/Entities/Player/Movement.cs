@@ -521,13 +521,17 @@ public class Movement : MonoBehaviour
     {
         groundCheck.localPosition = caneGroundCheck;
     }
+    public void PutOutFire()
+    {
+        onFire = false;
+        bubbleAnimator.SetBool("Fire", false);
+    }
 
     public void EnterWater()
     {
         touchingWater = true;
         grounded = false;
-        onFire = false;
-        bubbleAnimator.SetBool("Fire", false);
+        PutOutFire();
         if(body.velocity.y > -5)
         {
             body.velocity = new Vector2(body.velocity.x,-5);

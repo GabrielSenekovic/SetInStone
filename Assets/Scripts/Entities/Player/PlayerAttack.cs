@@ -64,7 +64,7 @@ public class PlayerAttack : MonoBehaviour
 
     void MoveHitBox(Vector2 point)
     {
-        Collider2D[] hitObjects = Physics2D.OverlapCircleAll(point, 1.5f, LayerMask.GetMask("Entity"), playerBody.transform.position.z,
+        Collider2D[] hitObjects = Physics2D.OverlapCircleAll(point, 1.0f, LayerMask.GetMask("Entity"), playerBody.transform.position.z,
         playerBody.transform.position.z);
 
         foreach (Collider2D obj in hitObjects)

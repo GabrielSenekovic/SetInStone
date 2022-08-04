@@ -12,6 +12,10 @@ public class PlayerCollision : MonoBehaviour
         {
             movement.EnterWater();
         }
+        if(other.GetComponent<Waterfall>())
+        {
+            movement.PutOutFire();
+        }
     }
     void OnTriggerExit2D(Collider2D other) 
     {
