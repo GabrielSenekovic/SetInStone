@@ -45,10 +45,10 @@ public class CutsceneTrigger : MonoBehaviour
         else if(cutsceneState == 2)
         {
             writeTimer++;
-            if(writeTimer >= writeTimerMax && Game.GetTitleText().text != text)
+            if(writeTimer >= writeTimerMax && GameMenu.GetTitleText().text != text)
             {
                 writeTimer = 0;
-                Game.GetTitleText().text += text[textIndex];
+                GameMenu.GetTitleText().text += text[textIndex];
                 textIndex++;
             }
         }
@@ -65,8 +65,7 @@ public class CutsceneTrigger : MonoBehaviour
             }
             input.SetControllable(false);
             AudioManager.PlayMusic("Dungeon Clear Last", false);
-            StartCoroutine(Game.WaitForLoad(AudioManager.GetMusic("Dungeon Clear Last").theme.length));
-            Game.SetHUDVisibility(0);
+            StartCoroutine(GameMenu.WaitForLoad(AudioManager.GetMusic("Dungeon Clear Last").theme.length));
         }
     }
 }

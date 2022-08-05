@@ -17,7 +17,7 @@ public class HealthModel : MonoBehaviour, Attackable
     void Start()
     {
         currentHealth = maxHealth;
-        healthBar = Game.ConnectToHealthBar();
+        healthBar = GameMenu.ConnectToHealthBar();
         healthBar.Initialize(maxHealth, currentHealth);
         Game.AttachPlayer(gameObject);
         safePos = transform.position;

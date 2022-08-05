@@ -85,7 +85,10 @@ public class Input : MonoBehaviour
     }
     void OnZoom(InputValue value)
     {
-        Game.Instance.Zoom(value.Get<Vector2>());
+        if(GameMenu.Instance != null)
+        {
+            GameMenu.Instance.Zoom(value.Get<Vector2>());
+        }
     }
 
     private void OnAttack()
@@ -158,7 +161,8 @@ public class Input : MonoBehaviour
 
     void OnPause()
     {
-        Game.Instance.Pause();
+        if(GameMenu.Instance == null) { return; }
+        GameMenu.Instance.Pause();
     }
 
     void OnMenu()
@@ -179,9 +183,9 @@ public class Input : MonoBehaviour
 
     void OnNavigate(InputValue value)
     {
-        if(Game.Instance.mapCanvas.alpha == 1)
+        if(GameMenu.Instance && GameMenu.Instance.mapCanvas.alpha == 1)
         {
-            Game.Instance.mapScript.SetMovement(value.Get<Vector2>());
+            GameMenu.Instance.mapScript.SetMovement(value.Get<Vector2>());
         }
     }
 
