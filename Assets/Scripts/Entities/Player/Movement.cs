@@ -223,6 +223,7 @@ public class Movement : MonoBehaviour
             {
                 playerAnimator.SetTrigger("ledgeClimb");
                 forceLedgeClimb = false;
+                facingDirection = movingDirection == 0 ? facingDirection : movingDirection;
             }
         }
         if(hangingFromLedge)
@@ -422,7 +423,7 @@ public class Movement : MonoBehaviour
         if(actionBuffer) {return;} //! if hookshotting, don't try to jump
         if(jumpTimer < jumpLimit) {return;} // ! you can't jump unless it's been a while since you last jumped
         if(pulka.GetState() == Pulka.PulkaState.SITTING) { return; }
-        
+        if(ledgeClimbTimer > 0) { return; }
         if(hangingFromLedge) //If ledge hanging and trying to jump away from it
         {
             hangingFromLedge = false;
