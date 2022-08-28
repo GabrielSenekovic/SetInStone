@@ -10,6 +10,8 @@ public class HookShot : MonoBehaviour
     [System.NonSerialized] public float hookAngle;
     public HookProjectile hook;
     public Vector2 hookDir;
+    public float rayLength = 2.0f;
+    [SerializeField] public LayerMask whatIsGround;
     Vector2 hookForce;
     Rigidbody2D body;
     Pulka pulka;
@@ -128,6 +130,8 @@ public class HookShot : MonoBehaviour
         if(hook.gameObject.activeSelf) {return false;}
         if(GetComponent<Movement>().ducking){return false;}
         if(pulka.GetState() != Pulka.PulkaState.NONE) {return false;}
+        RaycastHit2D closeRangeHit = Physics2D.Raycast(transform.position, hookDir, rayLength, whatIsGround);
+        if(closeRangeHit.collider != null) { return false; }
         hook.gameObject.SetActive(true);
         hit = false;
         shooting = true;

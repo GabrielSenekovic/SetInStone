@@ -4876,6 +4876,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightPrefab: {fileID: 5860494742068191757, guid: b28d15909f9c7c445837fa6ce072ad37, type: 3}
+  amountOfLights: 0
 --- !u!1 &430483964310553560
 GameObject:
   m_ObjectHideFlags: 0
@@ -5160,14 +5161,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 712838b5fea173540a818ac96a137fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerAnimator: {fileID: 0}
   bubbleAnimator: {fileID: 5110154857784678183}
-  grounded: 1
   ducking: 0
   cancelJumpSpeed: 5
   movingDirection: 0
   verticalDirection: 0
-  caneGroundCheck: {x: 0, y: -0.2}
-  pulkaGroundCheck: {x: 0, y: -0.5}
   gravityModifier: 2
   jumpForce: 5
   airJumpForce: 7
@@ -5182,7 +5181,6 @@ MonoBehaviour:
   whatIsWater:
     serializedVersion: 2
     m_Bits: 16
-  groundCheck: {fileID: 8514047503222518936}
   movementDebug:
     trajectoryInterval: 3
     maxTrajectory: 0
@@ -5191,9 +5189,7 @@ MonoBehaviour:
   doubleJump: {fileID: 7779242586999690155}
   caneVFX: {fileID: 10348963}
   currentVelocity: {x: 0, y: 0}
-  isFlung: 0
-  hangingFromLedge: 0
-  ledgeDetected: 0
+  groundCheck: {fileID: 8514047503222518936}
   ledgeCheck: {fileID: 3208712078895267526}
   wallCheck: {fileID: 6109885671159055737}
   surfaceCheck: {fileID: 4447867109422272356}
@@ -5209,10 +5205,14 @@ MonoBehaviour:
   mainCollider: {fileID: 7255899783724612402}
   ledgeClimbTimer: 0
   forceLedgeClimb: 0
+  hangingFromLedge: 0
+  ledgeDetected: 0
   submerged: 0
   touchingWater: 0
   touchingSurface: 0
+  isFlung: 0
   onFire: 0
+  room: {fileID: 0}
   health: {fileID: 8321820850026777538}
 --- !u!114 &8321820850026777538
 MonoBehaviour:
@@ -5247,6 +5247,10 @@ MonoBehaviour:
   hookRange: 11
   hook: {fileID: 7622038091694817950}
   hookDir: {x: 0, y: 0}
+  rayLength: 2
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 256
   playerAnimator: {fileID: 0}
   movement: {fileID: 0}
   seaweed: {fileID: 4932931559435457741}
@@ -5280,7 +5284,6 @@ MonoBehaviour:
   pulkaDistanceRad: 1.4
   pulka: {fileID: 8577940362441366980}
   sittingPosition: {x: 0, y: 0}
-  state: 0
 --- !u!114 &6067472280786907983
 MonoBehaviour:
   m_ObjectHideFlags: 0
