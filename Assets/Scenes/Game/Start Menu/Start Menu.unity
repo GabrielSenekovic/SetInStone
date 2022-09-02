@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5637,6 +5637,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: StartMenu, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 568431845995157326, guid: 85ae5b352a9640e4eaf4f7ee230d30a0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 45
+      objectReference: {fileID: 0}
     - target: {fileID: 684721036720985426, guid: 85ae5b352a9640e4eaf4f7ee230d30a0, type: 3}
       propertyPath: m_Name
       value: Start Menu
@@ -5704,6 +5708,14 @@ PrefabInstance:
     - target: {fileID: 3148541145274317724, guid: 85ae5b352a9640e4eaf4f7ee230d30a0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4511054918888616321, guid: 85ae5b352a9640e4eaf4f7ee230d30a0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 582604314}
+    - target: {fileID: 4511054918888616321, guid: 85ae5b352a9640e4eaf4f7ee230d30a0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Quit
       objectReference: {fileID: 0}
     - target: {fileID: 5700707170138571777, guid: 85ae5b352a9640e4eaf4f7ee230d30a0, type: 3}
       propertyPath: m_AnchorMax.y

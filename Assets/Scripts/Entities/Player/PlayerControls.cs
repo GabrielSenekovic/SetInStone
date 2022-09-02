@@ -147,7 +147,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Menu"",
+                    ""name"": ""Map"",
                     ""type"": ""Button"",
                     ""id"": ""5cbd0840-c6c1-49cd-a688-65314ae37b0d"",
                     ""expectedControlType"": ""Button"",
@@ -572,7 +572,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",
-                    ""action"": ""Menu"",
+                    ""action"": ""Map"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -791,7 +791,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Land_Duck = m_Land.FindAction("Duck", throwIfNotFound: true);
         m_Land_StandUp = m_Land.FindAction("StandUp", throwIfNotFound: true);
         m_Land_Pause = m_Land.FindAction("Pause", throwIfNotFound: true);
-        m_Land_Menu = m_Land.FindAction("Menu", throwIfNotFound: true);
+        m_Land_Map = m_Land.FindAction("Map", throwIfNotFound: true);
         m_Land_Navigate = m_Land.FindAction("Navigate", throwIfNotFound: true);
         m_Land_Zoom = m_Land.FindAction("Zoom", throwIfNotFound: true);
         m_Land_DEBUGRESET = m_Land.FindAction("DEBUGRESET", throwIfNotFound: true);
@@ -860,7 +860,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Land_Duck;
     private readonly InputAction m_Land_StandUp;
     private readonly InputAction m_Land_Pause;
-    private readonly InputAction m_Land_Menu;
+    private readonly InputAction m_Land_Map;
     private readonly InputAction m_Land_Navigate;
     private readonly InputAction m_Land_Zoom;
     private readonly InputAction m_Land_DEBUGRESET;
@@ -884,7 +884,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Duck => m_Wrapper.m_Land_Duck;
         public InputAction @StandUp => m_Wrapper.m_Land_StandUp;
         public InputAction @Pause => m_Wrapper.m_Land_Pause;
-        public InputAction @Menu => m_Wrapper.m_Land_Menu;
+        public InputAction @Map => m_Wrapper.m_Land_Map;
         public InputAction @Navigate => m_Wrapper.m_Land_Navigate;
         public InputAction @Zoom => m_Wrapper.m_Land_Zoom;
         public InputAction @DEBUGRESET => m_Wrapper.m_Land_DEBUGRESET;
@@ -945,9 +945,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Pause.started -= m_Wrapper.m_LandActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnPause;
-                @Menu.started -= m_Wrapper.m_LandActionsCallbackInterface.OnMenu;
-                @Menu.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnMenu;
-                @Menu.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnMenu;
+                @Map.started -= m_Wrapper.m_LandActionsCallbackInterface.OnMap;
+                @Map.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnMap;
+                @Map.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnMap;
                 @Navigate.started -= m_Wrapper.m_LandActionsCallbackInterface.OnNavigate;
                 @Navigate.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnNavigate;
                 @Navigate.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnNavigate;
@@ -1009,9 +1009,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
-                @Menu.started += instance.OnMenu;
-                @Menu.performed += instance.OnMenu;
-                @Menu.canceled += instance.OnMenu;
+                @Map.started += instance.OnMap;
+                @Map.performed += instance.OnMap;
+                @Map.canceled += instance.OnMap;
                 @Navigate.started += instance.OnNavigate;
                 @Navigate.performed += instance.OnNavigate;
                 @Navigate.canceled += instance.OnNavigate;
@@ -1061,7 +1061,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnDuck(InputAction.CallbackContext context);
         void OnStandUp(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
-        void OnMenu(InputAction.CallbackContext context);
+        void OnMap(InputAction.CallbackContext context);
         void OnNavigate(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
         void OnDEBUGRESET(InputAction.CallbackContext context);

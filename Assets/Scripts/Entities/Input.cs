@@ -165,9 +165,9 @@ public class Input : MonoBehaviour
         GameMenu.Instance.Pause();
     }
 
-    void OnMenu()
+    void OnMap()
     {
-        /*Game.Instance.Menu();*/
+        GameMenu.Instance.Map();
     }
 
     private void OnJump()

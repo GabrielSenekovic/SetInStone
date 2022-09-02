@@ -15,7 +15,7 @@ PlayerSettings:
   companyName: Amalgamates
   productName: SetInStone
   defaultCursor: {fileID: 2800000, guid: e4eb9bd6f4ea9b644aafbc57494a9659, type: 3}
-  cursorHotspot: {x: 16, y: 16}
+  cursorHotspot: {x: 8, y: 8}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1
   m_ShowUnitySplashLogo: 1

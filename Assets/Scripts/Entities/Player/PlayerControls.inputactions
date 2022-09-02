@@ -134,7 +134,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Menu",
+                    "name": "Map",
                     "type": "Button",
                     "id": "5cbd0840-c6c1-49cd-a688-65314ae37b0d",
                     "expectedControlType": "Button",
@@ -559,7 +559,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "Menu",
+                    "action": "Map",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

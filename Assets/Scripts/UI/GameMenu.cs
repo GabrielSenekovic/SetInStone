@@ -17,7 +17,9 @@ public class GameMenu : MonoBehaviour
         }
     }
     [SerializeField] Options options;
+    CanvasGroup optionsMenu;
     [SerializeField] CanvasGroup keybindingMenu;
+    [SerializeField] CanvasGroup pauseMenu;
     [System.NonSerialized] public CanvasGroup mapCanvas;
     public Map mapScript;
     bool pause = false;
@@ -29,6 +31,7 @@ public class GameMenu : MonoBehaviour
         {
             instance = this;
             mapCanvas = mapScript.GetComponent<CanvasGroup>();
+            optionsMenu = options.GetComponent<CanvasGroup>();
         }
         else
         {
@@ -51,31 +54,26 @@ public class GameMenu : MonoBehaviour
     }
     public void Options()
     {
-        gameObject.SetActive(options.gameObject.activeSelf);
-        options.gameObject.SetActive(options.gameObject.activeSelf ? false : true);
+        pauseMenu.SetCanvasGroupAs(Extensions.SetValue.OFF);
+        keybindingMenu.SetCanvasGroupAs(Extensions.SetValue.OFF);
+        optionsMenu.SetCanvasGroupAs(Extensions.SetValue.ON);
     }
+
     public void OpenKeybinding()
     {
-        if (options)
-        {
-            options.gameObject.SetActive(keybindingMenu.alpha == 1);
-        }
-        keybindingMenu.alpha = keybindingMenu.alpha == 1 ? 0 : 1;
-        keybindingMenu.interactable = !options.gameObject.activeSelf;
-        keybindingMenu.blocksRaycasts = keybindingMenu.interactable;
+        optionsMenu.SetCanvasGroupAs(Extensions.SetValue.OFF);
+        keybindingMenu.SetCanvasGroupAs(Extensions.SetValue.TOGGLE);
     }
     public void Pause()
     {
         if (Game.Instance.keybindConflict) { return; } //This variable should be in Input Change, but I don't have time make Input Change a variable of Game right now
         pause = !pause;
         Time.timeScale = pause ? 0 : 1;
-        gameObject.SetActive(pause);
-        options.gameObject.SetActive(false);
-        keybindingMenu.alpha = 0;
-        keybindingMenu.interactable = false;
-        keybindingMenu.blocksRaycasts = false;
+        pauseMenu.SetCanvasGroupAs(Extensions.SetValue.TOGGLE);
+        optionsMenu.SetCanvasGroupAs(Extensions.SetValue.OFF);
+        keybindingMenu.SetCanvasGroupAs(Extensions.SetValue.OFF);
     }
-    public void Menu()
+    public void Map()
     {
         if (mapCanvas.alpha == 0)
         {
@@ -91,7 +89,6 @@ public class GameMenu : MonoBehaviour
     public void StartMenu()
     {
         DontDestroyOnLoad(Game.audioManager);
-        DontDestroyOnLoad(this);
         Game.Instance.cinemachineVirtualCamera.m_Follow = null;
         Game.Instance.cinemachineVirtualCamera.gameObject.SetActive(false);
         titleText.text = "";
