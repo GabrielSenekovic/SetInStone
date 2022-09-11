@@ -161,7 +161,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 112
+        y: 64
         width: 16
         height: 16
       alignment: 0
@@ -182,7 +182,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 112
+        y: 64
         width: 16
         height: 16
       alignment: 0
@@ -203,7 +203,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 112
+        y: 64
         width: 16
         height: 16
       alignment: 0
@@ -224,7 +224,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 48
-        y: 112
+        y: 64
         width: 16
         height: 16
       alignment: 0
@@ -245,7 +245,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 96
+        y: 48
         width: 16
         height: 16
       alignment: 0
@@ -266,7 +266,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 96
+        y: 48
         width: 16
         height: 16
       alignment: 0
@@ -287,7 +287,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 96
+        y: 48
         width: 16
         height: 16
       alignment: 0
@@ -308,7 +308,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 80
+        y: 32
         width: 16
         height: 16
       alignment: 0
@@ -329,7 +329,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 80
+        y: 32
         width: 16
         height: 16
       alignment: 0
@@ -350,7 +350,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 80
+        y: 32
         width: 16
         height: 16
       alignment: 0
@@ -371,7 +371,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 64
+        y: 16
         width: 16
         height: 16
       alignment: 0
@@ -392,7 +392,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 64
+        y: 16
         width: 16
         height: 16
       alignment: 0
@@ -413,7 +413,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 48
+        y: 0
         width: 16
         height: 16
       alignment: 0
@@ -434,7 +434,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 48
+        y: 0
         width: 16
         height: 16
       alignment: 0
@@ -454,8 +454,8 @@ TextureImporter:
       name: ForestDungeon_Tiles_2_Background_1_14
       rect:
         serializedVersion: 2
-        x: 0
-        y: 32
+        x: 32
+        y: 0
         width: 16
         height: 16
       alignment: 0
@@ -467,69 +467,6 @@ TextureImporter:
       bones: []
       spriteID: edd8c22edaf6b1760800000000000000
       internalID: 7429654802892361182
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ForestDungeon_Tiles_2_Background_1_15
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: aeed4850d6b1d58c0800000000000000
-      internalID: -4009017938231894294
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ForestDungeon_Tiles_2_Background_1_16
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ab65bce09a1d845a0800000000000000
-      internalID: -6536744335100389702
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ForestDungeon_Tiles_2_Background_1_17
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ff0c7e7db790aedc0800000000000000
-      internalID: -3609061723876114177
       vertices: []
       indices: 
       edges: []

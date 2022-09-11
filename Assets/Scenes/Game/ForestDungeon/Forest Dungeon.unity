@@ -10740,6 +10740,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: First Room
       objectReference: {fileID: 0}
+    - target: {fileID: 2683769658384019929, guid: d9b205d03f618dd48b0c17873ab1fed0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9b205d03f618dd48b0c17873ab1fed0, type: 3}
 --- !u!1001 &4925938731704135903
