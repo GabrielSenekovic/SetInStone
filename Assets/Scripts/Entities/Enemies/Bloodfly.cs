@@ -12,7 +12,7 @@ public class Bloodfly : MonoBehaviour, Attackable
     public int maxHealth;
     [SerializeField] public GameObject bubble;
 
-    [SerializeField]VisualEffectEntry deathCloud;
+    //[SerializeField]VisualEffectEntry deathCloud;
 
     public VisualEffect VFX_prefab;
 
@@ -20,7 +20,7 @@ public class Bloodfly : MonoBehaviour, Attackable
     {
         currentHealth = maxHealth;
 
-        deathCloud.effect = Instantiate(VFX_prefab, transform.position, Quaternion.identity, transform);
+        //deathCloud.effect = Instantiate(VFX_prefab, transform.position, Quaternion.identity, transform);
        // Game.Instance.visualEffects.Add(deathCloud, false);
     }
 

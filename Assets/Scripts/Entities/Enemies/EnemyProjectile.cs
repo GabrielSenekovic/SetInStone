@@ -9,16 +9,16 @@ public class EnemyProjectile : MonoBehaviour
     public bool hit;
     public Snail snailScript;
 
-    public LightEntry myLight;
-    public VisualEffectEntry VFX;
+    //public LightEntry myLight;
+    //public VisualEffectEntry VFX;
 
     public int damageDealt;
 
     private void Start()
     {
         body = GetComponent<Rigidbody2D>();
-        VFX.effect = GetComponentInChildren<VisualEffect>();
-        myLight.light = GetComponentInChildren<Light>();
+        //VFX.effect = GetComponentInChildren<VisualEffect>();
+        //myLight.light = GetComponentInChildren<Light>();
     }
     public void Shoot(Vector2 atkDir, float atkSpeed, float atkAngle, Vector2 bodyPosition)
     {

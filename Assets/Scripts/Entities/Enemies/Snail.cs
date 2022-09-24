@@ -25,7 +25,7 @@ public class Snail : MonoBehaviour, Attackable
 
     [SerializeField] GameObject visuals;
 
-    [SerializeField]VisualEffectEntry deathCloud;
+    //[SerializeField]VisualEffectEntry deathCloud;
 
     public VisualEffect VFX_prefab;
 
@@ -40,7 +40,7 @@ public class Snail : MonoBehaviour, Attackable
         atkProjectile.GetComponent<EnemyProjectile>().snailScript = this;
         atkProjectile.SetActive(false);
 
-        deathCloud.effect = Instantiate(VFX_prefab, transform.position, Quaternion.identity, transform);
+        //deathCloud.effect = Instantiate(VFX_prefab, transform.position, Quaternion.identity, transform);
        // Game.Instance.visualEffects.Add(deathCloud, false);
     }
 
@@ -85,7 +85,7 @@ public class Snail : MonoBehaviour, Attackable
         if(currentHealth == 0)
         {
            // Game.Instance.visualEffects.ChangePosition(deathCloud, transform.position);
-            deathCloud.effect.Play();
+            //deathCloud.effect.Play();
             Instantiate(bubble, transform.position, transform.rotation);
             AudioManager.PlaySFX("SnailDeath");
             transform.parent.gameObject.SetActive(false);

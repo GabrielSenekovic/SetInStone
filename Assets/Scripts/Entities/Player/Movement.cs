@@ -120,6 +120,7 @@ public class Movement : MonoBehaviour
 
     private void Start() 
     {
+        Debug.Assert(health != null);
         playerAnimator = GetComponentInChildren<Animator>();
         hookShot = GetComponent<HookShot>();
         pulka = GetComponent<Pulka>();
