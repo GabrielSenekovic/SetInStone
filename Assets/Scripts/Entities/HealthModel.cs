@@ -8,20 +8,22 @@ public class HealthModel : MonoBehaviour, Attackable
 
     [SerializeField] public int currentHealth;
     [SerializeField] public int maxHealth;
+    [SerializeField] Rigidbody2D body;
     public Vector3 safePos;
 
     int reviveAmount = 0;
 
-    Animator anim;
+    [SerializeField]Animator anim;
 
     void Start()
     {
+        Debug.Assert(body != null);
+        Debug.Assert(anim != null);
         currentHealth = maxHealth;
         healthBar = GameMenu.ConnectToHealthBar();
         healthBar.Initialize(maxHealth, currentHealth);
         Game.AttachPlayer(gameObject);
         safePos = transform.position;
-        anim = GetComponent<Animator>();
     }
 
     public void TakeDamage(int damage)
@@ -33,9 +35,9 @@ public class HealthModel : MonoBehaviour, Attackable
         AudioManager.PlaySFX("VoiceHurt");
         if (currentHealth <= 0 && reviveAmount <= 0)
         {
-            GetComponent<Input>().SetControllable(false);
-            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            if(GetComponent<Movement>().submerged)
+            transform.parent.GetComponent<Input>().SetControllable(false);
+            body.velocity = Vector2.zero;
+            if(transform.parent.GetComponent<Movement>().submerged)
             {
                 anim.SetBool("swimming", false);
             }
@@ -56,10 +58,7 @@ public class HealthModel : MonoBehaviour, Attackable
     public void OnBeAttacked(int value, Vector2 dir)
     {
         TakeDamage(value);
-        if(GetComponent<Rigidbody2D>())
-        {
-            GetComponent<Rigidbody2D>().AddForce(dir, ForceMode2D.Impulse);
-        }
+        body.AddForce(dir, ForceMode2D.Impulse);
     }
 
     public bool Damaged()

@@ -58,12 +58,12 @@ public class Game : MonoBehaviour
     {
         instance.player = playerIn;
         instance.cinemachineVirtualCamera.m_Follow = playerIn.transform;
-        instance.cinemachineVirtualCamera.GetComponent<CinemachineConfiner>().m_BoundingShape2D = playerIn.GetComponent<Movement>().room;
+        instance.cinemachineVirtualCamera.GetComponent<CinemachineConfiner>().m_BoundingShape2D = playerIn.transform.parent.GetComponent<Movement>().room;
         if(!instance.inputChange)
         {
             instance.inputChange = FindObjectOfType<InputChange>();
         }
-        instance.inputChange.Initialize(playerIn.GetComponent<PlayerInput>().currentControlScheme);
+        instance.inputChange.Initialize(playerIn.transform.parent.GetComponent<PlayerInput>().currentControlScheme);
     }
     public static GameObject GetCurrentPlayer()
     {

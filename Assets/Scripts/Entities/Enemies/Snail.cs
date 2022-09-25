@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
+using System.Linq;
 
 public class Snail : MonoBehaviour, Attackable
 {
@@ -25,7 +26,7 @@ public class Snail : MonoBehaviour, Attackable
 
     [SerializeField] GameObject visuals;
 
-    [SerializeField]VisualEffectEntry deathCloud;
+    //[SerializeField]VisualEffectEntry deathCloud;
 
     public VisualEffect VFX_prefab;
 
@@ -40,7 +41,7 @@ public class Snail : MonoBehaviour, Attackable
         atkProjectile.GetComponent<EnemyProjectile>().snailScript = this;
         atkProjectile.SetActive(false);
 
-        deathCloud.effect = Instantiate(VFX_prefab, transform.position, Quaternion.identity, transform);
+        //deathCloud.effect = Instantiate(VFX_prefab, transform.position, Quaternion.identity, transform);
        // Game.Instance.visualEffects.Add(deathCloud, false);
     }
 
@@ -85,7 +86,7 @@ public class Snail : MonoBehaviour, Attackable
         if(currentHealth == 0)
         {
            // Game.Instance.visualEffects.ChangePosition(deathCloud, transform.position);
-            deathCloud.effect.Play();
+            //deathCloud.effect.Play();
             Instantiate(bubble, transform.position, transform.rotation);
             AudioManager.PlaySFX("SnailDeath");
             transform.parent.gameObject.SetActive(false);
@@ -109,20 +110,7 @@ public class Snail : MonoBehaviour, Attackable
             }
         }
 
-        Collider2D[] terrainCheck;
-
-        if(transform.rotation.z <= 0)
-        {
-            terrainCheck = Physics2D.OverlapCircleAll(new Vector2(body.position.x-transform.localScale.x, body.position.y-transform.localScale.y), 0.5f, LayerMask.GetMask("Ground"), 
-            body.transform.position.z, body.transform.position.z);
-        }
-        else
-        {
-            terrainCheck = Physics2D.OverlapCircleAll(new Vector2(body.position.x+transform.localScale.x, body.position.y-transform.localScale.y), 0.5f, LayerMask.GetMask("Ground"), 
-            body.transform.position.z, body.transform.position.z);
-        }
-
-        if(terrainCheck.Length == 0 && (collisionTimer == collisionTimerMax))
+        if(Physics2D.LinecastAll(transform.position, transform.position + moveDir * 1.2f).Any(e => e.collider.gameObject.layer == LayerMask.GetMask("Ground")) && (collisionTimer == collisionTimerMax))
         {
             SwitchDirection();
         }
@@ -144,10 +132,7 @@ public class Snail : MonoBehaviour, Attackable
     void SwitchDirection()
     {
         moveDir = -moveDir;
-        gameObject.GetComponentInParent<Transform>().localScale.Set
-        (gameObject.GetComponentInParent<Transform>().localScale.x, 
-        gameObject.GetComponentInParent<Transform>().localScale.y, 
-        -gameObject.GetComponentInParent<Transform>().localScale.z);
+        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         collisionTimer = 0;
     }
 
