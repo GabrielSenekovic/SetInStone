@@ -5569,7 +5569,9 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   currentHealth: 0
   maxHealth: 12
+  body: {fileID: 3274055201585924953}
   safePos: {x: 0, y: 0, z: 0}
+  anim: {fileID: 1537443465}
 --- !u!1 &5250809999618113683
 GameObject:
   m_ObjectHideFlags: 0

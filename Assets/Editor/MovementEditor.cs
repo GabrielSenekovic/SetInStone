@@ -108,5 +108,6 @@ public class MovementEditor: SelectableEditor
             EditorGUILayout.PropertyField(serializedObject.FindProperty("movementDebug"));
             EditorGUI.indentLevel--;
         }
+        serializedObject.ApplyModifiedProperties();
     }
 }
