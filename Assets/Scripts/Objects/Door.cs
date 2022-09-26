@@ -9,7 +9,7 @@ public class Door : MonoBehaviour
     {
         if (collision.CompareTag("Player") && collision.transform.parent.GetComponent<Movement>())
         {
-            collision.transform.parent.GetComponent<HealthModel>().safePos = collision.transform.position;
+            collision.GetComponent<HealthModel>().safePos = collision.transform.position;
             if (Game.GetCurrentCameraCollider() != myRoom.GetCollider())
             {
                 Game.SetCameraCollider(myRoom.GetCollider());
