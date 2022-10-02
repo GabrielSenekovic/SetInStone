@@ -24,7 +24,7 @@ public class Bloodfly : MonoBehaviour, Attackable
        // Game.Instance.visualEffects.Add(deathCloud, false);
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.CompareTag("Player"))
         {
@@ -32,7 +32,7 @@ public class Bloodfly : MonoBehaviour, Attackable
             AudioManager.PlaySFX("ButterflyTouch");
             if(TryGetComponent<ChasePlayer>(out ChasePlayer chase))
             {
-                chase.leave = true;
+                chase.chaseBehavior |= ChasePlayer.ChaseBehavior.LEAVING;
                 GetComponent<Collider2D>().enabled = false;
             }
         }

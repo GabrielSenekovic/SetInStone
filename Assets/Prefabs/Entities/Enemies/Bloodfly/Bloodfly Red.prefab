@@ -79,7 +79,7 @@ SpriteRenderer:
   m_Size: {x: 3, y: 3}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &2940804170899513101
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 2940804170899513096}
   - component: {fileID: 5847023261019807991}
   m_Layer: 10
-  m_Name: Butterfly Enemy
+  m_Name: Bloodfly Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -146,14 +146,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contactDamage: 1
-  turnAroundSpeed: 5
-  pathPrefab: {fileID: 5777144279509328334, guid: 1fb9372a8cf3ee84892f7ac2754b626b, type: 3}
   currentHealth: 0
   maxHealth: 1
   bubble: {fileID: 4129302837664924161, guid: 5b64495461de8544f87c67cb8830c27c, type: 3}
-  deathCloud:
-    effect: {fileID: 0}
-    index: 0
   VFX_prefab: {fileID: 239912885287363553, guid: 87ac8f2e8a45d8f40bf052fda9490b72, type: 3}
 --- !u!58 &5847023261019807991
 CircleCollider2D:

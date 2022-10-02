@@ -83,7 +83,7 @@ public class HookShot : MonoBehaviour
     }
     public void StopPull()
     {
-        if(!hook.gameObject.activeSelf){return;}
+        if(!hook.IsVisible()){return;}
         shooting = false;
         movement.forceLedgeClimb = false;
         if(hit)
@@ -127,15 +127,16 @@ public class HookShot : MonoBehaviour
 
     public bool Shoot()
     {
-        if(hook.gameObject.activeSelf) {return false;}
+        if(hook.IsVisible()) {return false;}
         if(GetComponent<Movement>().ducking){return false;}
         if(pulka.GetState() != Pulka.PulkaState.NONE) {return false;}
         RaycastHit2D closeRangeHit = Physics2D.Raycast(transform.position, hookDir, rayLength, whatIsGround);
         if(closeRangeHit.collider != null) { return false; }
-        hook.gameObject.SetActive(true);
+        hook.SetVisible(true);
         hit = false;
         shooting = true;
-        hook.transform.position = (Vector3)hook.body.position + hookOrigin.localPosition;
+        hook.ResetHookshot();
+        hook.transform.localPosition = hookOrigin.localPosition;
         hook.transform.rotation = Quaternion.Euler(0, 0, hookAngle); // * rotate the hook in the direction of the stick and...
         hook.body.velocity = hookDir.normalized * hookSpeed; //* give it velocity in that direction
         movement.facingDirection = Mathf.Sign(Vector2.Dot(Vector2.right, hookDir.normalized));
@@ -150,7 +151,8 @@ public class HookShot : MonoBehaviour
     }
     public void Retract()
     {
-        if(movement.actionBuffer) //When it starts retracting, give player their movement back
+        if (!hook.IsVisible()) { return; }
+        if (movement.actionBuffer) //When it starts retracting, give player their movement back
         {
             movement.actionBuffer = false;
             body.gravityScale = movement.normGrav;
@@ -167,7 +169,9 @@ public class HookShot : MonoBehaviour
     }
     public void FinishRetraction()
     {
-        hook.gameObject.SetActive(false);
+        hook.SetVisible(false);
+        hook.transform.localPosition = Vector3.zero;
+        hook.body.velocity = Vector3.zero;
         hook.transform.rotation = Quaternion.identity;
         retract = false;
     }

@@ -123,16 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!95 &74408930 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 1537443465, guid: 7108319037d013048acb130722723263, type: 3}
-  m_PrefabInstance: {fileID: 1140934134}
-  m_PrefabAsset: {fileID: 0}
---- !u!50 &74408939 stripped
-Rigidbody2D:
-  m_CorrespondingSourceObject: {fileID: 3274055201585924953, guid: 7108319037d013048acb130722723263, type: 3}
-  m_PrefabInstance: {fileID: 1140934134}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &160209738
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -190,17 +180,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1002279e3f6db814ba696d24554395b7, type: 3}
---- !u!114 &349224377 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5586465475424076874, guid: 7108319037d013048acb130722723263, type: 3}
-  m_PrefabInstance: {fileID: 1140934134}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a8457cda6e239940ad294138504ed25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &349294387
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -286,7 +265,7 @@ GameObject:
   - component: {fileID: 799087345}
   - component: {fileID: 799087344}
   - component: {fileID: 799087346}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2368,10 +2347,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -6437868355953878240, guid: 7108319037d013048acb130722723263, type: 3}
-      propertyPath: health
-      value: 
-      objectReference: {fileID: 349224377}
     - target: {fileID: 2866837049075620533, guid: 7108319037d013048acb130722723263, type: 3}
       propertyPath: m_Name
       value: Player
@@ -2420,14 +2395,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5586465475424076874, guid: 7108319037d013048acb130722723263, type: 3}
-      propertyPath: anim
-      value: 
-      objectReference: {fileID: 74408930}
-    - target: {fileID: 5586465475424076874, guid: 7108319037d013048acb130722723263, type: 3}
-      propertyPath: body
-      value: 
-      objectReference: {fileID: 74408939}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7108319037d013048acb130722723263, type: 3}
 --- !u!1 &1257923894
@@ -5466,6 +5433,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 667011634, guid: 717569af8d48f39499c6424b9ff977cb, type: 3}
+      propertyPath: pushStrength
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7046166820537100905, guid: 717569af8d48f39499c6424b9ff977cb, type: 3}
       propertyPath: m_RootOrder
       value: 3

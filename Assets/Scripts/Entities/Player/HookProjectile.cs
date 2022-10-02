@@ -7,15 +7,34 @@ public class HookProjectile : MonoBehaviour
 {
     [System.NonSerialized]public Rigidbody2D body;
     public HookShot hookScript;
-    public ParticleSystem particles;
+    [SerializeField] ParticleSystem hitParticles;
+    [SerializeField] ParticleSystem ivyParticles;
     public Rigidbody2D playerRb;
+    [SerializeField] SpriteRenderer renderer;
+    [SerializeField] GameObject seaWeed;
 
 
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
         playerRb = hookScript.gameObject.GetComponent<Rigidbody2D>();
-        gameObject.SetActive(false);
+        SetVisible(false);
+    }
+
+    public bool IsVisible()
+    {
+        return renderer.color != Color.clear;
+    }
+    public void SetVisible(bool value)
+    {
+        renderer.color = value?Color.white:Color.clear;
+        seaWeed.SetActive(value);
+    }
+    public void ResetHookshot()
+    {
+        body.velocity = Vector3.zero;
+        transform.localPosition = Vector3.zero;
+        transform.rotation = Quaternion.identity;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -67,12 +86,16 @@ public class HookProjectile : MonoBehaviour
             {
                 hookScript.hitPoint_color = Color.red;
             }
-            particles.Play();
+            hitParticles.Play();
             if(!hookScript.shooting)
             {
                 hookScript.PullPlayer(body.position);
                 hookScript.retract = true;
             }
+        }
+        else if(other.CompareTag("PassThrough"))
+        {
+            ivyParticles.Play();
         }
     }
 }
