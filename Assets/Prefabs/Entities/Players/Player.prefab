@@ -10994,6 +10994,10 @@ PrefabInstance:
       value: Hook Projectile
       objectReference: {fileID: 0}
     - target: {fileID: 7622038091706896977, guid: 801cbde90d944264dad2336c50d4c23f, type: 3}
+      propertyPath: seaWeed
+      value: 
+      objectReference: {fileID: 7485179848820534894}
+    - target: {fileID: 7622038091706896977, guid: 801cbde90d944264dad2336c50d4c23f, type: 3}
       propertyPath: playerRb
       value: 
       objectReference: {fileID: 3274055201585924953}
@@ -11003,6 +11007,16 @@ PrefabInstance:
       objectReference: {fileID: 2171415922674932808}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 801cbde90d944264dad2336c50d4c23f, type: 3}
+--- !u!4 &4932931559435457741 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4932931559514571778, guid: 801cbde90d944264dad2336c50d4c23f, type: 3}
+  m_PrefabInstance: {fileID: 257478863}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7485179848820534894 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7485179849066479265, guid: 801cbde90d944264dad2336c50d4c23f, type: 3}
+  m_PrefabInstance: {fileID: 257478863}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7622038091694817950 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7622038091706896977, guid: 801cbde90d944264dad2336c50d4c23f, type: 3}
@@ -11014,11 +11028,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1c88e8dd434bc043a1ff08818fc97fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &4932931559435457741 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4932931559514571778, guid: 801cbde90d944264dad2336c50d4c23f, type: 3}
-  m_PrefabInstance: {fileID: 257478863}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2412416839921294678 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2412416839875628441, guid: 801cbde90d944264dad2336c50d4c23f, type: 3}
