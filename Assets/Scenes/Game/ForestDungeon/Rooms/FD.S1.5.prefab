@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 1987854769596371638}
   - component: {fileID: 1223859138294092046}
   m_Layer: 0
-  m_Name: Small Fire Room
+  m_Name: FD.S1.5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
