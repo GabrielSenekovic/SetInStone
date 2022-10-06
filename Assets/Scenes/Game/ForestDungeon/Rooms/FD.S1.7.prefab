@@ -136,12 +136,7 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -13.680252, y: 8.69519}
-      - {x: -14.619308, y: 4.278305}
-      - {x: -21.36337, y: 3.8867126}
-      - {x: -20.9543, y: -3.0185394}
-      - {x: -14.165565, y: -2.5528483}
-      - {x: -14.060471, y: -7.6499023}
+    - - {x: -18.9068, y: 8.387745}
       - {x: -42.628704, y: -8.089583}
       - {x: -42.396103, y: -31.606735}
       - {x: 13.583895, y: -31.991617}
@@ -1063,6 +1058,7 @@ GameObject:
   - component: {fileID: 5449745931667401734}
   - component: {fileID: 4996474690292356657}
   - component: {fileID: 864328439256248196}
+  - component: {fileID: 275246683}
   m_Layer: 8
   m_Name: Tilemap
   m_TagString: Untagged
@@ -5557,7 +5553,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 12
+      m_TileSpriteIndex: 16
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -6748,16 +6744,16 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: 3339420246952022605, guid: 58faa279530fb504b9398844ab8db875, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 4
     m_Data: {fileID: -78535367377307384, guid: 58faa279530fb504b9398844ab8db875, type: 3}
   - m_RefCount: 3
     m_Data: {fileID: 5575462544614039875, guid: 58faa279530fb504b9398844ab8db875, type: 3}
   - m_RefCount: 5
     m_Data: {fileID: 4414818188616877066, guid: 58faa279530fb504b9398844ab8db875, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 3339420246952022605, guid: 58faa279530fb504b9398844ab8db875, type: 3}
   - m_RefCount: 5
     m_Data: {fileID: -2440664299643632678, guid: 58faa279530fb504b9398844ab8db875, type: 3}
   - m_RefCount: 121
@@ -6888,6 +6884,22 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
+--- !u!19719996 &275246683
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2896095796652940534}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0.00001
 --- !u!1 &4026039907321332306
 GameObject:
   m_ObjectHideFlags: 0

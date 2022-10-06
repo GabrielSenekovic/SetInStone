@@ -56,12 +56,12 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 26.839508, y: 27.953396}
-      - {x: -11.878357, y: 27.291708}
+    - - {x: 43.839508, y: 43.953396}
+      - {x: -11.878357, y: 44.29171}
       - {x: -14.104904, y: -8.173988}
       - {x: -8.855759, y: -7.8429317}
       - {x: -9.087785, y: -25.809017}
-      - {x: 26.951057, y: -25.940983}
+      - {x: 43.951057, y: -25.940983}
 --- !u!1 &648082471865847699
 GameObject:
   m_ObjectHideFlags: 0
@@ -9102,7 +9102,7 @@ GameObject:
   - component: {fileID: 1662340280664707382}
   - component: {fileID: 1287358853}
   m_Layer: 0
-  m_Name: Big Religious Room
+  m_Name: FD.S1.9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
