@@ -5,12 +5,12 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class Room : MonoBehaviour
 {
-    [SerializeField] PolygonCollider2D myCollider;
+    [SerializeField] Collider2D myCollider;
     [SerializeField] List<GameObject> enemies;
     public bool discovered;
     [SerializeField] GameObject door;
     [SerializeField] Light2D roomLight;
-    public PolygonCollider2D GetCollider()
+    public Collider2D GetCollider()
     {
         return myCollider;
     }

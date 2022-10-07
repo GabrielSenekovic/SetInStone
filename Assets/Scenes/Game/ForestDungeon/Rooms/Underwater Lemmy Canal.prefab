@@ -20421,6 +20421,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6891274673068585715, guid: fb0bb58dfd8ca8a4284327321f10cd8f, type: 3}
+      propertyPath: speed
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 6891274673068585716, guid: fb0bb58dfd8ca8a4284327321f10cd8f, type: 3}
       propertyPath: m_Name
       value: Lemmy (2)
@@ -20487,6 +20491,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6891274673068585715, guid: fb0bb58dfd8ca8a4284327321f10cd8f, type: 3}
+      propertyPath: speed
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 6891274673068585716, guid: fb0bb58dfd8ca8a4284327321f10cd8f, type: 3}
       propertyPath: m_Name
       value: Lemmy (3)
@@ -20549,6 +20557,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6891274673068585715, guid: fb0bb58dfd8ca8a4284327321f10cd8f, type: 3}
+      propertyPath: speed
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 6891274673068585716, guid: fb0bb58dfd8ca8a4284327321f10cd8f, type: 3}
       propertyPath: m_Name
       value: Lemmy
@@ -20610,6 +20622,10 @@ PrefabInstance:
     - target: {fileID: 6891274673068585714, guid: fb0bb58dfd8ca8a4284327321f10cd8f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6891274673068585715, guid: fb0bb58dfd8ca8a4284327321f10cd8f, type: 3}
+      propertyPath: speed
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 6891274673068585716, guid: fb0bb58dfd8ca8a4284327321f10cd8f, type: 3}
       propertyPath: m_Name
@@ -20677,6 +20693,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6891274673068585715, guid: fb0bb58dfd8ca8a4284327321f10cd8f, type: 3}
+      propertyPath: speed
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 6891274673068585716, guid: fb0bb58dfd8ca8a4284327321f10cd8f, type: 3}
       propertyPath: m_Name
       value: Lemmy (4)
@@ -20742,6 +20762,10 @@ PrefabInstance:
     - target: {fileID: 6891274673068585714, guid: fb0bb58dfd8ca8a4284327321f10cd8f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6891274673068585715, guid: fb0bb58dfd8ca8a4284327321f10cd8f, type: 3}
+      propertyPath: speed
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 6891274673068585716, guid: fb0bb58dfd8ca8a4284327321f10cd8f, type: 3}
       propertyPath: m_Name
