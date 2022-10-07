@@ -36,7 +36,7 @@ public class TilemapManager : MonoBehaviour
                     break;
                 case TilemapType.IVY: break;
                 case TilemapType.WATER:
-                    tileMaps[i].tilemap.color = new Color32(0, 0,0,128);
+                    tileMaps[i].tilemap.color = new Color32(255, 255,255,128);
                     tileMaps[i].tilemap.tag = "Water";
                     tileMaps[i].tilemap.gameObject.layer = LayerMask.NameToLayer("Water");
                     if(!tileMaps[i].tilemap.TryGetComponent<TilemapCollider2D>(out collider))
