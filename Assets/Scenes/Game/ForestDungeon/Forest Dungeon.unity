@@ -598,6 +598,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b09e4354795fc394a9623ff46891154e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1154092372 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 381898959330880275, guid: 7108319037d013048acb130722723263, type: 3}
+  m_PrefabInstance: {fileID: 1608890000}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1256236189
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -686,6 +697,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 653190433}
     m_Modifications:
+    - target: {fileID: 118023376, guid: 6a6fa243507d2e04581942961d1afb53, type: 3}
+      propertyPath: myCollider
+      value: 
+      objectReference: {fileID: 2070569286}
     - target: {fileID: 1809682776579719113, guid: 6a6fa243507d2e04581942961d1afb53, type: 3}
       propertyPath: myRoom
       value: 
@@ -893,6 +908,10 @@ PrefabInstance:
     - target: {fileID: 10348964, guid: 7108319037d013048acb130722723263, type: 3}
       propertyPath: amountOfLights
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 381898959330880275, guid: 7108319037d013048acb130722723263, type: 3}
+      propertyPath: m_NeverAutoSwitchControlSchemes
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1895773138450474993, guid: 7108319037d013048acb130722723263, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1269,6 +1288,11 @@ MonoBehaviour:
 Transform:
   m_CorrespondingSourceObject: {fileID: 7318923625452231725, guid: 7eaf5c2938f9c0849b1c851a640ea178, type: 3}
   m_PrefabInstance: {fileID: 2049374687}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &2070569286 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 1929642097375117205, guid: 6a6fa243507d2e04581942961d1afb53, type: 3}
+  m_PrefabInstance: {fileID: 1279413409}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2080336532
 GameObject:
@@ -1830,6 +1854,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4553011603652641042, guid: 1002279e3f6db814ba696d24554395b7, type: 3}
+      propertyPath: playerInput
+      value: 
+      objectReference: {fileID: 1154092372}
     - target: {fileID: 4620396199152121579, guid: 1002279e3f6db814ba696d24554395b7, type: 3}
       propertyPath: m_RootOrder
       value: 0

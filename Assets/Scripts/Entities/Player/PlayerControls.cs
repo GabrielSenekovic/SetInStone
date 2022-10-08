@@ -197,7 +197,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""path"": ""<SwitchProControllerHID>/leftStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Player"",
+                    ""groups"": ""Game Controller"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -208,7 +208,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""path"": ""<SwitchProControllerHID>/leftStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Player"",
+                    ""groups"": ""Game Controller"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -230,7 +230,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""path"": ""<Joystick>/stick/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Player"",
+                    ""groups"": ""Game Controller"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -241,7 +241,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""path"": ""<Joystick>/stick/right"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Player"",
+                    ""groups"": ""Game Controller"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -285,7 +285,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""path"": ""<SwitchProControllerHID>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Player"",
+                    ""groups"": ""Game Controller"",
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -296,7 +296,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""path"": ""<HID::USB Gamepad >/button3"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Player"",
+                    ""groups"": ""Game Controller"",
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -318,7 +318,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""path"": ""<SwitchProControllerHID>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Player"",
+                    ""groups"": ""Game Controller"",
                     ""action"": ""StopJump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -329,7 +329,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""path"": ""<HID::USB Gamepad >/button3"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Player"",
+                    ""groups"": ""Game Controller"",
                     ""action"": ""StopJump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -395,7 +395,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""path"": ""<SwitchProControllerHID>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Player"",
+                    ""groups"": ""Game Controller"",
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -406,7 +406,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""path"": ""<HID::USB Gamepad >/button4"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Player"",
+                    ""groups"": ""Game Controller"",
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -439,7 +439,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""path"": ""<SwitchProControllerHID>/leftStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Player"",
+                    ""groups"": ""Game Controller"",
                     ""action"": ""StopMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -450,7 +450,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""path"": ""<SwitchProControllerHID>/leftStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Player"",
+                    ""groups"": ""Game Controller"",
                     ""action"": ""StopMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -472,7 +472,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""path"": ""<Joystick>/stick/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Player"",
+                    ""groups"": ""Game Controller"",
                     ""action"": ""StopMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -483,7 +483,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""path"": ""<Joystick>/stick/right"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Player"",
+                    ""groups"": ""Game Controller"",
                     ""action"": ""StopMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -735,22 +735,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     ],
     ""controlSchemes"": [
         {
-            ""name"": ""Player"",
-            ""bindingGroup"": ""Player"",
+            ""name"": ""Game Controller"",
+            ""bindingGroup"": ""Game Controller"",
             ""devices"": [
                 {
-                    ""devicePath"": ""<Keyboard>"",
-                    ""isOptional"": true,
-                    ""isOR"": false
-                },
-                {
-                    ""devicePath"": ""<SwitchProControllerHID>"",
-                    ""isOptional"": true,
-                    ""isOR"": false
-                },
-                {
-                    ""devicePath"": ""<HID::USB Gamepad >"",
-                    ""isOptional"": true,
+                    ""devicePath"": ""<Gamepad>"",
+                    ""isOptional"": false,
                     ""isOR"": false
                 }
             ]
@@ -1025,13 +1015,13 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         }
     }
     public LandActions @Land => new LandActions(this);
-    private int m_PlayerSchemeIndex = -1;
-    public InputControlScheme PlayerScheme
+    private int m_GameControllerSchemeIndex = -1;
+    public InputControlScheme GameControllerScheme
     {
         get
         {
-            if (m_PlayerSchemeIndex == -1) m_PlayerSchemeIndex = asset.FindControlSchemeIndex("Player");
-            return asset.controlSchemes[m_PlayerSchemeIndex];
+            if (m_GameControllerSchemeIndex == -1) m_GameControllerSchemeIndex = asset.FindControlSchemeIndex("Game Controller");
+            return asset.controlSchemes[m_GameControllerSchemeIndex];
         }
     }
     private int m_KeyboardMouseSchemeIndex = -1;

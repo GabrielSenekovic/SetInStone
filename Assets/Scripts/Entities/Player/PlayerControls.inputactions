@@ -184,7 +184,7 @@
                     "path": "<SwitchProControllerHID>/leftStick/left",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Player",
+                    "groups": "Game Controller",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -195,7 +195,7 @@
                     "path": "<SwitchProControllerHID>/leftStick/right",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Player",
+                    "groups": "Game Controller",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -217,7 +217,7 @@
                     "path": "<Joystick>/stick/left",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Player",
+                    "groups": "Game Controller",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -228,7 +228,7 @@
                     "path": "<Joystick>/stick/right",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Player",
+                    "groups": "Game Controller",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -272,7 +272,7 @@
                     "path": "<SwitchProControllerHID>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Player",
+                    "groups": "Game Controller",
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -283,7 +283,7 @@
                     "path": "<HID::USB Gamepad >/button3",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Player",
+                    "groups": "Game Controller",
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -305,7 +305,7 @@
                     "path": "<SwitchProControllerHID>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Player",
+                    "groups": "Game Controller",
                     "action": "StopJump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -316,7 +316,7 @@
                     "path": "<HID::USB Gamepad >/button3",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Player",
+                    "groups": "Game Controller",
                     "action": "StopJump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -382,7 +382,7 @@
                     "path": "<SwitchProControllerHID>/buttonWest",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Player",
+                    "groups": "Game Controller",
                     "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -393,7 +393,7 @@
                     "path": "<HID::USB Gamepad >/button4",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Player",
+                    "groups": "Game Controller",
                     "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -426,7 +426,7 @@
                     "path": "<SwitchProControllerHID>/leftStick/left",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Player",
+                    "groups": "Game Controller",
                     "action": "StopMove",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -437,7 +437,7 @@
                     "path": "<SwitchProControllerHID>/leftStick/right",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Player",
+                    "groups": "Game Controller",
                     "action": "StopMove",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -459,7 +459,7 @@
                     "path": "<Joystick>/stick/left",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Player",
+                    "groups": "Game Controller",
                     "action": "StopMove",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -470,7 +470,7 @@
                     "path": "<Joystick>/stick/right",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Player",
+                    "groups": "Game Controller",
                     "action": "StopMove",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -722,22 +722,12 @@
     ],
     "controlSchemes": [
         {
-            "name": "Player",
-            "bindingGroup": "Player",
+            "name": "Game Controller",
+            "bindingGroup": "Game Controller",
             "devices": [
                 {
-                    "devicePath": "<Keyboard>",
-                    "isOptional": true,
-                    "isOR": false
-                },
-                {
-                    "devicePath": "<SwitchProControllerHID>",
-                    "isOptional": true,
-                    "isOR": false
-                },
-                {
-                    "devicePath": "<HID::USB Gamepad >",
-                    "isOptional": true,
+                    "devicePath": "<Gamepad>",
+                    "isOptional": false,
                     "isOR": false
                 }
             ]

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Users;
 using UnityEngine.UI;
 using System.Linq;
 
@@ -23,8 +24,13 @@ public class InputChange : MonoBehaviour
     private void Awake()
     {
         map = inputAction.actionMaps[0];
+        InputUser.onChange += OnControlsChanged;
 
         buttons = buttonListParent.GetComponentsInChildren<KeybindButton>().ToList();
+    }
+    void OnControlsChanged(InputUser user, InputUserChange change, InputDevice device)
+    {
+        Debug.Log("Changed to: " + user.controlScheme.Value.name);
     }
     public void Initialize(string currentScheme_in)
     {
@@ -32,7 +38,7 @@ public class InputChange : MonoBehaviour
         currentScheme = currentScheme_in;
         for (int i = 0; i < buttons.Count; i++)
         {
-            Debug.Log(buttons[i].action);
+            ´//Debug.Log(buttons[i].action);
             switch (buttons[i].action)
             {
                 case "Jump":
