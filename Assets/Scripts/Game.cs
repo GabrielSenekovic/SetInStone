@@ -63,7 +63,11 @@ public class Game : MonoBehaviour
         {
             instance.inputChange = FindObjectOfType<InputChange>();
         }
-        instance.inputChange.Initialize(playerIn.transform.parent.GetComponent<PlayerInput>().currentControlScheme);
+        PlayerInput input = playerIn.transform.parent.GetComponent<PlayerInput>();
+        foreach(InputDevice device in input.devices)
+        {
+            instance.inputChange.SetBindingButtons(device, input.currentControlScheme);
+        }
     }
     public static GameObject GetCurrentPlayer()
     {

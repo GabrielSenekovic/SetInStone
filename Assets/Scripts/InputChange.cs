@@ -30,52 +30,64 @@ public class InputChange : MonoBehaviour
     }
     void OnControlsChanged(InputUser user, InputUserChange change, InputDevice device)
     {
-        Debug.Log("Changed to: " + user.controlScheme.Value.name);
+        Debug.Log("Changed to: " + device);
+        SetBindingButtons(device, user.controlScheme.Value.name);
     }
-    public void Initialize(string currentScheme_in)
+    public void SetBindingButtons(InputDevice device, string currentScheme_in)
     {
-        if (initialized) { return; }
         currentScheme = currentScheme_in;
-        for (int i = 0; i < buttons.Count; i++)
+        for (int i = 0; i < buttons.Count;)
         {
-            ´//Debug.Log(buttons[i].action);
             switch (buttons[i].action)
             {
                 case "Jump":
-                    buttons[i].SetButtonText(map.actions[4].bindings[map.actions[4].GetBindingIndex(currentScheme)].path);
+                    OnSetBindingButton(device, ref i, 4);
                     break;
                 case "Hookshot":
-                    buttons[i].SetButtonText(map.actions[6].bindings[map.actions[6].GetBindingIndex(currentScheme)].path);
+                    OnSetBindingButton(device, ref i, 6);
                     break;
                 case "Attack":
-                    buttons[i].SetButtonText(map.actions[12].bindings[map.actions[12].GetBindingIndex(currentScheme)].path);
+                    OnSetBindingButton(device, ref i, 12);
                     break;
                 case "Pulka":
-                    buttons[i].SetButtonText(map.actions[8].bindings[map.actions[8].GetBindingIndex(currentScheme)].path);
+                    OnSetBindingButton(device, ref i, 8);
                     break;
-                case "Left":
-                    buttons[i].SetButtonText(map.actions[0].bindings[map.actions[0].GetBindingIndex(currentScheme)].path);
+                case "Left": //Right has to be after in the list
+                    OnSetBindingButton(device, ref i, 0);
                     break;
-                case "Right":
-                    buttons[i].SetButtonText(map.actions[0].bindings[map.actions[0].GetBindingIndex(currentScheme) + 1].path);
-                    break;
-                case "Down":
-                    buttons[i].SetButtonText(map.actions[2].bindings[map.actions[2].GetBindingIndex(currentScheme)].path);
-                    break;
-                case "Up":
-                    buttons[i].SetButtonText(map.actions[2].bindings[map.actions[2].GetBindingIndex(currentScheme) + 1].path);
+                case "Down": //Up has to be after in the list
+                    OnSetBindingButton(device, ref i, 2);
                     break;
                 case "Map":
-                    buttons[i].SetButtonText(map.actions[16].bindings[map.actions[16].GetBindingIndex(currentScheme)].path);
+                    OnSetBindingButton(device, ref i, 16);
                     break;
                 case "Pause":
-                    buttons[i].SetButtonText(map.actions[15].bindings[map.actions[15].GetBindingIndex(currentScheme)].path);
+                    OnSetBindingButton(device, ref i, 15);
                     break;
                 default:
-                    Debug.Break(); break;
+                    i++; break;
             }
         }
         initialized = true;
+    }
+    void OnSetBindingButton(InputDevice device, ref int index, int action)
+    {
+        InputControl currentControl = null;
+        List<InputControl> controls = map.actions[action].bindings.Where(b => 
+        {
+            currentControl = InputControlPath.TryFindControl(device, b.effectivePath);
+            return currentControl != null; //Makes sure that the control in question isn't null
+        }).Select(b => currentControl).ToList(); //Select returns the InputControl. Otherwise it would return an InputBinding, which we're not looking for
+
+        foreach(var c in controls)
+        {
+            buttons[index].SetButtonText(c.displayName, false); //For this to work, Right has to be after Left in the list and so on
+            index++;
+        }
+        if(controls.Count == 0)
+        {
+            index++; //If we're on the keyboard and not the mouse, we don't want the for loop to keep going forever. Just go on
+        }
     }
 
     public void Rebind(string function)
@@ -177,7 +189,7 @@ public class InputChange : MonoBehaviour
             if (buttons[i].action == name)
             {
                 indexOfOriginalButton = i;
-                buttons[i].SetButtonText(path);
+                buttons[i].SetButtonText(path, true);
             }
         }
         for(int i = 0; i < buttons.Count; i++) //Go through all buttons to find conflicting bindings
