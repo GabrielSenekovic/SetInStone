@@ -6,7 +6,6 @@ using UnityEngine.Rendering.Universal;
 using Cinemachine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
 
 public class Game : MonoBehaviour
 {
@@ -59,15 +58,6 @@ public class Game : MonoBehaviour
         instance.player = playerIn;
         instance.cinemachineVirtualCamera.m_Follow = playerIn.transform;
         instance.cinemachineVirtualCamera.GetComponent<CinemachineConfiner>().m_BoundingShape2D = playerIn.transform.parent.GetComponent<Movement>().room;
-        if(!instance.inputChange)
-        {
-            instance.inputChange = FindObjectOfType<InputChange>();
-        }
-        PlayerInput input = playerIn.transform.parent.GetComponent<PlayerInput>();
-        foreach(InputDevice device in input.devices)
-        {
-            instance.inputChange.SetBindingButtons(device, input.currentControlScheme);
-        }
     }
     public static GameObject GetCurrentPlayer()
     {
