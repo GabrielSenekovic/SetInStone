@@ -31,7 +31,7 @@ public class Pulka : MonoBehaviour
             case PulkaState.SITTING:
                 movement.SetGroundCheck(pulkaGroundCheck);
                 movement.SetCantRotate(false);
-                movement.slideRequest = true;
+                movement.AddFlag(Movement.NiyoMovementState.SLIDE_REQUEST);
                 movement.SetGrounded(false);
                 break;
             case PulkaState.SHIELD: AudioManager.PlaySFX("Shield"); break;
@@ -77,11 +77,11 @@ public class Pulka : MonoBehaviour
     }
     public void TriggerDismount(Movement movement)
     {
-        if (movement.dismountRequest && movement.GetGrounded()) //* triggers when on the pulka on ground, so that you get pushed up
+        if (movement.HasFlag(Movement.NiyoMovementState.DISMOUNT_REQUEST) && movement.GetGrounded()) //* triggers when on the pulka on ground, so that you get pushed up
         {
             movement.GetBody().AddForce(new Vector2(0, movement.jumpForce), ForceMode2D.Impulse);
             movement.SetGrounded(false);
-            movement.dismountRequest = false;
+            movement.RemoveFlag(Movement.NiyoMovementState.DISMOUNT_REQUEST);
             SetState(PulkaState.NONE, movement);
             movement.ResetGroundCheck();
             movement.playerAnimator.SetBool("sitting", false);

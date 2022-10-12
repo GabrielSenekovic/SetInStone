@@ -60,9 +60,9 @@ public class Input : MonoBehaviour
     
     private void OnMove(InputValue value) //! input stuff
     {
-        if (!controllable || movement.actionBuffer) {return;}
-        if(!movement.submerged){playerAnimator.SetBool("walking", true);}
-        movement.movingDirection = value.Get<float>();
+        if (!controllable || movement.HasFlag(Movement.NiyoMovementState.ACTIONBUFFER)) {return;}
+        if(!movement.IsSubmerged()){playerAnimator.SetBool("walking", true);}
+        movement.SetMovingDirection(value.Get<float>());
         movement.FaceMovingDirection();
     }
     void OnDEBUGRESET()
@@ -72,16 +72,16 @@ public class Input : MonoBehaviour
     void OnStopMove()
     {
         if(debug){Debug.Log("Stopping Movement");}
-        movement.movingDirection = 0;
-        if(!movement.submerged){playerAnimator.SetBool("walking", false);}
+        movement.SetMovingDirection(0);
+        if(!movement.IsSubmerged()){playerAnimator.SetBool("walking", false);}
     }
     void OnMoveVertical(InputValue value)
     {
-        movement.verticalDirection = value.Get<float>();
+        movement.SetVerticalDirection(value.Get<float>());
     }
     void OnStopMoveVertical()
     {
-        movement.verticalDirection = 0;
+        movement.SetVerticalDirection(0);
     }
     void OnZoom(InputValue value)
     {
@@ -93,13 +93,13 @@ public class Input : MonoBehaviour
 
     private void OnAttack()
     {
-        if (!controllable || movement.actionBuffer || movement.hangingFromLedge) {return;}
+        if (!controllable || movement.HasFlag(Movement.NiyoMovementState.ACTIONBUFFER) || movement.HasFlag(Movement.NiyoMovementState.LEDGE_HANGING)) {return;}
         if(!movement.GetGrounded() && attack.Attack()) {playerAnimator.SetTrigger("attack"); movement.StopVelocity();}
     }
 
     void OnSpecial()
     {
-        if (!controllable || movement.actionBuffer || !inventory.HasHookshot() || movement.submerged) {return;}
+        if (!controllable || movement.HasFlag(Movement.NiyoMovementState.ACTIONBUFFER) || !inventory.HasHookshot() || movement.IsSubmerged()) {return;}
         if(movement.hookShot.Shoot()) {movement.StopVelocity();}
         movement.FaceMovingDirection();
     }
@@ -111,11 +111,11 @@ public class Input : MonoBehaviour
 
     void OnPulka()
     {
-        if (!controllable || movement.actionBuffer || !inventory.HasPulka()) {return;}
+        if (!controllable || movement.HasFlag(Movement.NiyoMovementState.ACTIONBUFFER) || !inventory.HasPulka()) {return;}
 
         if(debug){Debug.Log("Using Pulka");}
 
-        if(movement.ducking)
+        if(movement.IsDucking())
         {
             playerAnimator.SetBool("sitting", true);
             pulka.SetState(Pulka.PulkaState.SITTING, movement);
@@ -131,31 +131,30 @@ public class Input : MonoBehaviour
         if(pulka.GetState() == Pulka.PulkaState.SITTING)
         {
             if(debug){Debug.Log("Put in dismount request");}
-            movement.dismountRequest = true;
+            movement.AddFlag(Movement.NiyoMovementState.DISMOUNT_REQUEST);
             movement.SetCantRotate(true);
             movement.ResetRotation();
-            movement.ducking = false;
         }
         else // if you arent sitting then dismount? maybe the state is changed right before
         {
             pulka.Dismount();
             movement.ResetGroundCheck();
-            movement.ducking = false;
             playerAnimator.SetBool("sitting", false);
         }
+        movement.RemoveFlag(Movement.NiyoMovementState.DUCKING);
     }
 
     void OnDuck()
     {
-        if (!controllable || movement.actionBuffer) {return;}
+        if (!controllable || movement.HasFlag(Movement.NiyoMovementState.ACTIONBUFFER)) {return;}
         if(debug){Debug.Log("Duck");}
-        movement.ducking = true;
+        movement.Duck();
     }
 
     void OnStandUp()
     {
         if(pulka.GetState() != Pulka.PulkaState.SITTING)
-        movement.ducking = false;
+        movement.RemoveFlag(Movement.NiyoMovementState.DUCKING);
         AudioManager.PlaySFX("SitOnSled");
     }
 

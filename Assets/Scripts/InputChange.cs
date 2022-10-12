@@ -188,7 +188,6 @@ public class InputChange : MonoBehaviour
         else
         {
             actions[0].Disable();
-            Debug.Log(newBinding);
             actions[0].ApplyBindingOverride(newBinding, currentScheme);
             RebindComplete(actions, name);
         }
