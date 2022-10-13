@@ -195,6 +195,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FD.S1.11
       objectReference: {fileID: 0}
+    - target: {fileID: 2955905592450400701, guid: 089cd6e8efb71b44fb7de700193e116c, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: ab0b71d67683e8047ab35c95edfebd3b, type: 2}
     - target: {fileID: 6989759996885193482, guid: 089cd6e8efb71b44fb7de700193e116c, type: 3}
       propertyPath: myRoom
       value: 
@@ -483,6 +487,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FD.S1.13
       objectReference: {fileID: 0}
+    - target: {fileID: 8965143252575335621, guid: 44a971fcf6dcd0642bf18c0ea7107050, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: ab0b71d67683e8047ab35c95edfebd3b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44a971fcf6dcd0642bf18c0ea7107050, type: 3}
 --- !u!4 &791553327 stripped
@@ -635,6 +643,10 @@ PrefabInstance:
       propertyPath: myRoom
       value: 
       objectReference: {fileID: 187216341}
+    - target: {fileID: 5875564638857548616, guid: 2a8195325e0b79c4fadd8cc7aac7872e, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: ab0b71d67683e8047ab35c95edfebd3b, type: 2}
     - target: {fileID: 5937326743351567286, guid: 2a8195325e0b79c4fadd8cc7aac7872e, type: 3}
       propertyPath: m_Name
       value: FD.S1.14
@@ -768,6 +780,10 @@ PrefabInstance:
       propertyPath: myRoom
       value: 
       objectReference: {fileID: 791553328}
+    - target: {fileID: 7294037975747898442, guid: 6a6fa243507d2e04581942961d1afb53, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: ab0b71d67683e8047ab35c95edfebd3b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a6fa243507d2e04581942961d1afb53, type: 3}
 --- !u!4 &1279413410 stripped
@@ -797,6 +813,10 @@ PrefabInstance:
       propertyPath: myRoom
       value: 
       objectReference: {fileID: 1104590860}
+    - target: {fileID: 1022413961051572332, guid: 7c3abbac3d277be42a17d6e4f4038718, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: ab0b71d67683e8047ab35c95edfebd3b, type: 2}
     - target: {fileID: 1662340280664707382, guid: 7c3abbac3d277be42a17d6e4f4038718, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -903,7 +923,7 @@ PrefabInstance:
     - target: {fileID: -6437868355953878240, guid: 7108319037d013048acb130722723263, type: 3}
       propertyPath: room
       value: 
-      objectReference: {fileID: 271470453}
+      objectReference: {fileID: 1963511079}
     - target: {fileID: -6437868355953878240, guid: 7108319037d013048acb130722723263, type: 3}
       propertyPath: bubbleAnimator
       value: 
@@ -1110,11 +1130,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2866837049075620558, guid: 7108319037d013048acb130722723263, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -53.9
+      value: 155.5
       objectReference: {fileID: 0}
     - target: {fileID: 2866837049075620558, guid: 7108319037d013048acb130722723263, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 16.5
+      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 2866837049075620558, guid: 7108319037d013048acb130722723263, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1354,6 +1374,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FD.S1.15
       objectReference: {fileID: 0}
+    - target: {fileID: 6827243911374475551, guid: ece1e77372a987a4a91f31a4a6dc2a78, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: ab0b71d67683e8047ab35c95edfebd3b, type: 2}
     - target: {fileID: 7558570425679522191, guid: ece1e77372a987a4a91f31a4a6dc2a78, type: 3}
       propertyPath: myRoom
       value: 
@@ -1387,6 +1411,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cec770a6693030408feb0c16edbf103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!60 &1963511079 stripped
+PolygonCollider2D:
+  m_CorrespondingSourceObject: {fileID: 444768720, guid: f7f39e54ebd4a994fbef5867e95c9b23, type: 3}
+  m_PrefabInstance: {fileID: 1606978459297975323}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2049374687
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1398,6 +1427,10 @@ PrefabInstance:
       propertyPath: myRoom
       value: 
       objectReference: {fileID: 1289799946}
+    - target: {fileID: 4587610372873454335, guid: 7eaf5c2938f9c0849b1c851a640ea178, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: ab0b71d67683e8047ab35c95edfebd3b, type: 2}
     - target: {fileID: 7318923625452231724, guid: 7eaf5c2938f9c0849b1c851a640ea178, type: 3}
       propertyPath: m_Name
       value: FD.S1.10
@@ -1562,6 +1595,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 653190433}
     m_Modifications:
+    - target: {fileID: 8579360556743335, guid: 17ff2126589afc24a912dc468f020086, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: ab0b71d67683e8047ab35c95edfebd3b, type: 2}
     - target: {fileID: 1256447025231153993, guid: 17ff2126589afc24a912dc468f020086, type: 3}
       propertyPath: myRoom
       value: 
@@ -1640,6 +1677,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 653190433}
     m_Modifications:
+    - target: {fileID: 184465994, guid: 7b2eca946049d944cb8aaa51e6d3d1d4, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: ab0b71d67683e8047ab35c95edfebd3b, type: 2}
     - target: {fileID: 875848617, guid: 7b2eca946049d944cb8aaa51e6d3d1d4, type: 3}
       propertyPath: myRoom
       value: 
@@ -1737,6 +1778,10 @@ PrefabInstance:
       propertyPath: myCollider
       value: 
       objectReference: {fileID: 271470453}
+    - target: {fileID: 1370760799363529047, guid: e1bffe1a38099f4409e257696d372c09, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: ab0b71d67683e8047ab35c95edfebd3b, type: 2}
     - target: {fileID: 1484364934022736316, guid: e1bffe1a38099f4409e257696d372c09, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1794,6 +1839,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 653190433}
     m_Modifications:
+    - target: {fileID: 1157581003, guid: f7f39e54ebd4a994fbef5867e95c9b23, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: ab0b71d67683e8047ab35c95edfebd3b, type: 2}
     - target: {fileID: 1656655045, guid: f7f39e54ebd4a994fbef5867e95c9b23, type: 3}
       propertyPath: myRoom
       value: 
@@ -1882,6 +1931,10 @@ PrefabInstance:
       propertyPath: myRoom
       value: 
       objectReference: {fileID: 1080944605}
+    - target: {fileID: 2683769657697638277, guid: d9b205d03f618dd48b0c17873ab1fed0, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: ab0b71d67683e8047ab35c95edfebd3b, type: 2}
     - target: {fileID: 2683769658075548668, guid: d9b205d03f618dd48b0c17873ab1fed0, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1944,6 +1997,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 653190433}
     m_Modifications:
+    - target: {fileID: 275246683, guid: 12b18a3008d50124bb3ac83feba301e4, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: ab0b71d67683e8047ab35c95edfebd3b, type: 2}
     - target: {fileID: 1461657067, guid: 12b18a3008d50124bb3ac83feba301e4, type: 3}
       propertyPath: myRoom
       value: 
@@ -1955,6 +2012,10 @@ PrefabInstance:
     - target: {fileID: 4026039907321332306, guid: 12b18a3008d50124bb3ac83feba301e4, type: 3}
       propertyPath: m_Name
       value: FD.S1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4026039907321332306, guid: 12b18a3008d50124bb3ac83feba301e4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4026039907321332307, guid: 12b18a3008d50124bb3ac83feba301e4, type: 3}
       propertyPath: m_RootOrder
@@ -2314,6 +2375,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FD.S1.3
       objectReference: {fileID: 0}
+    - target: {fileID: 1300819191137085245, guid: 0cb2fd7b71e22384c8b871b08f9afc8e, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: ab0b71d67683e8047ab35c95edfebd3b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0cb2fd7b71e22384c8b871b08f9afc8e, type: 3}
 --- !u!114 &7273207313275243709 stripped
@@ -2386,6 +2451,10 @@ PrefabInstance:
       propertyPath: myRoom
       value: 
       objectReference: {fileID: 7273207313275243709}
+    - target: {fileID: 7775170363563990444, guid: fd7803adde9c83b4899ac209830f84ce, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: ab0b71d67683e8047ab35c95edfebd3b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd7803adde9c83b4899ac209830f84ce, type: 3}
 --- !u!4 &7775170363563990443 stripped

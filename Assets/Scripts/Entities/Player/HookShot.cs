@@ -77,7 +77,7 @@ public class HookShot : MonoBehaviour
         AudioManager.PlaySFX("HookHit");
         AudioManager.PlaySFX("HookReel");
 
-        movement.RemoveFlag(Movement.NiyoMovementState.ACTIONBUFFER);
+        movement.RemoveFlag(NiyoMovementState.ACTIONBUFFER);
         body.gravityScale = movement.normGrav;
         movement.amntOfJumps = 0;
     }
@@ -85,7 +85,7 @@ public class HookShot : MonoBehaviour
     {
         if(!hook.IsVisible()){return;}
         shooting = false;
-        movement.RemoveFlag(Movement.NiyoMovementState.FORCE_LEDGE_CLIMB);
+        movement.RemoveFlag(NiyoMovementState.FORCE_LEDGE_CLIMB);
         if(hit)
         {
             PullPlayer(hook.body.position);
@@ -143,7 +143,7 @@ public class HookShot : MonoBehaviour
         AdjustSeaweed();
        
         body.gravityScale = 0;
-        movement.AddFlag(Movement.NiyoMovementState.ACTIONBUFFER);
+        movement.AddFlag(NiyoMovementState.ACTIONBUFFER);
         body.velocity = Vector2.zero;
         playerAnimator.SetTrigger("throwhook");
         AudioManager.PlaySFX("HookThrow");
@@ -152,9 +152,9 @@ public class HookShot : MonoBehaviour
     public void Retract()
     {
         if (!hook.IsVisible()) { return; }
-        if (movement.HasFlag(Movement.NiyoMovementState.ACTIONBUFFER)) //When it starts retracting, give player their movement back
+        if (movement.HasFlag(NiyoMovementState.ACTIONBUFFER)) //When it starts retracting, give player their movement back
         {
-            movement.RemoveFlag(Movement.NiyoMovementState.ACTIONBUFFER);
+            movement.RemoveFlag(NiyoMovementState.ACTIONBUFFER);
             body.gravityScale = movement.normGrav;
         }
 
@@ -192,7 +192,7 @@ public class HookShot : MonoBehaviour
     }
     public void ClimbLedge()
     {
-        movement.AddFlag(Movement.NiyoMovementState.FORCE_LEDGE_CLIMB);
+        movement.AddFlag(NiyoMovementState.FORCE_LEDGE_CLIMB);
     }
 
     private void OnDrawGizmos()

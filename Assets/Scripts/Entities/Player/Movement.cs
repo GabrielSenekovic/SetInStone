@@ -8,31 +8,6 @@ using System.Linq;
 using System;
 public class Movement : MonoBehaviour
 {
-    [Flags]
-    public enum NiyoMovementState
-    {
-        NONE = 0,
-        GROUNDED = 1,
-        JUMPING = 1 << 1,
-        DUCKING = 1 << 2,
-
-        TOUCHING_WATER = 1 << 3,
-        TOUCHING_SURFACE = 1 << 4,
-        SUBMERGED = 1 << 5,
-
-        LEDGE_DETECTED = 1 << 6,
-        LEDGE_HANGING = 1 << 7,
-        FORCE_LEDGE_CLIMB = 1 << 8,
-
-        ONFIRE = 1 << 9,
-
-        IS_FLUNG = 1 << 10, //Used for hookshotting. If moving in the opposite direction of velocity you break it but if you move in the same direction nothing happens
-
-        DISMOUNT_REQUEST = 1 << 11,
-        SLIDE_REQUEST = 1 << 12,
-
-        ACTIONBUFFER = 1 << 13
-    }
     [SerializeField] NiyoMovementState movementState;
     public Animator playerAnimator;
     public Animator bubbleAnimator;
@@ -148,14 +123,15 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
-        if(!movementState.HasFlag(NiyoMovementState.SUBMERGED)) //Underwater you cant walk on the ground nor ledgeclimb
+        GroundCollisionCheck();
+        if (!movementState.HasFlag(NiyoMovementState.SUBMERGED))
         {
-            GroundCollisionCheck();
             CheckLedgeClimb();
             Fall();
-            if(movementState.HasFlag(NiyoMovementState.TOUCHING_WATER) && Physics2D.OverlapCircleAll(surfaceCheck.transform.position, 0.5f).Any(e => e.gameObject.layer == LayerMask.NameToLayer("Water")))
+            if(movementState.HasFlag(NiyoMovementState.TOUCHING_WATER) && !movementState.HasFlag(NiyoMovementState.GROUNDED)
+                && Physics2D.OverlapCircleAll(surfaceCheck.transform.position, 0.5f).Any(e => e.gameObject.layer == LayerMask.NameToLayer("Water")))
             {
-                movementState |= NiyoMovementState.SUBMERGED;
+                movementState = movementState.Submerge();
                 playerAnimator.SetBool("swimming", true);
             }
         }
@@ -283,8 +259,8 @@ public class Movement : MonoBehaviour
     }
     void Fall()
     {
-        if(!movementState.HasFlag(NiyoMovementState.GROUNDED) && !movementState.HasFlag(NiyoMovementState.LEDGE_HANGING) 
-            && Mathf.Abs(body.velocity.y) < 1 && jumpTimer > 0 && !movementState.HasFlag(NiyoMovementState.ACTIONBUFFER)) //!If the down velocity or the up velocity is less than a threshold
+        if(!movementState.IsGrounded() && !movementState.IsLedgeHanging()
+            && Mathf.Abs(body.velocity.y) < 1 && jumpTimer > 0 && !movementState.CanMove()) //!If the down velocity or the up velocity is less than a threshold
         {
             body.gravityScale = normGrav * gravityModifier;
         }
@@ -325,7 +301,7 @@ public class Movement : MonoBehaviour
             movementState |= NiyoMovementState.LEDGE_DETECTED;
             ledgePosBot = wallCheck.position;
         }
-        if(movementState.HasFlag(NiyoMovementState.LEDGE_DETECTED) && !movementState.HasFlag(NiyoMovementState.LEDGE_HANGING))
+        if(movementState.HasFlag(NiyoMovementState.LEDGE_DETECTED) && !movementState.IsLedgeHanging())
         {
             movementState |= NiyoMovementState.LEDGE_HANGING;
             if(bodyTransform.transform.localScale.x > 0)
@@ -349,7 +325,7 @@ public class Movement : MonoBehaviour
 
     public void FinishLedgeClimb()
     {
-        if(!movementState.HasFlag(NiyoMovementState.LEDGE_HANGING)) {return;}
+        if(!movementState.IsLedgeHanging()) {return;}
 
         movementState &= ~NiyoMovementState.LEDGE_HANGING;
         movementState &= ~NiyoMovementState.LEDGE_DETECTED;
@@ -368,7 +344,11 @@ public class Movement : MonoBehaviour
         {
             movementState |= NiyoMovementState.TOUCHING_SURFACE;
         }
-        if(!movementState.HasFlag(NiyoMovementState.TOUCHING_SURFACE))
+        else
+        {
+            movementState &= ~NiyoMovementState.TOUCHING_SURFACE;
+        }
+        if(!movementState.IsTouchingSurface())
         { //This is a patch. Previously, when jumping out of water flush against a wall for a bit, swimming would be set to false and you wouldnt be far out of the water enough to exit it and reenter it
         //So when you fell back into the water, you were in a constant state of falling animation
             playerAnimator.SetBool("swimming", true);
@@ -378,20 +358,19 @@ public class Movement : MonoBehaviour
     void GroundCollisionCheck()
     {
         if(movementState.HasFlag(NiyoMovementState.LEDGE_HANGING)){return;}
-        if(body.velocity.y == 0 || pulka.GetState() == Pulka.PulkaState.SITTING) //!if falling ( if you are not moving in y and if you just jumped and you arent on the ground)
+        if((body.velocity.y == 0 && !movementState.IsSubmerged())
+            || pulka.GetState() == Pulka.PulkaState.SITTING 
+            || movementState.HasFlag(NiyoMovementState.TOUCHING_SURFACE | NiyoMovementState.SUBMERGED))
         {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundedRadius, whatIsGround); //* make a collider on the feet and see what it hits
-
-            for (int i = 0; i < colliders.Length; i++)
+            if(Physics2D.OverlapCircleAll(groundCheck.position, groundedRadius, whatIsGround).Any(c => c.gameObject.layer == Mathf.Log(whatIsGround.value, 2)))
             {
-                if (colliders[i].gameObject.layer == Mathf.Log(whatIsGround.value,2)) //* check the things it hits,,, if its not the player itself, you collided maboi
+                if (jumpTimer > 10 && !movementState.HasFlag(NiyoMovementState.GROUNDED)) 
                 {
-                    if (jumpTimer > 10 && !movementState.HasFlag(NiyoMovementState.GROUNDED)) {Ground();} // if !grounded && jumptimer > 10 
-                    movementState |= NiyoMovementState.GROUNDED;
-                    return;
+                    Ground();
                 }
-                else if(i == colliders.Length - 1) {playerAnimator.SetBool("falling", true); movementState &= ~NiyoMovementState.GROUNDED; }
-            }  
+                movementState |= NiyoMovementState.GROUNDED;
+                return;
+            } 
         }
         else
         {
@@ -428,6 +407,8 @@ public class Movement : MonoBehaviour
         movementState |= NiyoMovementState.GROUNDED;
         movementState &= ~NiyoMovementState.JUMPING;
         movementState &= ~NiyoMovementState.IS_FLUNG;
+        movementState &= ~NiyoMovementState.SUBMERGED;
+        playerAnimator.SetBool("swimming", false);
 
         playerAnimator.SetTrigger("land");
         playerAnimator.SetBool("falling", false);
@@ -590,9 +571,7 @@ public class Movement : MonoBehaviour
     }
     public void ExitWater()
     {
-        movementState &= ~NiyoMovementState.SUBMERGED;
-        movementState &= ~NiyoMovementState.TOUCHING_WATER;
-        movementState &= ~NiyoMovementState.TOUCHING_SURFACE;
+        movementState.ExitWater();
         healthTimer.Reset();
         amntOfJumps = 0;
         playerAnimator.SetBool("swimming", false);

@@ -60,7 +60,7 @@ public class Input : MonoBehaviour
     
     private void OnMove(InputValue value) //! input stuff
     {
-        if (!controllable || movement.HasFlag(Movement.NiyoMovementState.ACTIONBUFFER)) {return;}
+        if (!controllable || movement.HasFlag(NiyoMovementState.ACTIONBUFFER)) {return;}
         if(!movement.IsSubmerged()){playerAnimator.SetBool("walking", true);}
         movement.SetMovingDirection(value.Get<float>());
         movement.FaceMovingDirection();
@@ -93,13 +93,13 @@ public class Input : MonoBehaviour
 
     private void OnAttack()
     {
-        if (!controllable || movement.HasFlag(Movement.NiyoMovementState.ACTIONBUFFER) || movement.HasFlag(Movement.NiyoMovementState.LEDGE_HANGING)) {return;}
+        if (!controllable || movement.HasFlag(NiyoMovementState.ACTIONBUFFER) || movement.HasFlag(NiyoMovementState.LEDGE_HANGING)) {return;}
         if(!movement.GetGrounded() && attack.Attack()) {playerAnimator.SetTrigger("attack"); movement.StopVelocity();}
     }
 
     void OnSpecial()
     {
-        if (!controllable || movement.HasFlag(Movement.NiyoMovementState.ACTIONBUFFER) || !inventory.HasHookshot() || movement.IsSubmerged()) {return;}
+        if (!controllable || movement.HasFlag(NiyoMovementState.ACTIONBUFFER) || !inventory.HasHookshot() || movement.IsSubmerged()) {return;}
         if(movement.hookShot.Shoot()) {movement.StopVelocity();}
         movement.FaceMovingDirection();
     }
@@ -111,7 +111,7 @@ public class Input : MonoBehaviour
 
     void OnPulka()
     {
-        if (!controllable || movement.HasFlag(Movement.NiyoMovementState.ACTIONBUFFER) || !inventory.HasPulka()) {return;}
+        if (!controllable || movement.HasFlag(NiyoMovementState.ACTIONBUFFER) || !inventory.HasPulka()) {return;}
 
         if(debug){Debug.Log("Using Pulka");}
 
@@ -131,7 +131,7 @@ public class Input : MonoBehaviour
         if(pulka.GetState() == Pulka.PulkaState.SITTING)
         {
             if(debug){Debug.Log("Put in dismount request");}
-            movement.AddFlag(Movement.NiyoMovementState.DISMOUNT_REQUEST);
+            movement.AddFlag(NiyoMovementState.DISMOUNT_REQUEST);
             movement.SetCantRotate(true);
             movement.ResetRotation();
         }
@@ -141,12 +141,12 @@ public class Input : MonoBehaviour
             movement.ResetGroundCheck();
             playerAnimator.SetBool("sitting", false);
         }
-        movement.RemoveFlag(Movement.NiyoMovementState.DUCKING);
+        movement.RemoveFlag(NiyoMovementState.DUCKING);
     }
 
     void OnDuck()
     {
-        if (!controllable || movement.HasFlag(Movement.NiyoMovementState.ACTIONBUFFER)) {return;}
+        if (!controllable || movement.HasFlag(NiyoMovementState.ACTIONBUFFER)) {return;}
         if(debug){Debug.Log("Duck");}
         movement.Duck();
     }
@@ -154,7 +154,7 @@ public class Input : MonoBehaviour
     void OnStandUp()
     {
         if(pulka.GetState() != Pulka.PulkaState.SITTING)
-        movement.RemoveFlag(Movement.NiyoMovementState.DUCKING);
+        movement.RemoveFlag(NiyoMovementState.DUCKING);
         AudioManager.PlaySFX("SitOnSled");
     }
 
