@@ -212,7 +212,7 @@ public class Movement : MonoBehaviour
     }
     public void SetMovingDirection(float value)
     {
-        movingDirection = value;
+        movingDirection = Mathf.RoundToInt(value);
     }
     public void SetVerticalDirection(float value)
     {

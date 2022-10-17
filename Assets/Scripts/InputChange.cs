@@ -31,16 +31,16 @@ public class InputChange : MonoBehaviour
     }
     private void Start()
     {
-        Rebind("Jump", PlayerPrefs.GetString("Jump", "<Keyboard>/space"));
-        Rebind("Hookshot", PlayerPrefs.GetString("Hookshot", "<Keyboard>/q"));
-        Rebind("Attack", PlayerPrefs.GetString("Attack", "<Keyboard>/x"));
-        Rebind("Pulka", PlayerPrefs.GetString("Pulka", "<Keyboard>/z"));
-        Rebind("Left", PlayerPrefs.GetString("Left", "<Keyboard>/a"));
-        Rebind("Right", PlayerPrefs.GetString("Right", "<Keyboard>/d"));
-        Rebind("Down", PlayerPrefs.GetString("Down", "<Keyboard>/s"));
-        Rebind("Up", PlayerPrefs.GetString("Up", "<Keyboard>/w"));
-        Rebind("Map", PlayerPrefs.GetString("Map", "<Keyboard>/alt"));
-        Rebind("Pause", PlayerPrefs.GetString("Pause", "<Keyboard>/esc"));
+        //Rebind("Jump", PlayerPrefs.GetString("Jump", "<Keyboard>/space"));
+        //Rebind("Hookshot", PlayerPrefs.GetString("Hookshot", "<Keyboard>/q"));
+        //Rebind("Attack", PlayerPrefs.GetString("Attack", "<Keyboard>/x"));
+        //Rebind("Pulka", PlayerPrefs.GetString("Pulka", "<Keyboard>/z"));
+        //Rebind("Left", PlayerPrefs.GetString("Left", "<Keyboard>/a"));
+        //Rebind("Right", PlayerPrefs.GetString("Right", "<Keyboard>/d"));
+        //Rebind("Down", PlayerPrefs.GetString("Down", "<Keyboard>/s"));
+        //Rebind("Up", PlayerPrefs.GetString("Up", "<Keyboard>/w"));
+        //Rebind("Map", PlayerPrefs.GetString("Map", "<Keyboard>/alt"));
+        //Rebind("Pause", PlayerPrefs.GetString("Pause", "<Keyboard>/esc"));
     }
 
     public void SetDeviceAndScheme(InputDevice[] devices, string scheme)
@@ -51,17 +51,20 @@ public class InputChange : MonoBehaviour
 
     void OnControlsChanged(InputUser user, InputUserChange change, InputDevice device)
     {
-        if(device != null && currentScheme == user.controlScheme.Value.name)
+        if(device == null) { return; }
+        if (user.controlScheme.Value.name != currentScheme)
         {
-            currentDevices.Add(device);
-        }
-        else if(user.controlScheme.Value.name != currentScheme)
-        {
-            currentScheme = user.controlScheme.Value.name;
+            Debug.Log("Changing controls to: " + device.name);
             currentDevices.Clear();
-            currentDevices.Add(device);
         }
-        SetBindingButtons();
+        if (device != null && user.controlScheme.Value.SupportsDevice(device) && !currentDevices.Contains(device))
+        {
+            Debug.Log("Device added to current: " + device.name + " user control scheme is: " + user.controlScheme.Value.name);
+            currentDevices.Add(device);
+            currentScheme = user.controlScheme.Value.name;
+            SetBindingButtons();
+            return;
+        }
     }
 
     public void SetBindingButtons()
@@ -107,6 +110,7 @@ public class InputChange : MonoBehaviour
 
         foreach (var c in controls)
         {
+            Debug.Log("Index of button to change: " + index + " amount of buttons: " + buttons.Count + " name of c: " + c.displayName);
             buttons[index].SetButtonText(c.displayName, false); //For this to work, Right has to be after Left in the list and so on
             index++;
         }
