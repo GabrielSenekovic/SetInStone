@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class GameMenu : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class GameMenu : MonoBehaviour
     CanvasGroup optionsMenu;
     [SerializeField] CanvasGroup keybindingMenu;
     [SerializeField] CanvasGroup pauseMenu;
+    [SerializeField] InputChange inputChange;
     [System.NonSerialized] public CanvasGroup mapCanvas;
     public Map mapScript;
     bool pause = false;
@@ -30,23 +32,33 @@ public class GameMenu : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            mapCanvas = mapScript.GetComponent<CanvasGroup>();
-            optionsMenu = options.GetComponent<CanvasGroup>();
+            OnAwake();
         }
         else
         {
             Destroy(this.gameObject);
         }
     }
+    private void OnAwake()
+    {
+        mapCanvas = mapScript.GetComponent<CanvasGroup>();
+        optionsMenu = options.GetComponent<CanvasGroup>();
+        
+        inputChange.Awake();
+    }
     private void Start()
     {
         options.SFXSlider.value = AudioManager.SFX_volume;
         options.MusicSlider.value = AudioManager.music_volume;
         options.VolumeSlider.value = AudioManager.global_volume;
+
+        PlayerInput input = FindObjectOfType<PlayerInput>();
+        inputChange.SetDeviceAndScheme(input.devices.ToArray(), input.currentControlScheme);
+        inputChange.SetBindingButtons();
     }
     public static HealthBar ConnectToHealthBar()
     {
-        return Instance.hUD.playerHealthBar;
+        return instance.hUD.playerHealthBar;
     }
     public static Text GetTitleText()
     {

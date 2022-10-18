@@ -17,7 +17,7 @@ public class HookShot : MonoBehaviour
     Pulka pulka;
     public Animator playerAnimator;
 
-    public Movement movement;
+    Movement movement;
     [SerializeField] Transform seaweed;
     public Transform hookOrigin;
     public bool retract;
@@ -68,7 +68,7 @@ public class HookShot : MonoBehaviour
         {
             hookForce = (posIn - body.position).normalized * hookStrength; // * the vector from player to hook hit position normalized and scaled
             body.AddForce(hookForce, ForceMode2D.Impulse); // * push player towards the hook hit position
-            GetComponent<Movement>().isFlung = true;
+            movement.Fling();
         }
         else
         {
@@ -77,7 +77,7 @@ public class HookShot : MonoBehaviour
         AudioManager.PlaySFX("HookHit");
         AudioManager.PlaySFX("HookReel");
 
-        movement.actionBuffer = false;
+        movement.RemoveFlag(NiyoMovementState.ACTIONBUFFER);
         body.gravityScale = movement.normGrav;
         movement.amntOfJumps = 0;
     }
@@ -85,7 +85,7 @@ public class HookShot : MonoBehaviour
     {
         if(!hook.IsVisible()){return;}
         shooting = false;
-        movement.forceLedgeClimb = false;
+        movement.RemoveFlag(NiyoMovementState.FORCE_LEDGE_CLIMB);
         if(hit)
         {
             PullPlayer(hook.body.position);
@@ -124,11 +124,22 @@ public class HookShot : MonoBehaviour
             hookDir = new Vector2(0,1);
         }
     }
+    public void SetAngle(Vector2 direction)
+    {
+        hookDir = direction;
+        hookAngle = Vector2.Angle(Vector2.right, direction);
+        hookAngle -= 90;
+        if (hookDir == Vector2.zero)
+        {
+            hookDir = new Vector2(0, 1);
+        }
+
+    }
 
     public bool Shoot()
     {
         if(hook.IsVisible()) {return false;}
-        if(GetComponent<Movement>().ducking){return false;}
+        if(movement.IsDucking()){return false;}
         if(pulka.GetState() != Pulka.PulkaState.NONE) {return false;}
         RaycastHit2D closeRangeHit = Physics2D.Raycast(transform.position, hookDir, rayLength, whatIsGround);
         if(closeRangeHit.collider != null) { return false; }
@@ -143,7 +154,7 @@ public class HookShot : MonoBehaviour
         AdjustSeaweed();
        
         body.gravityScale = 0;
-        GetComponent<Movement>().actionBuffer = true;
+        movement.AddFlag(NiyoMovementState.ACTIONBUFFER);
         body.velocity = Vector2.zero;
         playerAnimator.SetTrigger("throwhook");
         AudioManager.PlaySFX("HookThrow");
@@ -152,9 +163,9 @@ public class HookShot : MonoBehaviour
     public void Retract()
     {
         if (!hook.IsVisible()) { return; }
-        if (movement.actionBuffer) //When it starts retracting, give player their movement back
+        if (movement.HasFlag(NiyoMovementState.ACTIONBUFFER)) //When it starts retracting, give player their movement back
         {
-            movement.actionBuffer = false;
+            movement.RemoveFlag(NiyoMovementState.ACTIONBUFFER);
             body.gravityScale = movement.normGrav;
         }
 
@@ -192,7 +203,7 @@ public class HookShot : MonoBehaviour
     }
     public void ClimbLedge()
     {
-        movement.forceLedgeClimb = true;
+        movement.AddFlag(NiyoMovementState.FORCE_LEDGE_CLIMB);
     }
 
     private void OnDrawGizmos()

@@ -37,7 +37,7 @@ public class HealthModel : MonoBehaviour, Attackable
         {
             transform.parent.GetComponent<Input>().SetControllable(false);
             body.velocity = Vector2.zero;
-            if(transform.parent.GetComponent<Movement>().submerged)
+            if(transform.parent.GetComponent<Movement>().IsSubmerged())
             {
                 anim.SetBool("swimming", false);
             }
@@ -70,7 +70,7 @@ public class HealthModel : MonoBehaviour, Attackable
     {
         Heal(12);
         transform.position = safePos;
-        GetComponent<Input>().SetControllable(true);
+        transform.parent.GetComponent<Input>().SetControllable(true);
         anim.SetBool("death", false);
         anim.SetBool("swimming", false);
         anim.SetTrigger("jump");

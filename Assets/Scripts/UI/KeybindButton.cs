@@ -14,9 +14,16 @@ public class KeybindButton : Button
         currentBinding = GetComponentInChildren<Text>();
     }
 
-    public void SetButtonText(string newText)
+    public void SetButtonText(string newText, bool mustClean)
     {
-        currentBinding.text = GetKeyValue(newText);
+        if(mustClean) //There are slashes in it
+        {
+            currentBinding.text = GetKeyValue(newText);
+        }
+        else
+        {
+            currentBinding.text = newText;
+        }
     }
     public bool IsSamePath(string text)
     {
