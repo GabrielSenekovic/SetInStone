@@ -20,6 +20,7 @@ public class PlayerAttack : MonoBehaviour
     Vector2 caneNextPosition;
 
     Vector2 mousePositionSaved;
+    public bool mouse;
 
     public float attackRange = 2;
 
@@ -40,7 +41,7 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    public void AimAttack(Vector2 mousePosition) //! input stuff
+    public void Aim(Vector2 mousePosition) //! input stuff
     {
         atkPos = mousePosition + (Vector2)transform.position;
         Vector2 clickPos = mousePositionSaved;
@@ -60,6 +61,12 @@ public class PlayerAttack : MonoBehaviour
         }
 
         mousePositionSaved = mousePosition;
+        mouse = true;
+    }
+    public void SetAngle(Vector2 direction)
+    {
+        atkAngle = Vector2.Angle(Vector2.right, direction);
+        mouse = false;
     }
 
     void MoveHitBox(Vector2 point)
@@ -87,19 +94,9 @@ public class PlayerAttack : MonoBehaviour
         if(atkCooldown < atkCooldownMax) {return false;}
         AudioManager.PlaySFX("Attack");
 
-        Vector2 clickPos = mousePositionSaved + (Vector2)transform.position;
-        Vector2 headPos =(Vector2)transform.position + originalCanePosition;
-        caneNextPosition = headPos + (clickPos - headPos).normalized * attackRange;
-
         cane.transform.localPosition = (new Vector2(Mathf.Cos(atkAngle * Mathf.Deg2Rad),
               Mathf.Sin(atkAngle * Mathf.Deg2Rad)) * attackRange);
 
-        float angle = Vector2.Angle(Vector2.up, mousePositionSaved + originalCanePosition); // *2
-
-        if(caneNextPosition.x > transform.position.x)
-        {
-            angle *= -1;
-        }
         cane.transform.rotation = Quaternion.Euler(0, 0, atkAngle);
 
         caneAnimator.SetTrigger("Attack");

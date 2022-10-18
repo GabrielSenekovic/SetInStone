@@ -124,6 +124,17 @@ public class HookShot : MonoBehaviour
             hookDir = new Vector2(0,1);
         }
     }
+    public void SetAngle(Vector2 direction)
+    {
+        hookDir = direction;
+        hookAngle = Vector2.Angle(Vector2.right, direction);
+        hookAngle -= 90;
+        if (hookDir == Vector2.zero)
+        {
+            hookDir = new Vector2(0, 1);
+        }
+
+    }
 
     public bool Shoot()
     {

@@ -17,8 +17,10 @@ public class Input : MonoBehaviour
 
     [System.NonSerialized] public HookShot hookShot;
     [System.NonSerialized] public Pulka pulka;
+    [SerializeField] InputChange inputChange;
 
     [SerializeField]bool debug;
+    [SerializeField] GameObject aimArrow;
 
     void Start()
     {
@@ -38,24 +40,36 @@ public class Input : MonoBehaviour
         Aim();
     }
 
-    void Aim()
+    void Aim() //Aiming with a mouse
     {
-        Vector3 mousePosition = Mouse.current.position.ReadValue(); 
-        mousePosition.z = 18; // cam z *-1
-
-        mousePosition = Game.Instance.cameraFollowsMainCamera.ScreenToWorldPoint(mousePosition);
-        mousePosition -= transform.position;
-        //Put the position of the mouse in world space relative to the players position
-
-        if (movement.GetGrounded())
+        if(inputChange.currentScheme == "KeyboardMouse")
         {
-            //*Then limit the position to playerpositions y
-            mousePosition.y = Mathf.Clamp(mousePosition.y, 0, Mathf.Infinity);
-        }
+            Vector3 mousePosition = Mouse.current.position.ReadValue();
+            mousePosition.z = 18; // cam z *-1
 
-        movement.hookShot.Aim(mousePosition); //Give it to hookshot / pulka / attack
-        attack.AimAttack(mousePosition);
-        movement.pulka.Aim(mousePosition);
+            mousePosition = Game.Instance.cameraFollowsMainCamera.ScreenToWorldPoint(mousePosition);
+            mousePosition -= transform.position;
+            //Put the position of the mouse in world space relative to the players position
+
+            if (movement.GetGrounded())
+            {
+                //*Then limit the position to playerpositions y
+                mousePosition.y = Mathf.Clamp(mousePosition.y, 0, Mathf.Infinity);
+            }
+
+            movement.hookShot.Aim(mousePosition); //Give it to hookshot / pulka / attack
+            attack.Aim(mousePosition);
+            movement.pulka.Aim(mousePosition);
+        }
+    }
+    void OnAim(InputValue value) //Aiming with a controller
+    {
+        Vector2 dir = value.Get<Vector2>().normalized;
+        attack.SetAngle(dir);
+        movement.hookShot.SetAngle(dir);
+        aimArrow.transform.localPosition = (Vector3)dir * 3;
+        float angle = Vector2.Angle(Vector2.up, dir);
+        aimArrow.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
     
     private void OnMove(InputValue value) //! input stuff

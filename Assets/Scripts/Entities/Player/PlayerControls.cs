@@ -177,6 +177,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Aim"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""98d51bed-d0fc-4789-98d3-ffd660b5005d"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -1037,6 +1045,61 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""DEBUGRESET"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Aim - XBOX"",
+                    ""id"": ""836348b1-1d82-45b0-9f62-ca3cc0e03432"",
+                    ""path"": ""2DVector(mode=2)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""2d1779cc-bd43-4286-bff4-75eb969e2199"",
+                    ""path"": ""<XInputController>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""04607625-b7a7-411a-911a-b5e421b7ca83"",
+                    ""path"": ""<XInputController>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""abd89ae2-57e3-406d-a928-31e795f17432"",
+                    ""path"": ""<XInputController>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""08b7e86f-774f-4059-b4ae-5b9f7193fc47"",
+                    ""path"": ""<XInputController>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -1115,6 +1178,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Land_Navigate = m_Land.FindAction("Navigate", throwIfNotFound: true);
         m_Land_Zoom = m_Land.FindAction("Zoom", throwIfNotFound: true);
         m_Land_DEBUGRESET = m_Land.FindAction("DEBUGRESET", throwIfNotFound: true);
+        m_Land_Aim = m_Land.FindAction("Aim", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1184,6 +1248,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Land_Navigate;
     private readonly InputAction m_Land_Zoom;
     private readonly InputAction m_Land_DEBUGRESET;
+    private readonly InputAction m_Land_Aim;
     public struct LandActions
     {
         private @PlayerControls m_Wrapper;
@@ -1208,6 +1273,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Navigate => m_Wrapper.m_Land_Navigate;
         public InputAction @Zoom => m_Wrapper.m_Land_Zoom;
         public InputAction @DEBUGRESET => m_Wrapper.m_Land_DEBUGRESET;
+        public InputAction @Aim => m_Wrapper.m_Land_Aim;
         public InputActionMap Get() { return m_Wrapper.m_Land; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1277,6 +1343,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @DEBUGRESET.started -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGRESET;
                 @DEBUGRESET.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGRESET;
                 @DEBUGRESET.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGRESET;
+                @Aim.started -= m_Wrapper.m_LandActionsCallbackInterface.OnAim;
+                @Aim.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnAim;
+                @Aim.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnAim;
             }
             m_Wrapper.m_LandActionsCallbackInterface = instance;
             if (instance != null)
@@ -1341,6 +1410,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @DEBUGRESET.started += instance.OnDEBUGRESET;
                 @DEBUGRESET.performed += instance.OnDEBUGRESET;
                 @DEBUGRESET.canceled += instance.OnDEBUGRESET;
+                @Aim.started += instance.OnAim;
+                @Aim.performed += instance.OnAim;
+                @Aim.canceled += instance.OnAim;
             }
         }
     }
@@ -1403,5 +1475,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnNavigate(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
         void OnDEBUGRESET(InputAction.CallbackContext context);
+        void OnAim(InputAction.CallbackContext context);
     }
 }

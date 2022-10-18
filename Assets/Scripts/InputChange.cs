@@ -10,7 +10,7 @@ public class InputChange : MonoBehaviour
 {
     [SerializeField] InputActionAsset inputAction;
     InputActionMap map;
-    string currentScheme = "";
+    public string currentScheme = "";
 
     InputActionRebindingExtensions.RebindingOperation rebindingOperation;
 
@@ -51,19 +51,31 @@ public class InputChange : MonoBehaviour
 
     void OnControlsChanged(InputUser user, InputUserChange change, InputDevice device)
     {
-        if(device == null) { return; }
-        if (user.controlScheme.Value.name != currentScheme)
+        //First the last device is unpaired
+        //Then the new device is paired
+        //THEN the control scheme changes
+        if(device != null && change == InputUserChange.DevicePaired) //If new device is paired
         {
             Debug.Log("Changing controls to: " + device.name);
             currentDevices.Clear();
-        }
-        if (device != null && user.controlScheme.Value.SupportsDevice(device) && !currentDevices.Contains(device))
-        {
-            Debug.Log("Device added to current: " + device.name + " user control scheme is: " + user.controlScheme.Value.name);
             currentDevices.Add(device);
+        }
+        if(device == null && change == InputUserChange.ControlSchemeChanged)
+        {
             currentScheme = user.controlScheme.Value.name;
             SetBindingButtons();
-            return;
+            TurnOnOffCursor();
+        }
+    }
+    void TurnOnOffCursor()
+    {
+        if(currentScheme != "KeyboardMouse")
+        {
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.visible = true;
         }
     }
 
@@ -110,7 +122,7 @@ public class InputChange : MonoBehaviour
 
         foreach (var c in controls)
         {
-            Debug.Log("Index of button to change: " + index + " amount of buttons: " + buttons.Count + " name of c: " + c.displayName);
+            //Debug.Log("Index of button to change: " + index + " amount of buttons: " + buttons.Count + " name of c: " + c.displayName);
             buttons[index].SetButtonText(c.displayName, false); //For this to work, Right has to be after Left in the list and so on
             index++;
         }
