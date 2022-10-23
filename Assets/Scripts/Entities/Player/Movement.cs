@@ -319,7 +319,7 @@ public class Movement : MonoBehaviour
             playerAnimator.SetTrigger("ledgeHang");
             transform.position = ledgePos1;
             movementState &= ~NiyoMovementState.ACTIONBUFFER;
-            hookShot.FinishRetraction(); hookShot.shooting = false;
+            hookShot.FinishRetraction(); hookShot.state = HookShot.HookShotState.None;
         }
     }
 

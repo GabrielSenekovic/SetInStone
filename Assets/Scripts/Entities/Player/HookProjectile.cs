@@ -48,7 +48,7 @@ public class HookProjectile : MonoBehaviour
                 if(hits[i].GetComponent<Ivy>())
                 {
                     hookScript.StopPull();
-                    hookScript.retract = true;
+                    hookScript.state = HookShot.HookShotState.Retracting;
                     return;
                 }
             }
@@ -87,10 +87,10 @@ public class HookProjectile : MonoBehaviour
                 hookScript.hitPoint_color = Color.red;
             }
             hitParticles.Play();
-            if(!hookScript.shooting)
+            if(hookScript.state != HookShot.HookShotState.Shooting)
             {
                 hookScript.PullPlayer(body.position);
-                hookScript.retract = true;
+                hookScript.state = HookShot.HookShotState.Retracting;
             }
         }
         else if(other.CompareTag("PassThrough"))

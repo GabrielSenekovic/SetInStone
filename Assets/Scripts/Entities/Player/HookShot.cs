@@ -4,6 +4,13 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class HookShot : MonoBehaviour
 {
+    public enum HookShotState
+    {
+        None = 0,
+        Aiming = 1,
+        Shooting = 2,
+        Retracting = 3
+    }
     public float hookStrength; // amount it joinks you
     public float hookSpeed; // speed of the hook projectile
     public float hookRange; // range of the hook
@@ -20,8 +27,7 @@ public class HookShot : MonoBehaviour
     Movement movement;
     [SerializeField] Transform seaweed;
     public Transform hookOrigin;
-    public bool retract;
-    public bool shooting;
+    public HookShotState state;
     [System.NonSerialized] public bool hit;
     public Vector2 hitPoint; //DEBUG
     public Vector2[] colliderCheckPoints = new Vector2[3];
@@ -35,7 +41,7 @@ public class HookShot : MonoBehaviour
         movement = gameObject.GetComponent<Movement>();
         hook.hookScript = this;
         pulka = GetComponent<Pulka>();
-        retract = false;
+        state = HookShotState.None;
     }
     private void Update() 
     {
@@ -44,17 +50,16 @@ public class HookShot : MonoBehaviour
     void FixedUpdate()
     {
         float hookDistance = (transform.position - hook.transform.position).magnitude;
-        if(hit && !retract && shooting)
+        if(hit && state == HookShotState.Retracting)
         {
             PullIn();
         }
-        if(!retract && hookDistance >= hookRange)
+        if(state != HookShotState.Retracting && hookDistance >= hookRange)
         {
             Retract();
-            retract = true;
-            //swoop back
+            state = HookShotState.Retracting;
         }
-        else if(retract)
+        else if(state == HookShotState.Retracting)
         {
             Retract();
         }
@@ -84,19 +89,18 @@ public class HookShot : MonoBehaviour
     public void StopPull()
     {
         if(!hook.IsVisible()){return;}
-        shooting = false;
         movement.RemoveFlag(NiyoMovementState.FORCE_LEDGE_CLIMB);
         if(hit)
         {
             PullPlayer(hook.body.position);
-            retract = true;
+            state = HookShotState.Retracting;
         }
     }
     public void PullIn()
     {
         if (HasPulledInFully())
         {
-            shooting = false;
+            state = HookShotState.None;
             return;
         }
         Vector2 Dir = (hitPoint - (Vector2)transform.position).normalized;
@@ -105,6 +109,14 @@ public class HookShot : MonoBehaviour
     public bool HasPulledInFully()
     {
         return (hitPoint - (Vector2)transform.position).magnitude < 0.5f; //0.5f is the current margin
+    }
+    public void Activate()
+    {
+        if(state == HookShotState.None)
+        {
+            state = HookShotState.Aiming;
+            Time.timeScale = 0.3f;
+        }
     }
 
     public void Aim(Vector2 mousePosition) //! input stuff
@@ -133,11 +145,11 @@ public class HookShot : MonoBehaviour
         {
             hookDir = new Vector2(0, 1);
         }
-
     }
 
     public bool Shoot()
     {
+        Time.timeScale = 1;
         if(hook.IsVisible()) {return false;}
         if(movement.IsDucking()){return false;}
         if(pulka.GetState() != Pulka.PulkaState.NONE) {return false;}
@@ -145,7 +157,7 @@ public class HookShot : MonoBehaviour
         if(closeRangeHit.collider != null) { return false; }
         hook.SetVisible(true);
         hit = false;
-        shooting = true;
+        state = HookShotState.Shooting;
         hook.ResetHookshot();
         hook.transform.localPosition = hookOrigin.localPosition;
         hook.transform.rotation = Quaternion.Euler(0, 0, hookAngle); // * rotate the hook in the direction of the stick and...
@@ -184,7 +196,7 @@ public class HookShot : MonoBehaviour
         hook.transform.localPosition = Vector3.zero;
         hook.body.velocity = Vector3.zero;
         hook.transform.rotation = Quaternion.identity;
-        retract = false;
+        state = HookShotState.None;
     }
 
     public void AdjustSeaweed()

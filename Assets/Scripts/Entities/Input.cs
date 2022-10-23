@@ -60,6 +60,12 @@ public class Input : MonoBehaviour
             movement.hookShot.Aim(mousePosition); //Give it to hookshot / pulka / attack
             attack.Aim(mousePosition);
             movement.pulka.Aim(mousePosition);
+
+            Vector2 dir = mousePosition.normalized;
+
+            aimArrow.transform.localPosition = (Vector3)dir * 3;
+            float angle = Vector2.Angle(Vector2.up, dir);
+            aimArrow.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle));
         }
     }
     void OnAim(InputValue value) //Aiming with a controller
@@ -114,13 +120,15 @@ public class Input : MonoBehaviour
     void OnSpecial()
     {
         if (!controllable || movement.HasFlag(NiyoMovementState.ACTIONBUFFER) || !inventory.HasHookshot() || movement.IsSubmerged()) {return;}
-        if(movement.hookShot.Shoot()) {movement.StopVelocity();}
+        movement.hookShot.Activate();
+        // if(movement.hookShot.Shoot()) {movement.StopVelocity();}
         movement.FaceMovingDirection();
     }
     void OnStopSpecial()
     {
         if(!inventory.HasHookshot()){return;}
-        movement.hookShot.StopPull();
+        //movement.hookShot.StopPull();
+        if (movement.hookShot.Shoot()) { movement.StopVelocity(); }
     }
 
     void OnPulka()
