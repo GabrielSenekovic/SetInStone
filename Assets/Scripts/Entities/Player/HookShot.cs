@@ -28,7 +28,7 @@ public class HookShot : MonoBehaviour
     [SerializeField] Transform seaweed;
     public Transform hookOrigin;
     public HookShotState state;
-    [System.NonSerialized] public bool hit;
+    public bool hit;
     public Vector2 hitPoint; //DEBUG
     public Vector2[] colliderCheckPoints = new Vector2[3];
     public Color[] colliderCheckPoint_colors = new Color[3];
@@ -54,7 +54,7 @@ public class HookShot : MonoBehaviour
         {
             PullIn();
         }
-        if(state != HookShotState.Retracting && hookDistance >= hookRange)
+        else if(state != HookShotState.Retracting && hookDistance >= hookRange)
         {
             Retract();
             state = HookShotState.Retracting;
@@ -100,7 +100,8 @@ public class HookShot : MonoBehaviour
     {
         if (HasPulledInFully())
         {
-            state = HookShotState.None;
+            hit = false;
+            state = HookShotState.Retracting;
             return;
         }
         Vector2 Dir = (hitPoint - (Vector2)transform.position).normalized;
@@ -150,11 +151,11 @@ public class HookShot : MonoBehaviour
     public bool Shoot()
     {
         Time.timeScale = 1;
-        if(hook.IsVisible()) {return false;}
-        if(movement.IsDucking()){return false;}
-        if(pulka.GetState() != Pulka.PulkaState.NONE) {return false;}
+        if(hook.IsVisible() || movement.IsDucking() || pulka.GetState() != Pulka.PulkaState.NONE) {return false;}
+
         RaycastHit2D closeRangeHit = Physics2D.Raycast(transform.position, hookDir, rayLength, whatIsGround);
         if(closeRangeHit.collider != null) { return false; }
+
         hook.SetVisible(true);
         hit = false;
         state = HookShotState.Shooting;
