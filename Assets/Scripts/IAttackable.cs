@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface Attackable
+public interface IAttackable
 {
     void OnBeAttacked(int value, Vector2 dir);
 }

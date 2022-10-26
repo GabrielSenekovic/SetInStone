@@ -55,10 +55,14 @@ public class HookProjectile : MonoBehaviour
             hookScript.hit = true;
 
             playerRb.gravityScale = 0;
-            playerRb.velocity = Vector2.zero;
 
             hookScript.hitPoint = other.gameObject.GetComponent<Collider2D>().ClosestPoint(transform.position);
             hookScript.hitPoint = new Vector2(Mathf.RoundToInt(hookScript.hitPoint.x), Mathf.CeilToInt(hookScript.hitPoint.y));
+
+            Vector2 Dir = (hookScript.hitPoint - (Vector2)hookScript.transform.position).normalized;
+            playerRb.velocity = Dir * hookScript.hookSpeed;
+
+            hitParticles.Play();
 
             CheckHitPoints();
         }
@@ -97,12 +101,6 @@ public class HookProjectile : MonoBehaviour
         else
         {
             hookScript.hitPoint_color = Color.red;
-        }
-        hitParticles.Play();
-        if (hookScript.state != HookShot.HookShotState.Shooting)
-        {
-            hookScript.PullPlayer(body.position);
-            hookScript.state = HookShot.HookShotState.Retracting;
         }
     }
 }

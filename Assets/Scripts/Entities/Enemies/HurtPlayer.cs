@@ -10,7 +10,7 @@ public class HurtPlayer : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Attackable>().OnBeAttacked(contactDamage, (collision.transform.position - transform.position).normalized * pushStrength);
+            collision.gameObject.GetComponent<IAttackable>().OnBeAttacked(contactDamage, (collision.transform.position - transform.position).normalized * pushStrength);
         }
     }
 }

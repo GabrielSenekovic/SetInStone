@@ -65,20 +65,16 @@ public class HookShot : MonoBehaviour
         }
     }
 
-    public void PullPlayer(Vector2 posIn) //This is when the player gets yeeted 
+    public void FlingPlayer(Vector2 posIn) //This is when the player gets yeeted 
     {
+        hit = false;
         playerAnimator.SetBool("hookpulling", true);
         body.velocity = Vector2.zero;
-        if(!HasPulledInFully())
-        {
-            hookForce = (posIn - body.position).normalized * hookStrength; // * the vector from player to hook hit position normalized and scaled
-            body.AddForce(hookForce, ForceMode2D.Impulse); // * push player towards the hook hit position
-            movement.Fling();
-        }
-        else
-        {
-            movement.UnCollideWithWalls();
-        }
+
+        hookForce = (posIn - body.position).normalized * hookStrength; // * the vector from player to hook hit position normalized and scaled
+        body.AddForce(hookForce, ForceMode2D.Impulse); // * push player towards the hook hit position
+        movement.Fling();
+
         AudioManager.PlaySFX("HookHit");
         AudioManager.PlaySFX("HookReel");
 
@@ -90,18 +86,12 @@ public class HookShot : MonoBehaviour
     {
         if(!hook.IsVisible()){return;}
         movement.RemoveFlag(NiyoMovementState.FORCE_LEDGE_CLIMB);
-        if(hit)
-        {
-            PullPlayer(hook.body.position);
-            state = HookShotState.Retracting;
-        }
     }
     public void PullIn()
     {
         if (HasPulledInFully())
         {
-            hit = false;
-            state = HookShotState.Retracting;
+            state = HookShotState.None;
             return;
         }
         Vector2 Dir = (hitPoint - (Vector2)transform.position).normalized;
@@ -109,14 +99,22 @@ public class HookShot : MonoBehaviour
     }
     public bool HasPulledInFully()
     {
-        return (hitPoint - (Vector2)transform.position).magnitude < 0.5f; //0.5f is the current margin
+        return (hitPoint - (Vector2)transform.position).magnitude < 0.5f || body.velocity == Vector2.zero; //0.5f is the current margin
     }
     public void Activate()
     {
-        if(state == HookShotState.None)
+        if(state == HookShotState.None && !hit)
         {
             state = HookShotState.Aiming;
             Time.timeScale = 0.3f;
+        }
+        else if(state == HookShotState.None && hit) //If has pulled in the whole way
+        {
+            LetGo();
+        }
+        else if(state == HookShotState.Retracting && hit)
+        {
+            FlingPlayer(hook.body.position);
         }
     }
 
@@ -147,10 +145,28 @@ public class HookShot : MonoBehaviour
             hookDir = new Vector2(0, 1);
         }
     }
+    public bool Release()
+    {
+        Time.timeScale = 1;
+        if (state == HookShotState.Aiming)
+        {
+            return Shoot();
+        }
+        return false;
+    }
+    public void LetGo()
+    {
+        movement.RemoveFlag(NiyoMovementState.ACTIONBUFFER);
+        body.gravityScale = movement.normGrav;
+        movement.amntOfJumps = 0;
+        state = HookShotState.None;
+        hit = false;
+        hook.SetVisible(false);
+        movement.UnCollideWithWalls();
+    }
 
     public bool Shoot()
     {
-        Time.timeScale = 1;
         if(hook.IsVisible() || movement.IsDucking() || pulka.GetState() != Pulka.PulkaState.NONE) {return false;}
 
         RaycastHit2D closeRangeHit = Physics2D.Raycast(transform.position, hookDir, rayLength, whatIsGround);
@@ -176,11 +192,6 @@ public class HookShot : MonoBehaviour
     public void Retract()
     {
         if (!hook.IsVisible()) { return; }
-        if (movement.HasFlag(NiyoMovementState.ACTIONBUFFER)) //When it starts retracting, give player their movement back
-        {
-            movement.RemoveFlag(NiyoMovementState.ACTIONBUFFER);
-            body.gravityScale = movement.normGrav;
-        }
 
         Vector2 Dir = (movement.gameObject.transform.position - hook.transform.position).normalized;
         hook.body.velocity = Dir * 30.0f * 2.0f; //* give it velocity in that direction (hookspeed * 2)
@@ -198,6 +209,7 @@ public class HookShot : MonoBehaviour
         hook.body.velocity = Vector3.zero;
         hook.transform.rotation = Quaternion.identity;
         state = HookShotState.None;
+        LetGo();
     }
 
     public void AdjustSeaweed()
