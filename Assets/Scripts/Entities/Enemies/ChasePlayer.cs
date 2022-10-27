@@ -61,7 +61,6 @@ public class ChasePlayer : MonoBehaviour
         {
             AvoidGround(ref destination);
         }
-        Debug.Log(destination);
         Move(destination);
     }
     private void Move(Vector2 destination)
