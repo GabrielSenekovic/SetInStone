@@ -273,6 +273,7 @@ public class Movement : MonoBehaviour
         }
         else
         {
+            Debug.Log("Set upside down");
             bodyTransform.localScale = new Vector3(1, -1, 1);
         }
 
@@ -314,8 +315,8 @@ public class Movement : MonoBehaviour
     }
     public void FaceMovingDirection()
     {
-        if (!movementState.HasFlag(NiyoMovementState.LEDGE_HANGING & NiyoMovementState.SUBMERGED))
-        { //* If not climbing a ledge, turn around and move
+        if (!movementState.HasFlag(NiyoMovementState.LEDGE_HANGING) || !movementState.HasFlag(NiyoMovementState.SUBMERGED))
+        { 
             facingDirection = movingDirection == 0 ? facingDirection : movingDirection;
             bodyTransform.localScale = new Vector3(facingDirection, 1, 1);
         }
@@ -603,12 +604,13 @@ public class Movement : MonoBehaviour
     }
     public void ExitWater()
     {
-        movementState.ExitWater();
+        movementState = movementState.ExitWater();
         healthTimer.Reset();
         amntOfJumps = 0;
         body.drag = 0;
         transform.rotation = Quaternion.identity;
-        playerAnimator.SetBool("swimming", false);
+        bodyTransform.localScale = new Vector3(transform.localScale.y, 1, 1);
+         playerAnimator.SetBool("swimming", false);
         if(!movementState.HasFlag(NiyoMovementState.LEDGE_HANGING)){body.gravityScale = normGrav;}
     }
     public bool IsSubmerged()
