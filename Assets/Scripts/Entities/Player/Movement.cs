@@ -5,12 +5,12 @@ using UnityEngine.InputSystem;
 using Cinemachine;
 using UnityEngine.VFX;
 using System.Linq;
+using System;
 public class Movement : MonoBehaviour
 {
+    [SerializeField] NiyoMovementState movementState;
     public Animator playerAnimator;
     public Animator bubbleAnimator;
-    bool grounded = true;
-    public bool ducking;
     public float cancelJumpSpeed = 5.0f;
 
     Rigidbody2D body;
@@ -19,20 +19,16 @@ public class Movement : MonoBehaviour
 
     [System.NonSerialized] public const float groundedRadius = .05f;
     [System.NonSerialized] public float gravityVelocity;
-    public float movingDirection = 0; //The direction you're currently moving in. If not moving, the direction is 0
-    public float verticalDirection = 0; //This is only used when swimming! If not swimming, vertical directon is 0
+    float movingDirection = 0; //The direction you're currently moving in. If not moving, the direction is 0
+    float verticalDirection = 0; //This is only used when swimming! If not swimming, vertical directon is 0
     [System.NonSerialized] public float facingDirection = 0; //The direction you last looked in. It's set to something even if not moving
     
     [System.NonSerialized] public int amntOfJumps = 0;
     [System.NonSerialized] public int jumpTimer = 0;
     [System.NonSerialized] public int jumpBufferTimer = 0;
-    
-    [System.NonSerialized] public bool jumping = false;
-    [System.NonSerialized] public bool dismountRequest = false;
-    [System.NonSerialized] public bool slideRequest = false;
+    [SerializeField] public int jumpBufferMax; //This timer should count down to 0
 
     [System.NonSerialized] public float normGrav;
-    [System.NonSerialized] public bool actionBuffer;
 
     Vector2 caneGroundCheck = new Vector2(0, -0.2f);
     [SerializeField] public float gravityModifier; //Used to increase the gravity when falling
@@ -40,20 +36,18 @@ public class Movement : MonoBehaviour
     [SerializeField] public float airJumpForce;
     [SerializeField] public float speed;
     [SerializeField] public float swimmingSpeed;
-    [SerializeField] public int jumpBufferMax; //This timer should count down to 0
+    [SerializeField] public float swimmingTurnSpeed;
     [SerializeField] public int jumpLimit;
     [SerializeField] public int amntOfJumpsMax;
     [SerializeField] public LayerMask whatIsGround;
     [SerializeField] public LayerMask whatIsWater;
 
-    public MovementDebug movementDebug;
+    MovementDebug movementDebug;
 
     public Transform bodyTransform;
 
     public ParticleSystem doubleJump;
     public ParticleSystem caneVFX;
-
-    public Vector2 currentVelocity;
 
     [SerializeField] Transform groundCheck;
     public Transform ledgeCheck;
@@ -72,21 +66,8 @@ public class Movement : MonoBehaviour
 
     public Collider2D mainCollider;
 
-    public int ledgeClimbTimer;
-    int ledgeClimbTimer_max = 2;
-
-    public bool forceLedgeClimb = false;
-    public bool hangingFromLedge;
-    public bool ledgeDetected;
-    public bool submerged = false;
-    public bool touchingWater = false;
-    public bool touchingSurface = false;
-    public bool isFlung; //Used for hookshotting. If moving in the opposite direction of velocity you break it but if you move in the same direction nothing happens
-
-    int healthTimer;
-    int healthTimer_max = 50;
-
-    [SerializeField] bool onFire = false;
+    Timer ledgeClimbTimer;
+    Timer healthTimer;
 
     public PolygonCollider2D room;
 
@@ -121,6 +102,8 @@ public class Movement : MonoBehaviour
     private void Start() 
     {
         Debug.Assert(health != null);
+        ledgeClimbTimer = new Timer(() => ClimbLedge(), 2);
+        healthTimer = new Timer(() => health.Heal(1), 50);
         playerAnimator = GetComponentInChildren<Animator>();
         hookShot = GetComponent<HookShot>();
         pulka = GetComponent<Pulka>();
@@ -130,35 +113,34 @@ public class Movement : MonoBehaviour
         groundCheck.localPosition = caneGroundCheck;
         
         normGrav = body.gravityScale;
-        movementDebug.buttonLiftPosition = transform.position;
-        movementDebug.buttonLiftPositionSecond = transform.position;
+        if(movementDebug != null)
+        {
+            movementDebug.buttonLiftPosition = transform.position;
+            movementDebug.buttonLiftPositionSecond = transform.position;
+        }
         
         facingDirection = 1;
-        actionBuffer = false;
-        ducking = false;
-        hangingFromLedge = false;
     }
 
     private void Update()
     {
-        currentVelocity = body.velocity;
-
-        if(!submerged) //Underwater you cant walk on the ground nor ledgeclimb
+        GroundCollisionCheck();
+        if (!movementState.HasFlag(NiyoMovementState.SUBMERGED))
         {
-            GroundCollisionCheck();
             CheckLedgeClimb();
             Fall();
-            if(touchingWater && Physics2D.OverlapCircleAll(surfaceCheck.transform.position, 0.5f).Any(e => e.gameObject.layer == LayerMask.NameToLayer("Water")))
+            if(movementState.HasFlag(NiyoMovementState.TOUCHING_WATER) && !movementState.HasFlag(NiyoMovementState.GROUNDED)
+                && Physics2D.OverlapCircleAll(surfaceCheck.transform.position, 0.5f).Any(e => e.gameObject.layer == LayerMask.NameToLayer("Water")))
             {
-                submerged = true;
+                movementState = movementState.Submerge();
                 playerAnimator.SetBool("swimming", true);
             }
         }
-        else if(submerged && !touchingSurface)
+        else if(movementState.HasFlag(NiyoMovementState.SUBMERGED) && !movementState.HasFlag(NiyoMovementState.TOUCHING_SURFACE))
         {
             CheckSurfaceClose();
         }
-        else if(submerged && touchingSurface)
+        else if(movementState.HasFlag(NiyoMovementState.SUBMERGED | NiyoMovementState.TOUCHING_SURFACE))
         {
             CheckLedgeClimb();
             CheckSurfaceClose();
@@ -172,16 +154,11 @@ public class Movement : MonoBehaviour
 
     private void FixedUpdate() 
     {
-        movementDebug.Update(transform.position);
+        movementDebug?.Update(transform.position);
 
-        if(submerged)
+        if(movementState.HasFlag(NiyoMovementState.SUBMERGED))
         {
-            healthTimer++;
-            if(healthTimer>=healthTimer_max)
-            {
-                healthTimer = 0;
-                health.Heal(1);
-            }
+            healthTimer.Increment();
             if(body.gravityScale > 0)
             {
                 float modifier = verticalDirection > 0?0.2f:0.05f;
@@ -199,45 +176,63 @@ public class Movement : MonoBehaviour
         
         TriggerSlide();
 
-        if(actionBuffer || (ducking && grounded)) {return;}
+        if(movementState.HasFlag(NiyoMovementState.ACTIONBUFFER) || movementState.HasFlag(NiyoMovementState.DUCKING | NiyoMovementState.GROUNDED)) {return;}
 
         float speedMod = 1;
 
-        if(isFlung && movingDirection != 0)
+        if(movementState.HasFlag(NiyoMovementState.IS_FLUNG) && movingDirection != 0)
         {
-            if(Mathf.Sign(body.velocity.x) == Mathf.Sign(movingDirection) && body.velocity.x != 0)
-            {
-                speedMod = 0; //If trying to move in the same direction as youre being flung, dont do anything
-            }
-            else
-            {
-                body.velocity = new Vector3(0, body.velocity.y); //If youre trying to move in the opposite direction, cancel the hookshot on twitter
-            }
+            MoveWhenFlung(speedMod);
         }
-        if(!hangingFromLedge)
+        if(!movementState.HasFlag(NiyoMovementState.LEDGE_HANGING))
         {
             Move(speedMod);
         }
-        else if(hangingFromLedge && (facingDirection == movingDirection || forceLedgeClimb || touchingSurface))
+        else if(movementState.HasFlag(NiyoMovementState.LEDGE_HANGING) && (facingDirection == movingDirection 
+            || movementState.HasFlag(NiyoMovementState.FORCE_LEDGE_CLIMB) 
+            || movementState.HasFlag(NiyoMovementState.TOUCHING_SURFACE)))
         {
-            if(ledgeClimbTimer >= ledgeClimbTimer_max || forceLedgeClimb || touchingSurface)
+            if(movementState.HasFlag(NiyoMovementState.FORCE_LEDGE_CLIMB) || movementState.HasFlag(NiyoMovementState.TOUCHING_SURFACE))
             {
-                playerAnimator.SetTrigger("ledgeClimb");
-                forceLedgeClimb = false;
-                facingDirection = movingDirection == 0 ? facingDirection : movingDirection;
+                ClimbLedge();
             }
         }
-        if(hangingFromLedge)
+        if(movementState.HasFlag(NiyoMovementState.LEDGE_HANGING))
         {
-            ledgeClimbTimer++;
+            ledgeClimbTimer.Increment();
         }
 
-        if(jumping) {jumpTimer++;}
+        if(movementState.HasFlag(NiyoMovementState.JUMPING)) {jumpTimer++;}
         if(jumpBufferTimer > 0) {jumpBufferTimer--;}
+    }
+    void ClimbLedge()
+    {
+        playerAnimator.SetTrigger("ledgeClimb");
+        movementState &= ~NiyoMovementState.FORCE_LEDGE_CLIMB;
+        facingDirection = movingDirection == 0 ? facingDirection : movingDirection;
+    }
+    public void SetMovingDirection(float value)
+    {
+        movingDirection = Mathf.RoundToInt(value);
+    }
+    public void SetVerticalDirection(float value)
+    {
+        verticalDirection = value;
+    }
+    void MoveWhenFlung(float speedMod)
+    {
+        if (Mathf.Sign(body.velocity.x) == Mathf.Sign(movingDirection) && body.velocity.x != 0)
+        {
+            speedMod = 0; //If trying to move in the same direction as youre being flung, dont do anything
+        }
+        else
+        {
+            body.velocity = new Vector3(0, body.velocity.y); //If youre trying to move in the opposite direction, cancel the hookshot on twitter
+        }
     }
     void Move(float speedMod)
     {
-        if(!submerged)
+        if(!movementState.HasFlag(NiyoMovementState.SUBMERGED))
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector2(facingDirection * 1.0f / 16 * 10, 0),
                 new Vector2(facingDirection * 1.0f / 16 * 10, 0).magnitude, whatIsGround);
@@ -248,10 +243,41 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            if(touchingSurface && submerged && verticalDirection == 1){verticalDirection = 0;}
-            Vector2 swimmingDirection = (new Vector2(movingDirection, verticalDirection)).normalized;
-            transform.position +=  new Vector3(swimmingDirection.x * swimmingSpeed * speedMod,swimmingDirection.y * swimmingSpeed * speedMod,0); //The normal movement
+            Swim(speedMod);
         }
+    }
+    void Swim(float speedMod)
+    {
+        if (movementState.HasFlag(NiyoMovementState.SUBMERGED | NiyoMovementState.TOUCHING_SURFACE) && verticalDirection == 1) { verticalDirection = 0; }
+
+        Vector2 swimmingDirection = (new Vector2(movingDirection, verticalDirection)).normalized;
+        if(swimmingDirection == Vector2.zero)
+        {
+            return;
+        }
+
+        Quaternion target = Quaternion.FromToRotation(transform.right, swimmingDirection) * transform.rotation;
+
+        target = new Quaternion(0,
+                                0,
+                                Mathf.Lerp(transform.rotation.z, target.z, swimmingTurnSpeed),
+                                Mathf.Lerp(transform.rotation.w, target.w, swimmingTurnSpeed));
+
+        Vector2 movementDirection = target * Vector2.right;
+
+        transform.rotation = target;
+
+        if(target.eulerAngles.z - 180 > 90 || target.eulerAngles.z - 180 < -90)
+        {
+            bodyTransform.localScale = new Vector3(1, 1, 1);
+        }
+        else
+        {
+            Debug.Log("Set upside down");
+            bodyTransform.localScale = new Vector3(1, -1, 1);
+        }
+
+        body.velocity = movementDirection * swimmingSpeed * speedMod;
     }
     public void UnCollideWithWalls()
     {
@@ -265,15 +291,32 @@ public class Movement : MonoBehaviour
     }
     void Fall()
     {
-        if(!grounded && !hangingFromLedge && Mathf.Abs(body.velocity.y) < 1 && jumpTimer > 0 && actionBuffer == false) //!If the down velocity or the up velocity is less than a threshold
+        if(!movementState.IsGrounded() && !movementState.IsLedgeHanging()
+            && Mathf.Abs(body.velocity.y) < 1 && jumpTimer > 0 && !movementState.CanMove()) //!If the down velocity or the up velocity is less than a threshold
         {
             body.gravityScale = normGrav * gravityModifier;
         }
     }
+    public void Fling()
+    {
+        movementState |= NiyoMovementState.IS_FLUNG;
+    }
+    public void RemoveFlag(NiyoMovementState state)
+    {
+        movementState &= ~state;
+    }
+    public void AddFlag(NiyoMovementState state)
+    {
+        movementState |= state;
+    }
+    public bool HasFlag(NiyoMovementState state)
+    {
+        return movementState.HasFlag(state);
+    }
     public void FaceMovingDirection()
     {
-        if (!hangingFromLedge)
-        { //* If not climbing a ledge, turn around and move
+        if (!movementState.HasFlag(NiyoMovementState.LEDGE_HANGING) || !movementState.HasFlag(NiyoMovementState.SUBMERGED))
+        { 
             facingDirection = movingDirection == 0 ? facingDirection : movingDirection;
             bodyTransform.localScale = new Vector3(facingDirection, 1, 1);
         }
@@ -281,18 +324,18 @@ public class Movement : MonoBehaviour
 
     void CheckLedgeClimb()
     {
-        if(grounded){return;}
+        if(!movementState.HasFlag(NiyoMovementState.GROUNDED)) {return;}
         bool isTouchingWall = Physics2D.Raycast(wallCheck.position, new Vector2(facingDirection, 0), wallCheckDistance, whatIsGround);
         bool isTouchingLedge = Physics2D.Raycast(ledgeCheck.position, new Vector2(facingDirection, 0), wallCheckDistance, whatIsGround);
         bool isCloseToGround = Physics2D.Raycast(groundCheck.position, -transform.up, wallCheckDistance, whatIsGround);
-        if(isTouchingWall && !isTouchingLedge && !isCloseToGround && !ledgeDetected)
+        if(isTouchingWall && !isTouchingLedge && !isCloseToGround && !movementState.HasFlag(NiyoMovementState.LEDGE_DETECTED))
         {
-            ledgeDetected = true;
+            movementState |= NiyoMovementState.LEDGE_DETECTED;
             ledgePosBot = wallCheck.position;
         }
-        if(ledgeDetected && !hangingFromLedge)
+        if(movementState.HasFlag(NiyoMovementState.LEDGE_DETECTED) && !movementState.IsLedgeHanging())
         {
-            hangingFromLedge = true;
+            movementState |= NiyoMovementState.LEDGE_HANGING;
             if(bodyTransform.transform.localScale.x > 0)
             {
                 ledgePos1 = new Vector2(Mathf.Floor(ledgePosBot.x + wallCheckDistance) - ledgeClimbXOffset1, Mathf.Floor(ledgePosBot.y) + ledgeClimbYOffset1);
@@ -307,28 +350,37 @@ public class Movement : MonoBehaviour
             mainCollider.gameObject.SetActive(false);
             playerAnimator.SetTrigger("ledgeHang");
             transform.position = ledgePos1;
-            actionBuffer = false;
-            hookShot.FinishRetraction(); hookShot.shooting = false;
+            movementState &= ~NiyoMovementState.ACTIONBUFFER;
+            hookShot.FinishRetraction(); hookShot.state = HookShot.HookShotState.None;
         }
     }
 
     public void FinishLedgeClimb()
     {
-        if(!hangingFromLedge){return;}
-        hangingFromLedge = false;
+        if(!movementState.IsLedgeHanging()) {return;}
+
+        movementState &= ~NiyoMovementState.LEDGE_HANGING;
+        movementState &= ~NiyoMovementState.LEDGE_DETECTED;
         transform.position = ledgePos2;
         mainCollider.gameObject.SetActive(true);
-        ledgeDetected = false;
         body.gravityScale = normGrav;
-        ledgeClimbTimer = 0;
+        ledgeClimbTimer.Reset();
         playerAnimator.ResetTrigger("ledgeClimb");
     }
     public void CheckSurfaceClose()
     {
         if(body.gravityScale > 0){return;} //If still going down from water enter gravity, then dont check for surface
-        touchingSurface = !Physics2D.Raycast(surfaceCheck.position, new Vector2(0, 1), surfaceCheckDistance, whatIsGround) &&
-        !Physics2D.Raycast(surfaceCheck.position, new Vector2(0, 1), surfaceCheckDistance, whatIsWater);
-        if(!touchingSurface)
+
+        if(!Physics2D.Raycast(surfaceCheck.position, new Vector2(0, 1), surfaceCheckDistance, whatIsGround) &&
+           !Physics2D.Raycast(surfaceCheck.position, new Vector2(0, 1), surfaceCheckDistance, whatIsWater))
+        {
+            movementState |= NiyoMovementState.TOUCHING_SURFACE;
+        }
+        else
+        {
+            movementState &= ~NiyoMovementState.TOUCHING_SURFACE;
+        }
+        if(!movementState.IsTouchingSurface())
         { //This is a patch. Previously, when jumping out of water flush against a wall for a bit, swimming would be set to false and you wouldnt be far out of the water enough to exit it and reenter it
         //So when you fell back into the water, you were in a constant state of falling animation
             playerAnimator.SetBool("swimming", true);
@@ -337,21 +389,20 @@ public class Movement : MonoBehaviour
 
     void GroundCollisionCheck()
     {
-        if(hangingFromLedge){return;}
-        if(body.velocity.y == 0 || pulka.GetState() == Pulka.PulkaState.SITTING) //!if falling ( if you are not moving in y and if you just jumped and you arent on the ground)
+        if(movementState.HasFlag(NiyoMovementState.LEDGE_HANGING)){return;}
+        if((body.velocity.y == 0 && !movementState.IsSubmerged())
+            || pulka.GetState() == Pulka.PulkaState.SITTING 
+            || movementState.HasFlag(NiyoMovementState.TOUCHING_SURFACE | NiyoMovementState.SUBMERGED))
         {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundedRadius, whatIsGround); //* make a collider on the feet and see what it hits
-
-            for (int i = 0; i < colliders.Length; i++)
+            if(Physics2D.OverlapCircleAll(groundCheck.position, groundedRadius, whatIsGround).Any(c => c.gameObject.layer == Mathf.Log(whatIsGround.value, 2)))
             {
-                if (colliders[i].gameObject.layer == Mathf.Log(whatIsGround.value,2)) //* check the things it hits,,, if its not the player itself, you collided maboi
+                if (jumpTimer > 10 && !movementState.HasFlag(NiyoMovementState.GROUNDED)) 
                 {
-                    if (jumpTimer > 10 && !grounded) {Ground();} // if !grounded && jumptimer > 10 
-                    grounded = true;
-                    return;
+                    Ground();
                 }
-                else if(i == colliders.Length - 1) {playerAnimator.SetBool("falling", true); grounded = false;}
-            }  
+                movementState |= NiyoMovementState.GROUNDED;
+                return;
+            } 
         }
         else
         {
@@ -359,13 +410,13 @@ public class Movement : MonoBehaviour
             {
                 playerAnimator.SetBool("walking", false);
             }
-            grounded = false;
+            movementState &= ~NiyoMovementState.GROUNDED;
         }
     }
 
     void PulkaRotate()
     {
-        if(ducking && pulka.GetState() != Pulka.PulkaState.NONE)
+        if(movementState.HasFlag(NiyoMovementState.DUCKING) && pulka.GetState() != Pulka.PulkaState.NONE)
         {
             float rot = body.transform.localRotation.eulerAngles.z;
             rot = rot > 50 && rot < 90 ? 50 : rot < 310 && rot > 90 ? 310 : rot;
@@ -375,32 +426,31 @@ public class Movement : MonoBehaviour
 
     void TriggerSlide()
     {
-        if(slideRequest && grounded) // ! and ducking maybe?
+        if(movementState.HasFlag(NiyoMovementState.SLIDE_REQUEST) && movementState.HasFlag(NiyoMovementState.GROUNDED)) // ! and ducking maybe?
         {
-            if(movementDebug.debugMessages){Debug.Log("Sliding");}
 
             body.AddForce( new Vector2(movingDirection * speed * 20, 0), ForceMode2D.Impulse);
-            slideRequest = false;
-        
+            movementState &= ~NiyoMovementState.SLIDE_REQUEST;
         }
     }
 
     private void Ground() //! when you hit ground this should be called
     {
-        if(movementDebug.debugMessages){Debug.Log("Ground");}
+        movementState |= NiyoMovementState.GROUNDED;
+        movementState &= ~NiyoMovementState.JUMPING;
+        movementState &= ~NiyoMovementState.IS_FLUNG;
+        movementState &= ~NiyoMovementState.SUBMERGED;
+        playerAnimator.SetBool("swimming", false);
 
-        grounded = true; //! ...
         playerAnimator.SetTrigger("land");
         playerAnimator.SetBool("falling", false);
-        amntOfJumps = 0; //? reset jumps when you hit the floor
-        jumping = false; // ? stop jump -||-
+        amntOfJumps = 0;
         jumpTimer = jumpLimit; //* you can jump now :)
         AudioManager.PlaySFX("LandOnLand");
 
-        if (!ducking) {body.velocity = Vector2.zero;}
+        if (!movementState.HasFlag(NiyoMovementState.DUCKING)) {body.velocity = Vector2.zero;}
         else {body.AddForce( new Vector2(movingDirection * speed * 20, 0), ForceMode2D.Impulse);}
         body.gravityScale = normGrav;
-        isFlung = false;
     }
 
     public void StopVelocity()
@@ -416,37 +466,46 @@ public class Movement : MonoBehaviour
     {
         body.transform.localRotation = Quaternion.identity;
     }
+    public void Duck()
+    {
+        movementState |= NiyoMovementState.DUCKING;
+    }
+    public bool IsDucking()
+    {
+        return movementState.HasFlag(NiyoMovementState.DUCKING);
+    }
 
     public void TryJump()
     {
         if(jumpBufferTimer <= 0) {return;} //! you can't jump unless you've pressed jump
-        if(submerged && !touchingSurface) {return;} //! cant jump if you're swimming, unless you're at the surface
-        if(actionBuffer) {return;} //! if hookshotting, don't try to jump
+        if(movementState.HasFlag(NiyoMovementState.SUBMERGED) && !movementState.HasFlag(NiyoMovementState.TOUCHING_SURFACE)) {return;} //! cant jump if you're swimming, unless you're at the surface
+        if(movementState.HasFlag(NiyoMovementState.ACTIONBUFFER)) {return;} //! if hookshotting, don't try to jump
         if(jumpTimer < jumpLimit) {return;} // ! you can't jump unless it's been a while since you last jumped
         if(pulka.GetState() == Pulka.PulkaState.SITTING) { return; }
-        if(ledgeClimbTimer > 0) { return; }
-        if(hangingFromLedge) //If ledge hanging and trying to jump away from it
+        if(ledgeClimbTimer.IsCounting()) { return; }
+        if(movementState.HasFlag(NiyoMovementState.LEDGE_HANGING)) //If ledge hanging and trying to jump away from it
         {
-            hangingFromLedge = false;
+            movementState &= ~NiyoMovementState.LEDGE_HANGING;
+            movementState &= ~NiyoMovementState.LEDGE_DETECTED;
+            movementState |= NiyoMovementState.GROUNDED;
             mainCollider.gameObject.SetActive(true);
-            ledgeDetected = false;
             body.gravityScale = normGrav;
-            grounded = true;
             amntOfJumps = 0;
-            ledgeClimbTimer = 0;
             bodyTransform.localScale = new Vector3(-facingDirection,1,1);
         }
         
-        if (grounded || amntOfJumps < amntOfJumpsMax || touchingSurface) // * if you are on the ground OR you are double jumping :) OR at the surface of the water
+        if (movementState.HasFlag(NiyoMovementState.GROUNDED) 
+            || amntOfJumps < amntOfJumpsMax 
+            || movementState.HasFlag(NiyoMovementState.TOUCHING_SURFACE)) // * if you are on the ground OR you are double jumping :) OR at the surface of the water
         {
-            if(movementDebug.debugMessages){Debug.Log("Jump");}
             if(amntOfJumps == 0){caneVFX.Play();}
             playerAnimator.SetBool("swimming", false);
             playerAnimator.SetTrigger("jump");
             AudioManager.PlaySFX("Jump");
             AudioManager.PlaySFX("VoiceJump");
             jumpBufferTimer = 0;
-            jumping = true; grounded = false; //* if you jump, you are jumping, and you are not on the ground *taps head*
+            movementState |= NiyoMovementState.JUMPING;
+            movementState &=~ NiyoMovementState.GROUNDED;
             if(amntOfJumps > 0)
             {
                 doubleJump.Play();
@@ -462,24 +521,23 @@ public class Movement : MonoBehaviour
 
     public void RequestJump()
     {
-        if(submerged && !touchingSurface){return;}
+        if(movementState.HasFlag(NiyoMovementState.SUBMERGED) && !movementState.HasFlag(NiyoMovementState.TOUCHING_SURFACE)) {return;}
         //When you press the jump button, make a request for a jump
-        if(movementDebug.debugMessages){Debug.Log("Jump pressed");}
         jumpBufferTimer = jumpBufferMax;
         //You will only see this count down in the inspector if you are jumping midair,
         //since it resets when you jump successfully
     }
     public void StopJump()
     {
-        if((submerged && !touchingSurface) || hangingFromLedge){return;}
-        if(movementDebug.debugMessages){Debug.Log("Cancel jump");}
+        if((movementState.HasFlag(NiyoMovementState.SUBMERGED) && !movementState.HasFlag(NiyoMovementState.TOUCHING_SURFACE)) 
+            || movementState.HasFlag(NiyoMovementState.LEDGE_HANGING)){return;}
 
-        if(jumpBufferTimer == 0)
+        if(jumpBufferTimer == 0 && movementDebug != null)
         {
             movementDebug.buttonLiftPosition = transform.position;
             movementDebug.buttonLiftPositionSecond = transform.position;
         }
-        else
+        else if(movementDebug != null)
         {
             movementDebug.buttonLiftPositionSecond = transform.position;
         }
@@ -496,20 +554,24 @@ public class Movement : MonoBehaviour
     }
     public void EnterFire()
     {
-        onFire = true;
+        movementState |= NiyoMovementState.ONFIRE;
         bubbleAnimator.SetBool("Fire", true);
     }
     public bool OnFire()
     {
-        return onFire;
+        return movementState.HasFlag(NiyoMovementState.ONFIRE);
     }
     public bool GetGrounded()
     {
-        return grounded;
+        return movementState.HasFlag(NiyoMovementState.GROUNDED);
     }
     public void SetGrounded(bool value)
     {
-        grounded = value;
+        if(value)
+        {
+            movementState |= NiyoMovementState.GROUNDED; return;
+        }
+        movementState &=~ NiyoMovementState.GROUNDED;
     }
     public Rigidbody2D GetBody()
     {
@@ -525,14 +587,15 @@ public class Movement : MonoBehaviour
     }
     public void PutOutFire()
     {
-        onFire = false;
+        movementState &= ~NiyoMovementState.ONFIRE;
         bubbleAnimator.SetBool("Fire", false);
     }
 
     public void EnterWater()
     {
-        touchingWater = true;
-        grounded = false;
+        movementState |= NiyoMovementState.TOUCHING_WATER;
+        movementState &= ~NiyoMovementState.GROUNDED;
+        body.drag = 1;
         PutOutFire();
         if(body.velocity.y > -5)
         {
@@ -541,17 +604,23 @@ public class Movement : MonoBehaviour
     }
     public void ExitWater()
     {
-        submerged = false;
-        touchingWater = false;
-        touchingSurface = false;
-        healthTimer = 0;
+        movementState = movementState.ExitWater();
+        healthTimer.Reset();
         amntOfJumps = 0;
-        playerAnimator.SetBool("swimming", false);
-        if(!hangingFromLedge){body.gravityScale = normGrav;}
+        body.drag = 0;
+        transform.rotation = Quaternion.identity;
+        bodyTransform.localScale = new Vector3(transform.localScale.y, 1, 1);
+         playerAnimator.SetBool("swimming", false);
+        if(!movementState.HasFlag(NiyoMovementState.LEDGE_HANGING)){body.gravityScale = normGrav;}
+    }
+    public bool IsSubmerged()
+    {
+        return movementState.HasFlag(NiyoMovementState.SUBMERGED);
     }
 
     private void OnDrawGizmos()
     {
+        /*
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(movementDebug.buttonLiftPositionSecond, 0.1f);
         
@@ -567,12 +636,13 @@ public class Movement : MonoBehaviour
             Gizmos.DrawSphere(movementDebug.trajectory[i], 0.1f);
             if(i != 0) {Gizmos.DrawLine(movementDebug.trajectory[i-1], movementDebug.trajectory[i]);}
         }
+        */
 
-        Gizmos.color = ledgeDetected ? Color.green : Color.red;
+        Gizmos.color = movementState.HasFlag(NiyoMovementState.LEDGE_DETECTED) ? Color.green : Color.red;
         Gizmos.DrawLine(ledgeCheck.position, ledgeCheck.position + new Vector3(wallCheckDistance, 0,0));
         Gizmos.DrawLine(wallCheck.position, wallCheck.position + new Vector3(wallCheckDistance, 0,0));
 
-        Gizmos.color = touchingSurface ? Color.green : Color.red;
+        Gizmos.color = movementState.HasFlag(NiyoMovementState.TOUCHING_SURFACE) ? Color.green : Color.red;
         Gizmos.DrawLine(surfaceCheck.position, surfaceCheck.position + new Vector3(0, surfaceCheckDistance,0));
     }
 }

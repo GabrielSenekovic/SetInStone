@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class PuzzleSwitch : MonoBehaviour, Attackable
+public class PuzzleSwitch : MonoBehaviour, IAttackable
 {
     [SerializeField] List<Activatable> activatables = new List<Activatable>();
     public bool isHit;
