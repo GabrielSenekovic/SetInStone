@@ -16,21 +16,36 @@ public class GoBackAndForth : MonoBehaviour
     [SerializeField] float movementSpeed;
     Rigidbody2D body;
     int direction;
+    bool pushable;
+    bool turnAround;
     [SerializeField] Behavior behavior;
     Vector2 startPosition;
     [SerializeField] int distanceToTravel; //Goes out from the middle
 
-    public void OnAwake()
+    public void OnAwake(bool pushable, bool turnAround)
     {
         startPosition = transform.position;
         body = GetComponent<Rigidbody2D>();
         ChooseRandomDir();
+        this.pushable = pushable;
+        this.turnAround = turnAround;
+        if(!pushable)
+        {
+            body.bodyType = RigidbodyType2D.Kinematic;
+        }
     }
     public void OnUpdate()
     {
         int x = behavior == Behavior.HORIZONTAL ? direction : 0;
         int y = behavior == Behavior.VERTICAL ? direction : 0;
-        body.AddForce(new Vector2(x, y) * Time.deltaTime * movementSpeed, ForceMode2D.Impulse);
+        if(pushable)
+        {
+            body.AddForce(new Vector2(x, y) * Time.deltaTime * movementSpeed, ForceMode2D.Impulse);
+        }
+        else
+        {
+            body.velocity = new Vector2(x, y) * Time.deltaTime * movementSpeed;
+        }
     }
     public void OnFixedUpdate()
     {
@@ -57,7 +72,10 @@ public class GoBackAndForth : MonoBehaviour
     }
     void FlipEntity()
     {
-        transform.localScale = new Vector3(direction, 1, 1);
+        if(turnAround)
+        {
+            transform.localScale = new Vector3(direction, 1, 1);
+        }
     }
     void CheckIfFinishedTravel()
     {
@@ -74,9 +92,11 @@ public class GoBackAndForth : MonoBehaviour
         Gizmos.color = Color.green;
         int x = behavior == Behavior.HORIZONTAL ? distanceToTravel : 0;
         int y = behavior == Behavior.VERTICAL ? distanceToTravel : 0;
-        Gizmos.DrawLine(startPosition, new Vector2(startPosition.x + x, startPosition.y + y));
-        Gizmos.DrawLine(startPosition, new Vector2(startPosition.x - x, startPosition.y - y));
-        Gizmos.DrawSphere(new Vector2(startPosition.x + x, startPosition.y + y), 0.1f);
-        Gizmos.DrawSphere(new Vector2(startPosition.x - x, startPosition.y - y), 0.1f);
+#if UNITY_EDITOR
+        Gizmos.DrawLine(transform.position, new Vector2(transform.position.x + x, transform.position.y + y));
+        Gizmos.DrawLine(transform.position, new Vector2(transform.position.x - x, transform.position.y - y));
+        Gizmos.DrawSphere(new Vector2(transform.position.x + x, transform.position.y + y), 0.1f);
+        Gizmos.DrawSphere(new Vector2(transform.position.x - x, transform.position.y - y), 0.1f);
+#endif
     }
 }

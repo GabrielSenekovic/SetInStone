@@ -142,6 +142,10 @@ public class Input : MonoBehaviour
         //movement.hookShot.StopPull();
         if (movement.hookShot.Release()) { movement.StopVelocity(); }
     }
+    void OnInteract()
+    {
+
+    }
 
     void OnPulka()
     {
