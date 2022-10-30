@@ -596,6 +596,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2866837049075620558, guid: 7108319037d013048acb130722723263, type: 3}
   m_PrefabInstance: {fileID: 1608890000}
   m_PrefabAsset: {fileID: 0}
+--- !u!60 &922428681 stripped
+PolygonCollider2D:
+  m_CorrespondingSourceObject: {fileID: 1548862915, guid: 0cb2fd7b71e22384c8b871b08f9afc8e, type: 3}
+  m_PrefabInstance: {fileID: 6616336200300421168}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &997379210
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -709,7 +714,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 381898959330880275, guid: 7108319037d013048acb130722723263, type: 3}
   m_PrefabInstance: {fileID: 1608890000}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1665039555}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
@@ -1010,11 +1015,19 @@ PrefabInstance:
     - target: {fileID: -6437868355953878240, guid: 7108319037d013048acb130722723263, type: 3}
       propertyPath: room
       value: 
-      objectReference: {fileID: 271470453}
+      objectReference: {fileID: 922428681}
+    - target: {fileID: -6437868355953878240, guid: 7108319037d013048acb130722723263, type: 3}
+      propertyPath: swimmingSpeed
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: -6437868355953878240, guid: 7108319037d013048acb130722723263, type: 3}
       propertyPath: bubbleAnimator
       value: 
       objectReference: {fileID: 141961871}
+    - target: {fileID: -6437868355953878240, guid: 7108319037d013048acb130722723263, type: 3}
+      propertyPath: swimmingTurnSpeed
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: -6437868355953878240, guid: 7108319037d013048acb130722723263, type: 3}
       propertyPath: whatIsWater.m_Bits
       value: 16
@@ -1221,11 +1234,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2866837049075620558, guid: 7108319037d013048acb130722723263, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -43.81
+      value: 8.1
       objectReference: {fileID: 0}
     - target: {fileID: 2866837049075620558, guid: 7108319037d013048acb130722723263, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 16.8
+      value: -0.8
       objectReference: {fileID: 0}
     - target: {fileID: 2866837049075620558, guid: 7108319037d013048acb130722723263, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1344,6 +1357,27 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2629734924318554442, guid: 7108319037d013048acb130722723263, type: 3}
   m_PrefabInstance: {fileID: 1608890000}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1665039555 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2866837049075620533, guid: 7108319037d013048acb130722723263, type: 3}
+  m_PrefabInstance: {fileID: 1608890000}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1665039564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665039555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8b1431e4f96e2846ad52c059f2c6176, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  atkCooldownMax: 10
+  atkPos: {x: 0, y: 0}
+  atkAngle: 0
+  mouse: 0
 --- !u!1 &1715268224
 GameObject:
   m_ObjectHideFlags: 0
@@ -2800,6 +2834,10 @@ PrefabInstance:
     - target: {fileID: 163938147031022985, guid: 0cb2fd7b71e22384c8b871b08f9afc8e, type: 3}
       propertyPath: m_Name
       value: FD.S1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 163938147031022985, guid: 0cb2fd7b71e22384c8b871b08f9afc8e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1300819191137085245, guid: 0cb2fd7b71e22384c8b871b08f9afc8e, type: 3}
       propertyPath: m_Material

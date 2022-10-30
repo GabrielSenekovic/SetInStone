@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerAttack : MonoBehaviour
+public class Cane : MonoBehaviour, ITool
 {
     int atkCooldown;
     public int atkCooldownMax;
     public Vector2 atkPos;
-    float atkAngle;
+    public float atkAngle;
 
     public Vector2 originalCanePosition;
 
@@ -16,8 +16,6 @@ public class PlayerAttack : MonoBehaviour
     Rigidbody2D playerBody;
 
     [SerializeField] GameObject cane;
-
-    Vector2 caneNextPosition;
 
     Vector2 mousePositionSaved;
     public bool mouse;
@@ -45,13 +43,11 @@ public class PlayerAttack : MonoBehaviour
     {
         atkPos = mousePosition + (Vector2)transform.position;
         Vector2 clickPos = mousePositionSaved;
-        Vector2 headPos = originalCanePosition;
-        Vector2 headToClick = clickPos - headPos;
 
         if (mousePosition.x != 0)
         {
-            atkAngle = mousePosition.y < 0 ? -1 * Vector2.Angle(Vector2.right, headToClick)
-                : Vector2.Angle(Vector2.right, headToClick);
+            atkAngle = mousePosition.y < 0 ? -1 * Vector2.Angle(Vector2.right, clickPos)
+                : Vector2.Angle(Vector2.right, clickPos);
         }
         else { atkAngle = 90 * Mathf.Sign(mousePosition.y); }
 
@@ -83,29 +79,10 @@ public class PlayerAttack : MonoBehaviour
                 {
                     obj.gameObject.GetComponent<PuzzleSwitch>().SwitchHit();
                 }
-                obj.gameObject.GetComponent<Attackable>().OnBeAttacked(baseAtkDamage, Vector2.zero);
+                obj.gameObject.GetComponent<IAttackable>().OnBeAttacked(baseAtkDamage, Vector2.zero);
             }
         }
 
-    }
-
-    public bool Attack()
-    {
-        if(atkCooldown < atkCooldownMax) {return false;}
-        AudioManager.PlaySFX("Attack");
-
-        cane.transform.localPosition = (new Vector2(Mathf.Cos(atkAngle * Mathf.Deg2Rad),
-              Mathf.Sin(atkAngle * Mathf.Deg2Rad)) * attackRange);
-
-        cane.transform.rotation = Quaternion.Euler(0, 0, atkAngle);
-
-        caneAnimator.SetTrigger("Attack");
-        MoveHitBox(cane.transform.position + (Vector3)(new Vector2(Mathf.Cos(atkAngle * Mathf.Deg2Rad),
-              Mathf.Sin(atkAngle * Mathf.Deg2Rad))));
-
-        atkCooldown = 0; // * is on cooldown
-        elapsedFrames = 0;
-        return true;
     }
 
     private void OnDrawGizmos()
@@ -124,8 +101,25 @@ public class PlayerAttack : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere((Vector2)transform.position + mousePositionSaved, 0.1f);
         Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(transform.position + (Vector3)originalCanePosition, 0.2f);
-        Gizmos.color = Color.blue;
         Gizmos.DrawSphere(transform.position - new Vector3(0,0,5), 0.2f);
+    }
+
+    public bool Use()
+    {
+        if (atkCooldown < atkCooldownMax) { return false; }
+        AudioManager.PlaySFX("Attack");
+
+        cane.transform.localPosition = (new Vector2(Mathf.Cos(atkAngle * Mathf.Deg2Rad),
+              Mathf.Sin(atkAngle * Mathf.Deg2Rad)) * attackRange);
+
+        cane.transform.rotation = Quaternion.Euler(0, 0, atkAngle);
+
+        caneAnimator.SetTrigger("Attack");
+        MoveHitBox(cane.transform.position + (Vector3)(new Vector2(Mathf.Cos(atkAngle * Mathf.Deg2Rad),
+              Mathf.Sin(atkAngle * Mathf.Deg2Rad))));
+
+        atkCooldown = 0; // * is on cooldown
+        elapsedFrames = 0;
+        return true;
     }
 }

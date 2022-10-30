@@ -8,7 +8,8 @@ public class Input : MonoBehaviour
 {
     PlayerControls controls;
     Movement movement;
-    PlayerAttack attack;
+    ITool tool1;
+    ITool tool2;
     Animator playerAnimator;
 
     Inventory inventory;
@@ -27,7 +28,8 @@ public class Input : MonoBehaviour
         playerAnimator = GetComponentInChildren<Animator>();
         playerAnimator.SetBool("walking", false);
         movement = GetComponent<Movement>();
-        attack = GetComponent<PlayerAttack>();
+        tool1 = GetComponent<Cane>();
+        tool2 = GetComponent<Slap>();
         hookShot = GetComponent<HookShot>();
         pulka = GetComponent<Pulka>();
         inventory = GetComponent<Inventory>();
@@ -58,14 +60,22 @@ public class Input : MonoBehaviour
             }
 
             movement.hookShot.Aim(mousePosition); //Give it to hookshot / pulka / attack
-            attack.Aim(mousePosition);
+            tool1.Aim(mousePosition);
+            tool2.Aim(mousePosition);
             movement.pulka.Aim(mousePosition);
+
+            Vector2 dir = mousePosition.normalized;
+
+            aimArrow.transform.localPosition = (Vector3)dir * 3;
+            float angle = Vector2.Angle(Vector2.up, dir);
+            aimArrow.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle));
         }
     }
     void OnAim(InputValue value) //Aiming with a controller
     {
         Vector2 dir = value.Get<Vector2>().normalized;
-        attack.SetAngle(dir);
+        tool1.SetAngle(dir);
+        tool2.SetAngle(dir);
         movement.hookShot.SetAngle(dir);
         aimArrow.transform.localPosition = (Vector3)dir * 3;
         float angle = Vector2.Angle(Vector2.up, dir);
@@ -108,19 +118,29 @@ public class Input : MonoBehaviour
     private void OnAttack()
     {
         if (!controllable || movement.HasFlag(NiyoMovementState.ACTIONBUFFER) || movement.HasFlag(NiyoMovementState.LEDGE_HANGING)) {return;}
-        if(!movement.GetGrounded() && attack.Attack()) {playerAnimator.SetTrigger("attack"); movement.StopVelocity();}
+        if(!movement.GetGrounded() && tool1.Use()) 
+        {
+            playerAnimator.SetTrigger("attack"); 
+            movement.StopVelocity();
+        }
+        else if(movement.GetGrounded())
+        {
+            tool2.Use();
+        }
     }
 
     void OnSpecial()
     {
-        if (!controllable || movement.HasFlag(NiyoMovementState.ACTIONBUFFER) || !inventory.HasHookshot() || movement.IsSubmerged()) {return;}
-        if(movement.hookShot.Shoot()) {movement.StopVelocity();}
+        if (!controllable || !inventory.HasHookshot() || movement.IsSubmerged()) {return;}
+        movement.hookShot.Activate();
+        // if(movement.hookShot.Shoot()) {movement.StopVelocity();}
         movement.FaceMovingDirection();
     }
     void OnStopSpecial()
     {
         if(!inventory.HasHookshot()){return;}
-        movement.hookShot.StopPull();
+        //movement.hookShot.StopPull();
+        if (movement.hookShot.Release()) { movement.StopVelocity(); }
     }
 
     void OnPulka()
@@ -186,7 +206,12 @@ public class Input : MonoBehaviour
     private void OnJump()
     {
         if(!controllable) { return; }
+        if (hookShot.state == HookShot.HookShotState.None && hookShot.hit)
+        {
+            hookShot.LetGo();
+        }
         movement.RequestJump();
+        
     }
 
     private void OnStopJump()

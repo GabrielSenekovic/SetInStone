@@ -36,6 +36,7 @@ public class Movement : MonoBehaviour
     [SerializeField] public float airJumpForce;
     [SerializeField] public float speed;
     [SerializeField] public float swimmingSpeed;
+    [SerializeField] public float swimmingTurnSpeed;
     [SerializeField] public int jumpLimit;
     [SerializeField] public int amntOfJumpsMax;
     [SerializeField] public LayerMask whatIsGround;
@@ -242,10 +243,41 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            if(movementState.HasFlag(NiyoMovementState.SUBMERGED | NiyoMovementState.TOUCHING_SURFACE) && verticalDirection == 1){verticalDirection = 0;}
-            Vector2 swimmingDirection = (new Vector2(movingDirection, verticalDirection)).normalized;
-            transform.position +=  new Vector3(swimmingDirection.x * swimmingSpeed * speedMod,swimmingDirection.y * swimmingSpeed * speedMod,0); //The normal movement
+            Swim(speedMod);
         }
+    }
+    void Swim(float speedMod)
+    {
+        if (movementState.HasFlag(NiyoMovementState.SUBMERGED | NiyoMovementState.TOUCHING_SURFACE) && verticalDirection == 1) { verticalDirection = 0; }
+
+        Vector2 swimmingDirection = (new Vector2(movingDirection, verticalDirection)).normalized;
+        if(swimmingDirection == Vector2.zero)
+        {
+            return;
+        }
+
+        Quaternion target = Quaternion.FromToRotation(transform.right, swimmingDirection) * transform.rotation;
+
+        target = new Quaternion(0,
+                                0,
+                                Mathf.Lerp(transform.rotation.z, target.z, swimmingTurnSpeed),
+                                Mathf.Lerp(transform.rotation.w, target.w, swimmingTurnSpeed));
+
+        Vector2 movementDirection = target * Vector2.right;
+
+        transform.rotation = target;
+
+        if(target.eulerAngles.z - 180 > 90 || target.eulerAngles.z - 180 < -90)
+        {
+            bodyTransform.localScale = new Vector3(1, 1, 1);
+        }
+        else
+        {
+            Debug.Log("Set upside down");
+            bodyTransform.localScale = new Vector3(1, -1, 1);
+        }
+
+        body.velocity = movementDirection * swimmingSpeed * speedMod;
     }
     public void UnCollideWithWalls()
     {
@@ -283,8 +315,8 @@ public class Movement : MonoBehaviour
     }
     public void FaceMovingDirection()
     {
-        if (!movementState.HasFlag(NiyoMovementState.LEDGE_HANGING))
-        { //* If not climbing a ledge, turn around and move
+        if (!movementState.HasFlag(NiyoMovementState.LEDGE_HANGING) || !movementState.HasFlag(NiyoMovementState.SUBMERGED))
+        { 
             facingDirection = movingDirection == 0 ? facingDirection : movingDirection;
             bodyTransform.localScale = new Vector3(facingDirection, 1, 1);
         }
@@ -319,7 +351,7 @@ public class Movement : MonoBehaviour
             playerAnimator.SetTrigger("ledgeHang");
             transform.position = ledgePos1;
             movementState &= ~NiyoMovementState.ACTIONBUFFER;
-            hookShot.FinishRetraction(); hookShot.shooting = false;
+            hookShot.FinishRetraction(); hookShot.state = HookShot.HookShotState.None;
         }
     }
 
@@ -563,6 +595,7 @@ public class Movement : MonoBehaviour
     {
         movementState |= NiyoMovementState.TOUCHING_WATER;
         movementState &= ~NiyoMovementState.GROUNDED;
+        body.drag = 1;
         PutOutFire();
         if(body.velocity.y > -5)
         {
@@ -571,10 +604,13 @@ public class Movement : MonoBehaviour
     }
     public void ExitWater()
     {
-        movementState.ExitWater();
+        movementState = movementState.ExitWater();
         healthTimer.Reset();
         amntOfJumps = 0;
-        playerAnimator.SetBool("swimming", false);
+        body.drag = 0;
+        transform.rotation = Quaternion.identity;
+        bodyTransform.localScale = new Vector3(transform.localScale.y, 1, 1);
+         playerAnimator.SetBool("swimming", false);
         if(!movementState.HasFlag(NiyoMovementState.LEDGE_HANGING)){body.gravityScale = normGrav;}
     }
     public bool IsSubmerged()

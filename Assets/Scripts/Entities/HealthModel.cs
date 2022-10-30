@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthModel : MonoBehaviour, Attackable
+public class HealthModel : MonoBehaviour, IAttackable
 {
     [SerializeField] public HealthBar healthBar;
 

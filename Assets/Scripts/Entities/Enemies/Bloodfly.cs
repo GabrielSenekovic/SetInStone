@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class Bloodfly : MonoBehaviour, Attackable
+public class Bloodfly : MonoBehaviour, IAttackable
 {
     public int contactDamage = 1;
     // Start is called before the first frame update
@@ -11,6 +11,7 @@ public class Bloodfly : MonoBehaviour, Attackable
     public int currentHealth;
     public int maxHealth;
     [SerializeField] public GameObject bubble;
+    Rigidbody2D body;
 
     //[SerializeField]VisualEffectEntry deathCloud;
 
@@ -19,6 +20,7 @@ public class Bloodfly : MonoBehaviour, Attackable
     void Start()
     {
         currentHealth = maxHealth;
+        body = GetComponent<Rigidbody2D>();
 
         //deathCloud.effect = Instantiate(VFX_prefab, transform.position, Quaternion.identity, transform);
        // Game.Instance.visualEffects.Add(deathCloud, false);
@@ -28,7 +30,7 @@ public class Bloodfly : MonoBehaviour, Attackable
     {
         if(collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Attackable>().OnBeAttacked(contactDamage, (collision.transform.position-transform.position ).normalized * 4);
+            collision.gameObject.GetComponent<IAttackable>().OnBeAttacked(contactDamage, (collision.transform.position-transform.position ).normalized * 4);
             AudioManager.PlaySFX("ButterflyTouch");
             if(TryGetComponent<ChasePlayer>(out ChasePlayer chase))
             {
@@ -41,7 +43,8 @@ public class Bloodfly : MonoBehaviour, Attackable
     public void OnBeAttacked(int value, Vector2 dir)
     {
         currentHealth -= value;
-        if(currentHealth == 0)
+        body.AddForce(dir, ForceMode2D.Impulse);
+        if(currentHealth <= 0)
         {
            // Game.Instance.visualEffects.ChangePosition(deathCloud, transform.position);
            // deathCloud.effect.Play();
