@@ -183,7 +183,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -206,7 +206,12 @@ MonoBehaviour:
   whatIsWater:
     serializedVersion: 2
     m_Bits: 16
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 0
   radius: 8
-  followSpeed: 0.08
+  acceleration: 0.08
+  maxSpeed: 2
   distanceFromGround: 2
+  startPosition: {x: 0, y: 0}
   chaseBehavior: 0

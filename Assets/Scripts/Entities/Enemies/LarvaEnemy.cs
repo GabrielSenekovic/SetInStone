@@ -15,7 +15,7 @@ public class LarvaEnemy : MonoBehaviour
     private void Awake()
     {
         movement = GetComponent<GoBackAndForth>();
-        movement.OnAwake();
+        movement.OnAwake(true, true);
         mouth.SetActive(false);
     }
     private void Update()

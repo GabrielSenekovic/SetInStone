@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: e576d81298c1e684880d242f77eb6ed3
+guid: 3026f8fcf3644f643b9664faf7b22207
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3081743221117430789
-    second: Ivy_Particles_0
+      213: 2455701909031757946
+    second: Platform_Moving_0
   - first:
-      213: 4072829039448004566
-    second: Ivy_Particles_1
+      213: -1849283813755635117
+    second: Platform_Moving_1
   - first:
-      213: -9031513001621540215
-    second: Ivy_Particles_2
+      213: 5264510363353057330
+    second: Platform_Moving_2
   - first:
-      213: 2613691902355155888
-    second: Ivy_Particles_3
+      213: 2509533525791747314
+    second: Platform_Moving_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -63,7 +63,7 @@ TextureImporter:
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
-  spriteTessellationDetail: -1
+  spriteTessellationDetail: 0
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
@@ -77,7 +77,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 32
+    maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -89,7 +89,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 32
+    maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -103,13 +103,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ivy_Particles_0
+      name: Platform_Moving_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 24
-        width: 8
-        height: 8
+        y: 96
+        width: 80
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -117,20 +117,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bf3d3504ed27b35d0800000000000000
-      internalID: -3081743221117430789
+      spriteID: a78261a10e7641220800000000000000
+      internalID: 2455701909031757946
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ivy_Particles_1
+      name: Platform_Moving_1
       rect:
         serializedVersion: 2
         x: 0
-        y: 16
-        width: 8
-        height: 8
+        y: 32
+        width: 80
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,20 +138,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6d7913fbe68958830800000000000000
-      internalID: 4072829039448004566
+      spriteID: 35a37385b260656e0800000000000000
+      internalID: -1849283813755635117
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ivy_Particles_2
+      name: Platform_Moving_2
       rect:
         serializedVersion: 2
         x: 0
-        y: 8
-        width: 8
-        height: 8
+        y: 80
+        width: 80
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -159,20 +159,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 982b60aa6ce99a280800000000000000
-      internalID: -9031513001621540215
+      spriteID: 238850c684c4f0940800000000000000
+      internalID: 5264510363353057330
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ivy_Particles_3
+      name: Platform_Moving_3
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 8
-        height: 8
+        width: 80
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -180,13 +180,26 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0bba130ffe2b54420800000000000000
-      internalID: 2613691902355155888
+      spriteID: 2fc20c41277a3d220800000000000000
+      internalID: 2509533525791747314
       vertices: []
       indices: 
       edges: []
       weights: []
-    outline: []
+    outline:
+    - - {x: -40, y: 40}
+      - {x: -40, y: 56}
+      - {x: 40, y: 56}
+      - {x: 40, y: 40}
+    - - {x: -40, y: -24}
+      - {x: -40, y: 40}
+      - {x: 40, y: 40}
+      - {x: 40, y: 40}
+      - {x: 40, y: -24}
+    - - {x: -40, y: -56}
+      - {x: -40, y: -24}
+      - {x: 40, y: -24}
+      - {x: 40, y: -56}
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000

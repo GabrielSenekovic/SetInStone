@@ -82,21 +82,22 @@ public class Ivy : MonoBehaviour
             else if(door == null)
             {
                 if(fire.particleCount == 0)
+
                 {
                     Destroy(gameObject);
-                    //map.SetTile(new Vector3Int((int)(transform.localPosition.x), (int)(transform.localPosition.y - 0.5f), 0), null);
+                    map.SetTile(new Vector3Int((int)(transform.localPosition.x - 0.5f), (int)(transform.localPosition.y - 0.5f), 0), null);
                 }
             }
         }
     }
     private void OnTriggerEnter2D(Collider2D other) 
     {
-        if(other.transform.parent.GetComponent<RoomDoor>())
+        if(other.transform.parent && other.transform.parent.GetComponent<RoomDoor>())
         {
             door = other.transform.parent.GetComponent<RoomDoor>();
             door.Jam();
         }
-        if(other.CompareTag("Player") && other.transform.parent.GetComponent<Movement>().OnFire())
+        if(other.CompareTag("Player") && other.transform.parent && other.transform.parent.GetComponent<Movement>().OnFire())
         {
             SetOnFire();
         }

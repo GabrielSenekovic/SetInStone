@@ -20,10 +20,11 @@ public class ChasePlayer : MonoBehaviour
     [SerializeField] LayerMask whatIsGround;
 
     [SerializeField] float radius;
-    [SerializeField] float followSpeed;
+    [SerializeField] float acceleration;
+    [SerializeField] float maxSpeed;
     [SerializeField] byte distanceFromGround; 
 
-    Vector2 startPosition;
+    [SerializeField]Vector2 startPosition;
 
     int returnTimer = 0;
     int returnTimer_max = 40;
@@ -65,7 +66,11 @@ public class ChasePlayer : MonoBehaviour
     private void Move(Vector2 destination)
     {
         transform.localScale = new Vector3(Mathf.Sign(destination.x), 1, 1);
-        body.MovePosition((Vector2)transform.position + destination * followSpeed);
+        if (body.velocity.x < maxSpeed && body.velocity.x > -maxSpeed && body.velocity.y > -maxSpeed && body.velocity.y < maxSpeed)
+        {
+            body.AddForce(destination * acceleration, ForceMode2D.Impulse);
+        }
+        //body.MovePosition((Vector2)transform.position + destination * followSpeed);
     }
     void AvoidGround(ref Vector2 destination)
     {
