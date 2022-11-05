@@ -30,7 +30,7 @@ public class Inventory : MonoBehaviour
     }
     bool hasPulka = false;
     bool hasAxe = false;
-    bool hasHookshot = false;
+    public bool hasHookshot = true;
 
     public bool HasAxe()
     {

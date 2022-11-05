@@ -93,6 +93,10 @@ public class Input : MonoBehaviour
     {
         movement.health.ReturnToSafe();
     }
+    void OnDEBUGRESETHOOKSHOT()
+    {
+        hookShot.FinishRetraction();
+    }
     void OnStopMove()
     {
         if(debug){Debug.Log("Stopping Movement");}
