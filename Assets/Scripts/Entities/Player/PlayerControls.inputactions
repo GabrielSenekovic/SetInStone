@@ -158,6 +158,14 @@
                     "interactions": ""
                 },
                 {
+                    "name": "Aim",
+                    "type": "PassThrough",
+                    "id": "98d51bed-d0fc-4789-98d3-ffd660b5005d",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "DEBUGRESET",
                     "type": "Button",
                     "id": "3fbc97f2-a54e-4ee9-a6e3-5144b324ae12",
@@ -166,10 +174,10 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Aim",
-                    "type": "PassThrough",
-                    "id": "98d51bed-d0fc-4789-98d3-ffd660b5005d",
-                    "expectedControlType": "Vector2",
+                    "name": "DEBUGRESETHOOKSHOT",
+                    "type": "Button",
+                    "id": "461d3395-9add-4e0e-aa74-2848a7b528a8",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 }
@@ -1023,17 +1031,6 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "6c6e418a-dfcf-4b0f-b868-6b99208fd337",
-                    "path": "<Keyboard>/5",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "DEBUGRESET",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
                     "name": "Aim - XBOX",
                     "id": "836348b1-1d82-45b0-9f62-ca3cc0e03432",
                     "path": "2DVector(mode=2)",
@@ -1087,6 +1084,17 @@
                     "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "dbba51e0-9b42-4fd6-bd86-f7c30b3c7f6f",
+                    "path": "<XInputController>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XBOX Controller",
+                    "action": "DEBUGRESETHOOKSHOT",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
