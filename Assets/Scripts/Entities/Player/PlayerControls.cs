@@ -1108,6 +1108,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""DEBUGRESETHOOKSHOT"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""40f56872-38bf-4444-a329-4b317c4a3f6f"",
+                    ""path"": ""<Keyboard>/minus"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""DEBUGRESETHOOKSHOT"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
