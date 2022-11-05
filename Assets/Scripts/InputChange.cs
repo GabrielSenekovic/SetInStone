@@ -56,7 +56,6 @@ public class InputChange : MonoBehaviour
         //THEN the control scheme changes
         if(device != null && change == InputUserChange.DevicePaired) //If new device is paired
         {
-            Debug.Log("Changing controls to: " + device.name);
             currentDevices.Clear();
             currentDevices.Add(device);
         }
