@@ -1108,6 +1108,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""DEBUGRESETHOOKSHOT"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1cf529bf-a6a1-4974-a883-294f09887da6"",
+                    ""path"": ""<Keyboard>/numpadPlus"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""DEBUGRESETHOOKSHOT"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
