@@ -63,7 +63,7 @@ public class InputChange : MonoBehaviour
         //First the last device is unpaired
         //Then the new device is paired
         //THEN the control scheme changes
-        if(device != null && change == InputUserChange.DevicePaired) //If new device is paired
+        if (device != null && change == InputUserChange.DevicePaired) //If new device is paired
         {
             if (debug)
             {

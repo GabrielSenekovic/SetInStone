@@ -22,6 +22,7 @@ public class RoomDoor : MonoBehaviour
     void Awake()
     {
         doorOpening = false;
+        Debug.Assert(roomBehind != null);
     }
 
     void Start()
