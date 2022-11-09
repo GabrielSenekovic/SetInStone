@@ -20,12 +20,14 @@ public class Timer : ScriptableObject
         this.max_value = max_value;
         this.OnHitMax = OnHitMax;
         current_value = 0;
+        this.behavior = behavior;
     }
     public void Increment()
     {
         current_value++;
         if(current_value >= max_value)
         {
+            Debug.Log(behavior);
             if(behavior == TimerBehavior.RESET_SELF)
             {
                 current_value = 0;
