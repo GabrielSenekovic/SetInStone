@@ -20,7 +20,7 @@ public class Input : MonoBehaviour
     [System.NonSerialized] public Pulka pulka;
     [SerializeField] InputChange inputChange;
 
-    [SerializeField]bool debug;
+    bool debug = true;
     [SerializeField] GameObject aimArrow;
 
     void Start()
@@ -93,6 +93,10 @@ public class Input : MonoBehaviour
     {
         movement.health.ReturnToSafe();
     }
+    void OnDEBUGRESETHOOKSHOT()
+    {
+        hookShot.FinishRetraction();
+    }
     void OnStopMove()
     {
         if(debug){Debug.Log("Stopping Movement");}
@@ -141,6 +145,10 @@ public class Input : MonoBehaviour
         if(!inventory.HasHookshot()){return;}
         //movement.hookShot.StopPull();
         if (movement.hookShot.Release()) { movement.StopVelocity(); }
+    }
+    void OnInteract()
+    {
+
     }
 
     void OnPulka()

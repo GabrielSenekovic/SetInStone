@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Activatable : MonoBehaviour
 {
-    public enum ACTIVATABLETYPE
+    public enum ACTIVATABLETYPE //This is kind of a really stupid way of doing this lol. This should be done with interfaces instead
     {
         DOOR,
-        LAMP
+        LAMP,
+        PLATFORM
     }
     public ACTIVATABLETYPE type;
     // Start is called before the first frame update
@@ -21,6 +22,9 @@ public class Activatable : MonoBehaviour
             break;
             case ACTIVATABLETYPE.LAMP:
             GetComponent<Animator>().SetTrigger("Activate");
+            break;
+            case ACTIVATABLETYPE.PLATFORM:
+            GetComponent<MovingPlatform>().isOn = true;
             break;
         }
     }
