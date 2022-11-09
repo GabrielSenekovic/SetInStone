@@ -103,7 +103,7 @@ public class Movement : MonoBehaviour
     {
         Debug.Assert(health != null);
         ledgeClimbTimer = new Timer(() => ClimbLedge(), 2);
-        healthTimer = new Timer(() => health.Heal(1), 50);
+        //healthTimer = new Timer(() => health.Heal(1), 50);
         playerAnimator = GetComponentInChildren<Animator>();
         hookShot = GetComponent<HookShot>();
         pulka = GetComponent<Pulka>();
@@ -158,7 +158,7 @@ public class Movement : MonoBehaviour
 
         if(movementState.HasFlag(NiyoMovementState.SUBMERGED))
         {
-            healthTimer.Increment();
+            //healthTimer.Increment();
             if(body.gravityScale > 0)
             {
                 float modifier = verticalDirection > 0?0.2f:0.05f;
@@ -204,6 +204,10 @@ public class Movement : MonoBehaviour
 
         if(movementState.HasFlag(NiyoMovementState.JUMPING)) {jumpTimer++;}
         if(jumpBufferTimer > 0) {jumpBufferTimer--;}
+    }
+    public void ReturnToSafe()
+    {
+        health.ReturnToSafe();
     }
     void ClimbLedge()
     {
