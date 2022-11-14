@@ -29,10 +29,13 @@ public class HookShot : MonoBehaviour
     public Transform hookOrigin;
     public HookShotState state;
     public bool hit;
+
     public Vector2 hitPoint; //DEBUG
     public Vector2[] colliderCheckPoints = new Vector2[3];
     public Color[] colliderCheckPoint_colors = new Color[3];
     public Color hitPoint_color;
+
+    bool debug = true;
 
     void Start()
     {
@@ -105,6 +108,7 @@ public class HookShot : MonoBehaviour
     {
         if(state == HookShotState.None && !hit)
         {
+            if (debug) { Debug.Log("Activating hookshot and slowdown"); }
             state = HookShotState.Aiming;
             Time.timeScale = 0.3f;
         }
@@ -114,12 +118,14 @@ public class HookShot : MonoBehaviour
         }
         else if(state == HookShotState.Retracting && hit)
         {
+            if (debug) { Debug.Log("Fling player"); }
             FlingPlayer(hook.body.position);
         }
     }
 
     public void Aim(Vector2 mousePosition) //! input stuff
     {
+        if (debug) { Debug.Log("Aiming hookshot"); }
         mousePosition -= (Vector2)hookOrigin.localPosition;
         hookDir = mousePosition.normalized;
 
@@ -147,6 +153,7 @@ public class HookShot : MonoBehaviour
     }
     public bool Release()
     {
+        if (debug) { Debug.Log("releasing hookshot"); }
         Time.timeScale = 1;
         if (state == HookShotState.Aiming)
         {
@@ -156,6 +163,7 @@ public class HookShot : MonoBehaviour
     }
     public void LetGo()
     {
+        if (debug) { Debug.Log("Letting go of hookshot"); }
         movement.RemoveFlag(NiyoMovementState.ACTIONBUFFER);
         body.gravityScale = movement.normGrav;
         movement.amntOfJumps = 0;
@@ -167,7 +175,9 @@ public class HookShot : MonoBehaviour
 
     public bool Shoot()
     {
-        if(hook.IsVisible() || movement.IsDucking() || pulka.GetState() != Pulka.PulkaState.NONE) {return false;}
+        if (debug) { Debug.Log("Trying to shoot hookshot"); }
+        if (hook.IsVisible() || movement.IsDucking() || pulka.GetState() != Pulka.PulkaState.NONE) {return false;}
+        if (debug) { Debug.Log("Shooting hookshot succeeded"); }
 
         RaycastHit2D closeRangeHit = Physics2D.Raycast(transform.position, hookDir, rayLength, whatIsGround);
         if(closeRangeHit.collider != null) { return false; }
