@@ -37,10 +37,6 @@ public class HealthModel : MonoBehaviour, IAttackable
         {
             transform.parent.GetComponent<Input>().SetControllable(false);
             body.velocity = Vector2.zero;
-            if(transform.parent.GetComponent<Movement>().IsSubmerged())
-            {
-                anim.SetBool("swimming", false);
-            }
             anim.SetBool("death", true);
             AudioManager.PlaySFX("VoiceDeath");
             Game.GameOver();
@@ -69,7 +65,7 @@ public class HealthModel : MonoBehaviour, IAttackable
     public void ReturnToSafe()
     {
         Heal(12);
-        transform.position = safePos;
+        transform.parent.position = safePos;
         transform.parent.GetComponent<Input>().SetControllable(true);
         anim.SetBool("death", false);
         anim.SetBool("swimming", false);

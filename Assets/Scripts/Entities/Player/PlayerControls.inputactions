@@ -1098,8 +1098,8 @@
                 },
                 {
                     "name": "",
-                    "id": "40f56872-38bf-4444-a329-4b317c4a3f6f",
-                    "path": "<Keyboard>/minus",
+                    "id": "1cf529bf-a6a1-4974-a883-294f09887da6",
+                    "path": "<Keyboard>/numpadPlus",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",

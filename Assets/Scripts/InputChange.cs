@@ -22,12 +22,17 @@ public class InputChange : MonoBehaviour
     List<InputDevice> currentDevices = new List<InputDevice>() { };
 
     bool initialized = false;
+    bool debug = true;
 
     public void Awake()
     {
         map = inputAction.actionMaps[0];
         InputUser.onChange += OnControlsChanged;
         buttons = buttonListParent.GetComponentsInChildren<KeybindButton>().ToList();
+        if(debug)
+        {
+            Debug.Log("Input change setup");
+        }
     }
     private void Start()
     {
@@ -45,6 +50,10 @@ public class InputChange : MonoBehaviour
 
     public void SetDeviceAndScheme(InputDevice[] devices, string scheme)
     {
+        if (debug)
+        {
+            Debug.Log("Setting device and scheme to: " + scheme);
+        }
         currentDevices = devices.ToList();
         currentScheme = scheme;
     }
@@ -54,9 +63,12 @@ public class InputChange : MonoBehaviour
         //First the last device is unpaired
         //Then the new device is paired
         //THEN the control scheme changes
-        if(device != null && change == InputUserChange.DevicePaired) //If new device is paired
+        if (device != null && change == InputUserChange.DevicePaired) //If new device is paired
         {
-            Debug.Log("Changing controls to: " + device.name);
+            if (debug)
+            {
+                Debug.Log("Changing controls to: " + device.name);
+            }
             currentDevices.Clear();
             currentDevices.Add(device);
         }
@@ -81,6 +93,10 @@ public class InputChange : MonoBehaviour
 
     public void SetBindingButtons()
     {
+        if (debug)
+        {
+            Debug.Log("Setting binding button");
+        }
         for (int i = 0; i < buttons.Count;)
         {
             switch (buttons[i].action)

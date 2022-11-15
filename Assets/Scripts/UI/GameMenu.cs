@@ -79,11 +79,11 @@ public class GameMenu : MonoBehaviour
     public void Pause()
     {
         if (Game.Instance.keybindConflict) { return; } //This variable should be in Input Change, but I don't have time make Input Change a variable of Game right now
-        pause = !pause;
-        Time.timeScale = pause ? 0 : 1;
         pauseMenu.SetCanvasGroupAs(Extensions.SetValue.TOGGLE);
         optionsMenu.SetCanvasGroupAs(Extensions.SetValue.OFF);
         keybindingMenu.SetCanvasGroupAs(Extensions.SetValue.OFF);
+        pause = pauseMenu.alpha == 1;
+        Time.timeScale = pause ? 0 : 1;
     }
     public void Map()
     {
