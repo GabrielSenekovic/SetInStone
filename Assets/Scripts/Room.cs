@@ -2,14 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
+using System.Linq;
 
 public class Room : MonoBehaviour
 {
+    [System.Serializable]public class RoomToDoor
+    {
+        public int value;
+        public Room destination;
+    }
     [SerializeField] Collider2D myCollider;
     [SerializeField] List<GameObject> enemies;
     public bool discovered;
     [SerializeField] GameObject door;
     [SerializeField] Light2D roomLight;
+    [SerializeField] List<RoomToDoor> linkedRooms;
     public Collider2D GetCollider()
     {
         return myCollider;
@@ -26,14 +33,15 @@ public class Room : MonoBehaviour
     void Update()
     {
        if(door != null && !door.GetComponent<RoomDoor>().doorOpening && enemies.Count > 0)
-        {
+       {
             CheckEnemies();
-        }
-        if(door != null && enemies.Count == 0)
-        {
+       }
+       if(door != null && enemies.Count == 0)
+       {
             door.GetComponent<RoomDoor>().doorOpening = true;
-        }
+       }
     }
+    public Room FetchLinkedRoom(int value) => linkedRooms.Where(r => r.value == value).First().destination;
 
     public void Discover()
     {
