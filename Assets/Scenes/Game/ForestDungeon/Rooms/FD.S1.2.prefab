@@ -7154,7 +7154,9 @@ MonoBehaviour:
   discovered: 1
   door: {fileID: 0}
   roomLight: {fileID: 0}
-  linkedRooms:
+  links:
+  - value: 0
+    destination: {fileID: 0}
   - value: 1
     destination: {fileID: 0}
 --- !u!1 &2683769658353860477

@@ -2,20 +2,48 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEditor;
 
-public class Level : MonoBehaviour
+public class Area: MonoBehaviour
 {
-    [SerializeField]List<Room> rooms = new List<Room>();
-    void Awake()
+    [System.Serializable]public class RoomConnector
     {
-        rooms = GetComponentsInChildren<Room>().ToList();
+        public Room source;
+        public RoomToDoor[] connections = new RoomToDoor[] { };
+        public RoomConnector(Room source)
+        {
+            this.source = source;
+        }
     }
+    [System.Serializable]
+    public class RoomToDoor
+    {
+        public int value;
+        public Room destination;
+    }
+    public List<RoomConnector> roomConnectors = new List<RoomConnector>();
     private void Start() 
     {
         /*CollectAllTilePositions();*/
     }
+    public void CollectAllRooms()
+    {
+        List<Room> rooms = GetComponentsInChildren<Room>().ToList();
+        for (int i = roomConnectors.Count; i < rooms.Count; i++)
+        {
+            roomConnectors.Add(new RoomConnector(rooms[i]));
+        }
+    }
+    public void SetAllLinks()
+    { 
+        for(int i = 0; i < roomConnectors.Count; i++)
+        {
+            EditorUtility.SetDirty(roomConnectors[i].source);
+            roomConnectors[i].source.SetLinkedRooms(roomConnectors[i].connections);
+        }
+    }
 
-    void CollectAllTilePositions()
+    /*void CollectAllTilePositions()
     {
         List<Map.RoomData> levelData = new List<Map.RoomData>();
         Vector2Int verticalBounds = Vector2Int.zero; // x = bottom, y = top
@@ -48,14 +76,14 @@ public class Level : MonoBehaviour
             }
         }
         AdjustTilePositions(levelData, verticalBounds, horizontalBounds);
-    }
+    }*/
     Color GetTileColor(int value)
     {
         //Use the material to get the color later
         return value == 8 ? Color.yellow : Color.red;
     }
 
-    void AdjustTilePositions(List<Map.RoomData> list, Vector2 verticalBounds, Vector2 horizontalBounds)
+    /*void AdjustTilePositions(List<Map.RoomData> list, Vector2 verticalBounds, Vector2 horizontalBounds)
     {
         //Script to make sure all Vector2 are above 0
 
@@ -86,5 +114,5 @@ public class Level : MonoBehaviour
         }
 
         Game.CreateMapTexture(list);
-    }
+    }*/
 }
