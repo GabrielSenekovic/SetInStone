@@ -57,9 +57,10 @@ public class HookShot : MonoBehaviour
         {
             PullIn();
         }
-        else if(state != HookShotState.Retracting && hookDistance >= hookRange)
+        else if(state == HookShotState.Shooting && hookDistance >= hookRange)
         {
             Retract();
+            Debug.Log("Set to retract!");
             state = HookShotState.Retracting;
         }
         else if(state == HookShotState.Retracting)
@@ -125,7 +126,7 @@ public class HookShot : MonoBehaviour
 
     public void Aim(Vector2 mousePosition) //! input stuff
     {
-        if (debug) { Debug.Log("Aiming hookshot"); }
+       // if (debug) { Debug.Log("Aiming hookshot"); }
         mousePosition -= (Vector2)hookOrigin.localPosition;
         hookDir = mousePosition.normalized;
 
@@ -168,6 +169,7 @@ public class HookShot : MonoBehaviour
         body.gravityScale = movement.normGrav;
         movement.amntOfJumps = 0;
         state = HookShotState.None;
+        Debug.Log("Setting state to none and making projectile invisible");
         hit = false;
         hook.SetVisible(false);
         movement.UnCollideWithWalls();
@@ -214,11 +216,9 @@ public class HookShot : MonoBehaviour
     }
     public void FinishRetraction()
     {
-        hook.SetVisible(false);
         hook.transform.localPosition = Vector3.zero;
         hook.body.velocity = Vector3.zero;
         hook.transform.rotation = Quaternion.identity;
-        state = HookShotState.None;
         LetGo();
     }
 

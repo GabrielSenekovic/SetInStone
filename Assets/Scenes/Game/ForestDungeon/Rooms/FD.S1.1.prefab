@@ -4156,7 +4156,7 @@ TilemapCollider2D:
   m_GameObject: {fileID: 825887394222307097}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: ab0b71d67683e8047ab35c95edfebd3b, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -5148,11 +5148,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b09e4354795fc394a9623ff46891154e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myCollider: {fileID: 0}
+  myCollider: {fileID: 2069518012}
   enemies: []
   discovered: 0
   door: {fileID: 0}
-  roomLight: {fileID: 0}
+  roomLight: {fileID: 1879225022}
 --- !u!1 &2885836267029387471
 GameObject:
   m_ObjectHideFlags: 0
