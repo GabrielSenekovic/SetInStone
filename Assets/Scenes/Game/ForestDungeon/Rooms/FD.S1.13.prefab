@@ -5816,7 +5816,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e1b919f9965704f96e6e3283f59411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myRoom: {fileID: 0}
+  transitionTo: {fileID: 0}
+  roomValue: 0
 --- !u!61 &8965143251107139017
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9065,3 +9066,4 @@ MonoBehaviour:
   discovered: 0
   door: {fileID: 0}
   roomLight: {fileID: 0}
+  links: []
