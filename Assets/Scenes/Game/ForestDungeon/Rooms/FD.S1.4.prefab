@@ -8188,7 +8188,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e1b919f9965704f96e6e3283f59411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myRoom: {fileID: 0}
+  transitionTo: {fileID: 0}
+  roomValue: 0
 --- !u!61 &8102857536930867895
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -19727,7 +19728,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e1b919f9965704f96e6e3283f59411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myRoom: {fileID: 0}
+  transitionTo: {fileID: 0}
+  roomValue: 0
 --- !u!61 &7577612086438981119
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -42802,7 +42804,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e1b919f9965704f96e6e3283f59411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myRoom: {fileID: 0}
+  transitionTo: {fileID: 0}
+  roomValue: 0
 --- !u!61 &3349461439943285344
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -42885,6 +42888,13 @@ MonoBehaviour:
   discovered: 0
   door: {fileID: 0}
   roomLight: {fileID: 1020322018022074934}
+  links:
+  - value: 0
+    destination: {fileID: 0}
+  - value: 1
+    destination: {fileID: 0}
+  - value: 2
+    destination: {fileID: 0}
 --- !u!1001 &3774160743461923353
 PrefabInstance:
   m_ObjectHideFlags: 0

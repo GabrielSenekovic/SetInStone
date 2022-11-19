@@ -103,7 +103,7 @@ public class Movement : MonoBehaviour
     {
         Debug.Assert(health != null);
         ledgeClimbTimer = new Timer(() => ClimbLedge(), 2);
-        //healthTimer = new Timer(() => health.Heal(1), 50);
+        healthTimer = new Timer(() => health.Heal(1), 50);
         playerAnimator = GetComponentInChildren<Animator>();
         hookShot = GetComponent<HookShot>();
         pulka = GetComponent<Pulka>();
