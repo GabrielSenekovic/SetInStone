@@ -20,7 +20,7 @@ public class Input : MonoBehaviour
     [System.NonSerialized] public Pulka pulka;
     [SerializeField] InputChange inputChange;
 
-    bool debug = true;
+    bool debug = false;
     [SerializeField] GameObject aimArrow;
 
     void Start()
