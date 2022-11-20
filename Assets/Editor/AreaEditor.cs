@@ -20,7 +20,7 @@ public class AreaEditor : SelectableEditor
         }
         if (GUILayout.Button("Set Room Links"))
         {
-            area.SetAllLinks();
+           // area.SetAllLinks();
         }
     }
 }
