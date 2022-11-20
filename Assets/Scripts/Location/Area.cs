@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEditor;
 
 public class Area: MonoBehaviour
 {
@@ -34,14 +33,14 @@ public class Area: MonoBehaviour
             roomConnectors.Add(new RoomConnector(rooms[i]));
         }
     }
-    public void SetAllLinks()
+   /* public void SetAllLinks()
     { 
         for(int i = 0; i < roomConnectors.Count; i++)
         {
             EditorUtility.SetDirty(roomConnectors[i].source);
             roomConnectors[i].source.SetLinkedRooms(roomConnectors[i].connections);
         }
-    }
+    }*/
 
     /*void CollectAllTilePositions()
     {
