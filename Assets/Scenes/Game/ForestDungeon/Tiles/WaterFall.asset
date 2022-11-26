@@ -12,7 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
   m_Name: WaterFall
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: 21300000, guid: 129a057a84875094c84f8726436d3065, type: 3}
+  m_DefaultSprite: {fileID: 1789541662717591004, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
   m_DefaultGameObject: {fileID: 1592237366360146000, guid: efa7da970e7a3b549b9729677e0b8fd4, type: 3}
   m_DefaultColliderType: 1
-  m_TilingRules: []
+  m_TilingRules:
+  - m_Id: 0
+    m_Sprites:
+    - {fileID: 1789541662717591004, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+    - {fileID: 8017144880244952471, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+    - {fileID: -1329908886971412536, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+    - {fileID: -9082459070385452779, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+    m_GameObject: {fileID: 1592237366360146000, guid: efa7da970e7a3b549b9729677e0b8fd4, type: 3}
+    m_MinAnimationSpeed: 16
+    m_MaxAnimationSpeed: 16
+    m_PerlinScale: 0.5
+    m_Output: 2
+    m_ColliderType: 1
+    m_RandomTransform: 0
+    m_Neighbors: 
+    m_NeighborPositions: []
+    m_RuleTransform: 0

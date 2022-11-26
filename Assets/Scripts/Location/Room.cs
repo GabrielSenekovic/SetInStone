@@ -8,11 +8,11 @@ using UnityEditor;
 public class Room : MonoBehaviour
 {
     [SerializeField] Collider2D myCollider;
-    [SerializeField] List<GameObject> enemies;
     public bool discovered;
-    [SerializeField] GameObject door;
     [SerializeField] Light2D roomLight;
     public List<Area.RoomToDoor> links = new List<Area.RoomToDoor>();
+
+    ActivatesWhenDefeatEnemies activatesWhenDefeatEnemies;
     public Collider2D GetCollider()
     {
         return myCollider;
@@ -24,18 +24,7 @@ public class Room : MonoBehaviour
         {
             myCollider.gameObject.tag = "PassThrough";
         }
-    }
-
-    void Update()
-    {
-       if(door != null && !door.GetComponent<RoomDoor>().doorOpening && enemies.Count > 0)
-       {
-            CheckEnemies();
-       }
-       if(door != null && enemies.Count == 0)
-       {
-            door.GetComponent<RoomDoor>().doorOpening = true;
-       }
+        TryGetComponent(out activatesWhenDefeatEnemies);
     }
     public void SetLinkedRooms(Area.RoomToDoor[] links)
     {
@@ -52,19 +41,6 @@ public class Room : MonoBehaviour
         if(discovered && roomLight && roomLight.intensity < 1)
         {
             roomLight.intensity += 0.05f;
-        }
-    }
-
-    void CheckEnemies()
-    {
-        for(int i = 0; i < enemies.Count; i++)
-        {
-            if(enemies[i].GetComponentInChildren<Snail>().currentHealth <= 0)
-            {
-                Destroy(enemies[i]);
-                enemies.Remove(enemies[i]);
-                i--;
-            }
         }
     }
 }

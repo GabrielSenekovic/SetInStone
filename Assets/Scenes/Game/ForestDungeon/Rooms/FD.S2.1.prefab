@@ -153,13 +153,55 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 0
       dummyAlignment: 0
       m_AllTileFlags: 1073741826
-  m_AnimatedTiles: {}
+  m_AnimatedTiles:
+  - first: {x: -42, y: 143, z: 0}
+    second:
+      m_AnimatedSprites:
+      - {fileID: 1789541662717591004, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      - {fileID: 8017144880244952471, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      - {fileID: -1329908886971412536, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      - {fileID: -9082459070385452779, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      m_AnimationSpeed: 16
+      m_AnimationTimeOffset: 0
+      m_IsLooping: 1
+  - first: {x: -41, y: 143, z: 0}
+    second:
+      m_AnimatedSprites:
+      - {fileID: 1789541662717591004, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      - {fileID: 8017144880244952471, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      - {fileID: -1329908886971412536, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      - {fileID: -9082459070385452779, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      m_AnimationSpeed: 16
+      m_AnimationTimeOffset: 0
+      m_IsLooping: 1
+  - first: {x: -38, y: 143, z: 0}
+    second:
+      m_AnimatedSprites:
+      - {fileID: 1789541662717591004, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      - {fileID: 8017144880244952471, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      - {fileID: -1329908886971412536, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      - {fileID: -9082459070385452779, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      m_AnimationSpeed: 16
+      m_AnimationTimeOffset: 0
+      m_IsLooping: 1
+  - first: {x: -37, y: 143, z: 0}
+    second:
+      m_AnimatedSprites:
+      - {fileID: 1789541662717591004, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      - {fileID: 8017144880244952471, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      - {fileID: -1329908886971412536, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      - {fileID: -9082459070385452779, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      m_AnimationSpeed: 16
+      m_AnimationTimeOffset: 0
+      m_IsLooping: 1
   m_TileAssetArray:
   - m_RefCount: 4
     m_Data: {fileID: 11400000, guid: 8169e6c0590db2a43a960bbcc79d89a5, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 4
-    m_Data: {fileID: 21300000, guid: 129a057a84875094c84f8726436d3065, type: 3}
+    m_Data: {fileID: 1789541662717591004, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileMatrixArray:
   - m_RefCount: 4
     m_Data:
@@ -381,9 +423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myCollider: {fileID: 3958080552389074704}
-  enemies: []
   discovered: 0
-  door: {fileID: 0}
   roomLight: {fileID: 4294169648400099281}
   links: []
 --- !u!1 &1302474751116073893

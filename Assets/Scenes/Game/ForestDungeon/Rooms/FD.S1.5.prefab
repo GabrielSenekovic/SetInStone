@@ -81,9 +81,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myCollider: {fileID: 8669870588051700319}
-  enemies: []
   discovered: 0
-  door: {fileID: 0}
   roomLight: {fileID: 8801451462035803425}
   links: []
 --- !u!1 &1040942378862814815
