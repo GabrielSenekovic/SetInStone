@@ -81,10 +81,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myCollider: {fileID: 8669870588051700319}
-  enemies: []
   discovered: 0
-  door: {fileID: 0}
   roomLight: {fileID: 8801451462035803425}
+  links: []
 --- !u!1 &1040942378862814815
 GameObject:
   m_ObjectHideFlags: 0
@@ -1494,7 +1493,7 @@ TilemapCollider2D:
   m_GameObject: {fileID: 1889663281421120256}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: ab0b71d67683e8047ab35c95edfebd3b, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -1639,7 +1638,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0
+  m_Intensity: 1
   m_LightVolumeOpacity: 0
   m_ApplyToSortingLayers: 00000000dfc2ec4d2b7520bb7ba5ca0e
   m_LightCookieSprite: {fileID: 0}
@@ -1971,7 +1970,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileSpriteIndex: 4294967295
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2141,7 +2140,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileSpriteIndex: 4294967295
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2201,7 +2200,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileSpriteIndex: 4294967295
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2431,7 +2430,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileSpriteIndex: 4294967295
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2521,7 +2520,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileSpriteIndex: 4294967295
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2631,7 +2630,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileSpriteIndex: 4294967295
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2641,7 +2640,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileSpriteIndex: 4294967295
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2971,7 +2970,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileSpriteIndex: 4294967295
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -3166,8 +3165,6 @@ Tilemap:
   m_TileSpriteArray:
   - m_RefCount: 137
     m_Data: {fileID: 1273005238892907350, guid: 15380a9c72750664ab541c3abc077841, type: 3}
-  - m_RefCount: 8
-    m_Data: {fileID: -7573940037591072837, guid: 15380a9c72750664ab541c3abc077841, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 145
     m_Data:
@@ -3306,7 +3303,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e1b919f9965704f96e6e3283f59411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myRoom: {fileID: 0}
+  transitionTo: {fileID: 0}
+  roomValue: 0
 --- !u!61 &3068471261776874838
 BoxCollider2D:
   m_ObjectHideFlags: 0

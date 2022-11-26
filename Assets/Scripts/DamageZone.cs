@@ -24,7 +24,7 @@ public class DamageZone : MonoBehaviour
 
         if (collision.gameObject.GetComponent<Movement>() && !(pos.y < colPos.y && sitting))
         {
-            collision.gameObject.GetComponent<IAttackable>().OnBeAttacked(contactDamage, Vector2.zero);
+            collision.gameObject.GetComponentInChildren<IAttackable>().OnBeAttacked(contactDamage, Vector2.zero);
             //collision.gameObject.GetComponent<HealthModel>().ReturnToSafe();
             // maybe teleport
         }

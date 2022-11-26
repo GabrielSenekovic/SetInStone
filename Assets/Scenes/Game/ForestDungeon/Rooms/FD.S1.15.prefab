@@ -8678,7 +8678,7 @@ TilemapCollider2D:
   m_GameObject: {fileID: 5141841277982293941}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: ab0b71d67683e8047ab35c95edfebd3b, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -8759,7 +8759,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e1b919f9965704f96e6e3283f59411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myRoom: {fileID: 0}
+  transitionTo: {fileID: 0}
+  roomValue: 0
 --- !u!61 &1620572864060492521
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8837,10 +8838,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myCollider: {fileID: 3913815501700595923}
-  enemies: []
   discovered: 0
-  door: {fileID: 0}
   roomLight: {fileID: 669239313897587149}
+  links: []
 --- !u!1 &7215282928123449443
 GameObject:
   m_ObjectHideFlags: 0
