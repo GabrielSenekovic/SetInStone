@@ -32,7 +32,7 @@ public class PuzzleSwitch : MonoBehaviour, IAttackable
             SwitchHit(); //This dowes noting atm the switch is activated in playerattack
         }
     }
-    public IEnumerator ActivationCutscene()
+    public IEnumerator ActivationCutscene() //The same as activate when defeat enemies
     {
         Transform temp = Game.Instance.cinemachineVirtualCamera.Follow;
         yield return new WaitForSeconds(1.0f);

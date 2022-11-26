@@ -8011,7 +8011,7 @@ Tilemap:
   m_GameObject: {fileID: 1142331153859280327}
   m_Enabled: 1
   m_Tiles:
-  - first: {x: 136, y: 8, z: 0}
+  - first: {x: 136, y: 9, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 0
@@ -8021,7 +8021,7 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 0
       dummyAlignment: 0
       m_AllTileFlags: 1073741826
-  - first: {x: 137, y: 8, z: 0}
+  - first: {x: 137, y: 9, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 0
@@ -8031,7 +8031,7 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 0
       dummyAlignment: 0
       m_AllTileFlags: 1073741826
-  - first: {x: 120, y: 9, z: 0}
+  - first: {x: 120, y: 10, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 0
@@ -8041,13 +8041,45 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 0
       dummyAlignment: 0
       m_AllTileFlags: 1073741826
-  m_AnimatedTiles: {}
+  m_AnimatedTiles:
+  - first: {x: 136, y: 9, z: 0}
+    second:
+      m_AnimatedSprites:
+      - {fileID: 1789541662717591004, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      - {fileID: 8017144880244952471, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      - {fileID: -1329908886971412536, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      - {fileID: -9082459070385452779, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      m_AnimationSpeed: 16
+      m_AnimationTimeOffset: 0
+      m_IsLooping: 1
+  - first: {x: 137, y: 9, z: 0}
+    second:
+      m_AnimatedSprites:
+      - {fileID: 1789541662717591004, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      - {fileID: 8017144880244952471, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      - {fileID: -1329908886971412536, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      - {fileID: -9082459070385452779, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      m_AnimationSpeed: 16
+      m_AnimationTimeOffset: 0
+      m_IsLooping: 1
+  - first: {x: 120, y: 10, z: 0}
+    second:
+      m_AnimatedSprites:
+      - {fileID: 1789541662717591004, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      - {fileID: 8017144880244952471, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      - {fileID: -1329908886971412536, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      - {fileID: -9082459070385452779, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+      m_AnimationSpeed: 16
+      m_AnimationTimeOffset: 0
+      m_IsLooping: 1
   m_TileAssetArray:
   - m_RefCount: 3
     m_Data: {fileID: 11400000, guid: 8169e6c0590db2a43a960bbcc79d89a5, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 3
-    m_Data: {fileID: 21300000, guid: 129a057a84875094c84f8726436d3065, type: 3}
+    m_Data: {fileID: 1789541662717591004, guid: 08a12b15406904e43b097b2bc23c52fe, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileMatrixArray:
   - m_RefCount: 3
     m_Data:
@@ -8076,7 +8108,7 @@ Tilemap:
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: 0, y: 0, z: 0}
-  m_Size: {x: 138, y: 10, z: 1}
+  m_Size: {x: 138, y: 11, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -8188,7 +8220,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e1b919f9965704f96e6e3283f59411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myRoom: {fileID: 0}
+  transitionTo: {fileID: 0}
+  roomValue: 0
 --- !u!61 &8102857536930867895
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -19727,7 +19760,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e1b919f9965704f96e6e3283f59411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myRoom: {fileID: 0}
+  transitionTo: {fileID: 0}
+  roomValue: 0
 --- !u!61 &7577612086438981119
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -42802,7 +42836,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e1b919f9965704f96e6e3283f59411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myRoom: {fileID: 0}
+  transitionTo: {fileID: 0}
+  roomValue: 0
 --- !u!61 &3349461439943285344
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -42881,10 +42916,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myCollider: {fileID: 890711473371094344}
-  enemies: []
   discovered: 0
-  door: {fileID: 0}
   roomLight: {fileID: 1020322018022074934}
+  links:
+  - value: 0
+    destination: {fileID: 0}
+  - value: 1
+    destination: {fileID: 0}
+  - value: 2
+    destination: {fileID: 0}
 --- !u!1001 &3774160743461923353
 PrefabInstance:
   m_ObjectHideFlags: 0

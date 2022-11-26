@@ -57317,7 +57317,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e1b919f9965704f96e6e3283f59411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myRoom: {fileID: 0}
+  transitionTo: {fileID: 0}
+  roomValue: 0
 --- !u!61 &875848616
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -57478,10 +57479,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myCollider: {fileID: 620161516}
-  enemies: []
   discovered: 0
-  door: {fileID: 0}
   roomLight: {fileID: 1251755216}
+  links: []
 --- !u!1 &2170300223541448304
 GameObject:
   m_ObjectHideFlags: 0
@@ -105386,7 +105386,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e1b919f9965704f96e6e3283f59411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myRoom: {fileID: 0}
+  transitionTo: {fileID: 0}
+  roomValue: 0
 --- !u!61 &1812047047592122973
 BoxCollider2D:
   m_ObjectHideFlags: 0
