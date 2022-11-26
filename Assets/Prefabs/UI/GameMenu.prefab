@@ -1571,6 +1571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputAction: {fileID: -944628639613478452, guid: 7251734ee6a346b429135a46421873a0, type: 3}
+  currentScheme: 
   buttonListParent: {fileID: 6451505583606125494}
   returnButton: {fileID: 6451505585022675462}
 --- !u!1 &5403485922528991325
@@ -1754,6 +1755,7 @@ MonoBehaviour:
   options: {fileID: 398214281624231704}
   keybindingMenu: {fileID: 6451505583606125489}
   pauseMenu: {fileID: 3836936246527702702}
+  inputChange: {fileID: 4553011603652641042}
   mapScript: {fileID: 1330257157360598520}
   hUD: {fileID: 1330257156693991037}
   titleText: {fileID: 6451505585188636335}

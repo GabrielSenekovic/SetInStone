@@ -70,7 +70,6 @@ public class ChasePlayer : MonoBehaviour
         {
             body.AddForce(destination * acceleration, ForceMode2D.Impulse);
         }
-        //body.MovePosition((Vector2)transform.position + destination * followSpeed);
     }
     void AvoidGround(ref Vector2 destination)
     {
