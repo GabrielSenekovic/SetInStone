@@ -6043,9 +6043,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myCollider: {fileID: 1548862915}
-  enemies: []
   discovered: 0
-  door: {fileID: 0}
   roomLight: {fileID: 1405699898}
   links:
   - value: 0
