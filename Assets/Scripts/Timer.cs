@@ -39,12 +39,7 @@ public class Timer : ScriptableObject
     {
         current_value = 0;
     }
-    public bool IsCounting()
-    {
-        return current_value > 0;
-    }
-    public bool IsLowerThanMax()
-    {
-        return current_value < max_value;
-    }
+    public bool IsCounting() => current_value > 0;
+    public bool IsLowerThanMax() => current_value < max_value;
+    public bool IsFull() => current_value > max_value;
 }

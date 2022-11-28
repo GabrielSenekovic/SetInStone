@@ -1983,7 +1983,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7969094737469182791
 Transform:
   m_ObjectHideFlags: 0
@@ -2047,10 +2047,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8788744899578789591}
-  - component: {fileID: 1929642097375117205}
+  - component: {fileID: 869982630}
   m_Layer: 0
   m_Name: Camera Colliders
-  m_TagString: Untagged
+  m_TagString: PassThrough
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2069,8 +2069,8 @@ Transform:
   m_Father: {fileID: 4608329662539762238}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &1929642097375117205
-BoxCollider2D:
+--- !u!60 &869982630
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2092,9 +2092,12 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 29, y: 17}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: -13.9510565, y: 8.309017}
+      - {x: -14.587785, y: -8.809017}
+      - {x: 14.587786, y: -8.809017}
+      - {x: 13.9510565, y: 8.309017}
 --- !u!1 &4608329662539762239
 GameObject:
   m_ObjectHideFlags: 0
@@ -2146,7 +2149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b09e4354795fc394a9623ff46891154e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myCollider: {fileID: 1929642097375117205}
+  myCollider: {fileID: 869982630}
   discovered: 0
   roomLight: {fileID: 0}
   links: []
@@ -7445,7 +7448,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8236118606841590236
 Transform:
   m_ObjectHideFlags: 0
@@ -7593,6 +7596,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
+    - target: {fileID: 153492696530379517, guid: e937b574f8ed6d54ebab3b2b1297ed5d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e937b574f8ed6d54ebab3b2b1297ed5d, type: 3}
 --- !u!114 &8899687648300716583 stripped
@@ -7628,7 +7635,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5845264543252489306, guid: d1b0580d258e86f4e9884b9ee0d52602, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5845264543252489306, guid: d1b0580d258e86f4e9884b9ee0d52602, type: 3}
       propertyPath: m_LocalPosition.z
