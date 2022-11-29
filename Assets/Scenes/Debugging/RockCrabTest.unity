@@ -188,11 +188,6 @@ PrefabInstance:
       objectReference: {fileID: 793980641}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7108319037d013048acb130722723263, type: 3}
---- !u!1 &81262709 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3847666693991799968, guid: 7108319037d013048acb130722723263, type: 3}
-  m_PrefabInstance: {fileID: 48774449}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &422501657
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -200,10 +195,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1573859055632685554, guid: 6a6fa243507d2e04581942961d1afb53, type: 3}
-      propertyPath: bubble
-      value: 
-      objectReference: {fileID: 81262709}
     - target: {fileID: 4608329662539762238, guid: 6a6fa243507d2e04581942961d1afb53, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -327,6 +318,26 @@ PolygonCollider2D:
   m_CorrespondingSourceObject: {fileID: 869982630, guid: 6a6fa243507d2e04581942961d1afb53, type: 3}
   m_PrefabInstance: {fileID: 422501657}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1134270574 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1477077481821026275, guid: d01cd1a73c6f7ee438ba7229a9b8edd1, type: 3}
+  m_PrefabInstance: {fileID: 1705877247}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1134270575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134270574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ChannelMask: 1
+  m_Gain: 1
+  m_Use2DDistance: 1
 --- !u!1001 &1705877247
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -396,11 +407,11 @@ PrefabInstance:
       objectReference: {fileID: 1885363262}
     - target: {fileID: 8713348054587949285, guid: d01cd1a73c6f7ee438ba7229a9b8edd1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.25153828
       objectReference: {fileID: 0}
     - target: {fileID: 8713348054587949285, guid: d01cd1a73c6f7ee438ba7229a9b8edd1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.21865034
       objectReference: {fileID: 0}
     - target: {fileID: 8822755520288019453, guid: d01cd1a73c6f7ee438ba7229a9b8edd1, type: 3}
       propertyPath: m_BoundingShape2D

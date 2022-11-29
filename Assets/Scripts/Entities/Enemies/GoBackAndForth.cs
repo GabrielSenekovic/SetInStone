@@ -64,6 +64,10 @@ public class GoBackAndForth : MonoBehaviour
             ChangeDir();
         }
     }
+    public void Stop()
+    {
+        body.velocity = Vector2.zero;
+    }
     public Vector2 GetDirection()
     {
         int x = behavior == Behavior.HORIZONTAL ? direction : 0;
