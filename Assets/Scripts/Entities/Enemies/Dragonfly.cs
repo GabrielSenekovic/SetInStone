@@ -5,47 +5,116 @@ using System.Linq;
 
 public class Dragonfly : MonoBehaviour
 {
+    public enum Behavior
+    {
+        NONE,
+        MOVING, //Moving, but also when pursuing player. The target is different 
+        WAITING, //Between moves
+        CHARGING, //Charge up fire
+    }
     Rigidbody2D body;
     [SerializeField] float speed;
-    Timer movementInterval; //The timer for when it stops moving and before it moves to a new position
     [SerializeField] float maxDistance;
     [SerializeField] float minDistance;
-    bool moving;
-    [SerializeField] Vector2 target;
-    [SerializeField] Vector2 startPosition;
-    [SerializeField] Vector2 previousPosition;
+    [SerializeField] Behavior behavior;
+    Vector2 target;
+    Vector2 startPosition;
+    Vector2 previousPosition;
     float distanceToTravel;
     public LayerMask whatIsGround;
+    Transform player;
 
-    void Awake()
+    [SerializeField]Timer movementTimer; //The timer for when it stops moving and before it moves to a new position
+    [SerializeField]Timer attackTimer; //The timer for how often the dragonfly will try to attack the player
+    [SerializeField]Timer chargeTimer; //The timer for how long it takes the fire to charge up
+
+    [SerializeField] GameObject projectilePrefab;
+    Rigidbody2D projectile;
+    Animator projectileAnim;
+    [SerializeField] Transform holdingTransform;
+
+    void Start()
     {
         body = GetComponent<Rigidbody2D>();
-        movementInterval = new Timer(ChooseNewDestination, 40);
-        moving = true;
+
+        movementTimer.Initialize(ChooseNewDestination);
+        attackTimer.Initialize(StartCharge);
+        chargeTimer.Initialize(StartPursue);
+
+        behavior = Behavior.MOVING;
         startPosition = transform.position;
         previousPosition = transform.position;
+
+        projectile = Instantiate(projectilePrefab, Vector2.zero, Quaternion.identity, holdingTransform).GetComponent<Rigidbody2D>();
+        projectile.gameObject.SetActive(false);
+        projectile.isKinematic = true;
+        projectileAnim = projectile.GetComponentInChildren<Animator>();
+
+        player = Game.GetCurrentPlayer().transform;
     }
     private void FixedUpdate()
     {
-        if (!moving)
+        switch(behavior)
         {
-            movementInterval.Increment();
-        }
-        else if (CheckIfFinishedTravel())
-        {
-            moving = false;
-            body.velocity = Vector2.zero;
-        }
-        else
-        {
-            Move();
+            case Behavior.MOVING:
+                if (CheckIfFinishedTravel())
+                {
+                    if(projectile.gameObject.activeSelf)
+                    {
+                        DropProjectile();
+                    }
+                    behavior = Behavior.WAITING;
+                    body.velocity = Vector2.zero;
+                }
+                else
+                {
+                    Move();
+                }
+                attackTimer.Increment();
+                break;
+            case Behavior.CHARGING:
+                chargeTimer.Increment();
+                break;
+            case Behavior.WAITING:
+                movementTimer.Increment();
+                attackTimer.Increment();
+                break;
+            default: break;
         }
     }
-    private void Move()
+    void Move()
     {
         Vector2 destination = target - (Vector2)transform.position;
         body.velocity = destination.normalized * speed;
         transform.localScale = new Vector3(Mathf.Sign(destination.x), 1, 1);
+    }
+    void StartCharge()
+    {
+        projectile.transform.parent = holdingTransform;
+        projectile.transform.localPosition = Vector2.zero;
+        projectile.velocity = Vector2.zero;
+
+        projectile.isKinematic = true;
+        projectile.gravityScale = 0;
+        projectile.gameObject.SetActive(true);
+        behavior = Behavior.CHARGING;
+        body.velocity = Vector2.zero;
+
+        projectileAnim.SetBool("Falling", false);
+    }
+    void StartPursue()
+    {
+        behavior = Behavior.MOVING;
+        target = player.position + new Vector3(0, 4, 0);
+        previousPosition = transform.position;
+        distanceToTravel = Vector2.Distance(transform.position, target);
+    }
+    void DropProjectile()
+    {
+        projectile.transform.parent = null;
+        projectile.gravityScale = 1;
+        projectile.isKinematic = false;
+        projectileAnim.SetBool("Falling", true);
     }
     bool CheckIfFinishedTravel()
     {
@@ -73,8 +142,7 @@ public class Dragonfly : MonoBehaviour
             }
         }
         while (Physics2D.LinecastAll(target, transform.position).Any(e => e.collider.gameObject.layer == Mathf.Log(whatIsGround.value, 2)));
-        moving = true;
+        behavior = Behavior.MOVING;
         previousPosition = transform.position;
-        Debug.Log("Chose a new target");
     }
 }

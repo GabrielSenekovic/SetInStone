@@ -4,20 +4,19 @@ using UnityEngine;
 using System;
 
 [Serializable]
-public class Timer : ScriptableObject
+public class Timer 
 {
     public enum TimerBehavior
     {
         NONE = 0,
         RESET_SELF = 1
     }
-    int max_value;
+    [SerializeField]int max_value;
     int current_value;
     Action OnHitMax;
     TimerBehavior behavior;
-    public Timer(Action OnHitMax, int max_value, TimerBehavior behavior = TimerBehavior.RESET_SELF)
+    public void Initialize(Action OnHitMax, TimerBehavior behavior = TimerBehavior.RESET_SELF)
     {
-        this.max_value = max_value;
         this.OnHitMax = OnHitMax;
         current_value = 0;
         this.behavior = behavior;

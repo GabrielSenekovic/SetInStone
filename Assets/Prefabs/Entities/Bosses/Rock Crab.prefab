@@ -852,6 +852,8 @@ MonoBehaviour:
   clawAnimators:
   - {fileID: 684061014427786219}
   - {fileID: 4139226267405445436}
+  attackCounter:
+    max_value: 150
   attackRadius: 13
 --- !u!95 &1688171461402142800
 Animator:

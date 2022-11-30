@@ -5442,6 +5442,10 @@ MonoBehaviour:
   ledgeClimbXOffset2: 0.5
   ledgeClimbYOffset2: 2
   mainCollider: {fileID: 7255899783724612402}
+  ledgeClimbTimer:
+    max_value: 2
+  healthTimer:
+    max_value: 50
   room: {fileID: 0}
   health: {fileID: 5586465475424076874}
 --- !u!114 &2171415922674932808

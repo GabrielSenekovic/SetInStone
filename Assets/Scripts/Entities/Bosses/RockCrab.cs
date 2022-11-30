@@ -21,7 +21,7 @@ public class RockCrab : MonoBehaviour
     Animator anim;
     Behavior behavior;
     Transform player;
-    Timer attackCounter;
+    [SerializeField]Timer attackCounter;
     [SerializeField]float attackRadius;
     //When animating, animate transforms, that have the body parts as children. The children then switch transform
 
@@ -32,7 +32,7 @@ public class RockCrab : MonoBehaviour
 
         movement.OnAwake(false, false);
         player = Game.GetCurrentPlayer().transform;
-        attackCounter = new Timer(()=> { }, 150, Timer.TimerBehavior.NONE);
+        attackCounter.Initialize(()=> { }, Timer.TimerBehavior.NONE);
         behavior = Behavior.WALKING;
     }
 

@@ -66,8 +66,8 @@ public class Movement : MonoBehaviour
 
     public Collider2D mainCollider;
 
-    Timer ledgeClimbTimer;
-    Timer healthTimer;
+    [SerializeField]Timer ledgeClimbTimer;
+    [SerializeField]Timer healthTimer;
 
     public PolygonCollider2D room;
 
@@ -102,8 +102,8 @@ public class Movement : MonoBehaviour
     private void Start() 
     {
         Debug.Assert(health != null);
-        ledgeClimbTimer = new Timer(() => ClimbLedge(), 2);
-        healthTimer = new Timer(() => health.Heal(1), 50);
+        ledgeClimbTimer.Initialize(() => ClimbLedge()); 
+        healthTimer.Initialize(() => health.Heal(1)); 
         playerAnimator = GetComponentInChildren<Animator>();
         hookShot = GetComponent<HookShot>();
         pulka = GetComponent<Pulka>();
