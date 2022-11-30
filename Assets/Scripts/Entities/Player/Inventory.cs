@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 public class Inventory : MonoBehaviour
 {
@@ -28,6 +29,25 @@ public class Inventory : MonoBehaviour
         MERCYSTONE = 1 << 16,
         AQUEOUSSTONE = 1 << 17
     }
+    public enum Currency
+    {
+        ACORN = 0
+    }
+    [System.Serializable]public class WalletEntry
+    {
+        public Currency currency;
+        public int amount;
+        public WalletEntry(Currency currency)
+        {
+            this.currency = currency;
+            amount = 0;
+        }
+        public void Add(int amount)
+        {
+            this.amount += amount;
+        }
+    }
+    List<WalletEntry> wallet = new List<WalletEntry>();
     bool hasPulka = false;
     bool hasAxe = false;
     public bool hasHookshot = true;
@@ -52,6 +72,19 @@ public class Inventory : MonoBehaviour
         {
             case Tools.SQUIDHOOK: hasHookshot = true; break;
             default: break;
+        }
+    }
+    public void AddCurrency(Currency type, int amount)
+    {
+        WalletEntry entry = wallet.FirstOrDefault(w => w.currency == type);
+        if(entry != null)
+        {
+            entry.Add(amount);
+        }
+        else
+        {
+            wallet.Add(new WalletEntry(type));
+            GameMenu.Instance.UpdateCurrency(type, amount);
         }
     }
 }
