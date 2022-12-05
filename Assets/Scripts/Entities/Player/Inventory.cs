@@ -31,7 +31,8 @@ public class Inventory : MonoBehaviour
     }
     public enum Currency
     {
-        ACORN = 0
+        NONE = 0,
+        ACORN = 1
     }
     [System.Serializable]public class WalletEntry
     {

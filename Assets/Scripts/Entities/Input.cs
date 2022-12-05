@@ -11,6 +11,7 @@ public class Input : MonoBehaviour
     ITool tool1;
     ITool tool2;
     Animator playerAnimator;
+    Interact interact;
 
     Inventory inventory;
 
@@ -33,6 +34,7 @@ public class Input : MonoBehaviour
         hookShot = GetComponent<HookShot>();
         pulka = GetComponent<Pulka>();
         inventory = GetComponent<Inventory>();
+        interact = GetComponentInChildren<Interact>();
 
         controllable = true;
     }
@@ -148,7 +150,7 @@ public class Input : MonoBehaviour
     }
     void OnInteract()
     {
-
+        interact.OnInteract();
     }
 
     void OnPulka()
