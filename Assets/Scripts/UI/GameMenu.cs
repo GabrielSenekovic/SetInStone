@@ -117,6 +117,12 @@ public class GameMenu : MonoBehaviour
         yield return new WaitForSecondsRealtime(seconds);
         instance.StartMenu();
     }
+
+    public void UpdateCurrency(Inventory.Currency currency, int amount)
+    {
+        //Check if current area uses this currency. If so, show
+        hUD.UpdateCurrency(currency, amount);
+    }
     public void Zoom(Vector2 value)
     {
         if (mapCanvas.alpha == 1)

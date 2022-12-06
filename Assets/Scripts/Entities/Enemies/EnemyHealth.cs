@@ -6,12 +6,19 @@ public class EnemyHealth : MonoBehaviour, IAttackable
 {
     [SerializeField] int currentHealth;
     [SerializeField] int maxHealth;
+    [SerializeField] GameObject bubble;
+    [SerializeField] GameObject enemy; //Object to destroy
 
     ActivatesWhenDefeatEnemies activatesWhenDefeatEnemies;
 
     private void Awake()
     {
-        currentHealth = maxHealth; 
+        currentHealth = maxHealth;
+        Debug.Assert(bubble != null);
+        if(enemy == null)
+        {
+            enemy = gameObject;
+        }
     }
 
     public void InsertRoom(ActivatesWhenDefeatEnemies activatesWhenDefeatEnemies)
@@ -23,8 +30,9 @@ public class EnemyHealth : MonoBehaviour, IAttackable
         currentHealth -= value;
         if(currentHealth <= 0)
         {
-            activatesWhenDefeatEnemies.RemoveEnemy(this);
-            Destroy(gameObject);
+            activatesWhenDefeatEnemies?.RemoveEnemy(this);
+            Instantiate(bubble, transform.position, transform.rotation);
+            Destroy(enemy.gameObject);
         }
     }
 }

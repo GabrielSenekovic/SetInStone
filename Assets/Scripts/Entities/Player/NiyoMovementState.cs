@@ -63,7 +63,6 @@ public static class NiyoMovementStateExtensions
     {
         state |= NiyoMovementState.SUBMERGED;
         state &= ~NiyoMovementState.TOUCHING_SURFACE;
-        Debug.Log("Submerge");
         return state;
     }
 }
