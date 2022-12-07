@@ -66,8 +66,8 @@ public class Movement : MonoBehaviour
 
     public Collider2D mainCollider;
 
-    Timer ledgeClimbTimer;
-    Timer healthTimer;
+    [SerializeField]Timer ledgeClimbTimer;
+    [SerializeField]Timer healthTimer;
 
     public PolygonCollider2D room;
 
@@ -102,8 +102,8 @@ public class Movement : MonoBehaviour
     private void Start() 
     {
         Debug.Assert(health != null);
-        ledgeClimbTimer = new Timer(() => ClimbLedge(), 2);
-        healthTimer = new Timer(() => health.Heal(1), 50);
+        ledgeClimbTimer.Initialize(() => ClimbLedge()); 
+        healthTimer.Initialize(() => health.Heal(1)); 
         playerAnimator = GetComponentInChildren<Animator>();
         hookShot = GetComponent<HookShot>();
         pulka = GetComponent<Pulka>();
@@ -267,7 +267,7 @@ public class Movement : MonoBehaviour
                                 Mathf.Lerp(transform.rotation.z, target.z, swimmingTurnSpeed),
                                 Mathf.Lerp(transform.rotation.w, target.w, swimmingTurnSpeed));
 
-        Vector2 movementDirection = target * Vector2.right;
+        Vector2 movementDirection = target * Vector2.right; 
 
         transform.rotation = target;
 
@@ -277,7 +277,6 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            Debug.Log("Set upside down");
             bodyTransform.localScale = new Vector3(1, -1, 1);
         }
 
@@ -604,6 +603,10 @@ public class Movement : MonoBehaviour
         if(body.velocity.y > -5)
         {
             body.velocity = new Vector2(body.velocity.x,-5);
+        }
+        if(bodyTransform.localScale.x < 0)
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, 180)); //rotate body towards the facing direction
         }
     }
     public void ExitWater()

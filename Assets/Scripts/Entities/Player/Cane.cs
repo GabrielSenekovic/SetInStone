@@ -77,7 +77,7 @@ public class Cane : MonoBehaviour, ITool
                 AudioManager.PlaySFX("CaneHit");
                 if (obj.gameObject.GetComponent<PuzzleSwitch>() && !obj.gameObject.GetComponent<PuzzleSwitch>().isHit)
                 {
-                    obj.gameObject.GetComponent<PuzzleSwitch>().SwitchHit();
+                    obj.gameObject.GetComponent<PuzzleSwitch>().ActivateSwitch();
                 }
                 obj.gameObject.GetComponent<IAttackable>().OnBeAttacked(baseAtkDamage, Vector2.zero);
             }

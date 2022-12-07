@@ -97,7 +97,7 @@ public class Ivy : MonoBehaviour
             door = other.transform.parent.GetComponent<RoomDoor>();
             door.Jam();
         }
-        if(other.CompareTag("Player") && other.transform.parent && other.transform.parent.GetComponent<Movement>().OnFire())
+        if((other.CompareTag("Player") && other.transform.parent && other.transform.parent.GetComponent<Movement>().OnFire()) || other.GetComponent<Fire>())
         {
             SetOnFire();
         }

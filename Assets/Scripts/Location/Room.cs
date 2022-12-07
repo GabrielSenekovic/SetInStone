@@ -8,8 +8,8 @@ using UnityEditor;
 public class Room : MonoBehaviour
 {
     [SerializeField] Collider2D myCollider;
-    public bool discovered;
     [SerializeField] Light2D roomLight;
+    bool discovered;
     public List<Area.RoomToDoor> links = new List<Area.RoomToDoor>();
 
     ActivatesWhenDefeatEnemies activatesWhenDefeatEnemies;

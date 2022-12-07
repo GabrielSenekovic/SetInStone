@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class PuzzleSwitch : MonoBehaviour, IAttackable
+public class PuzzleSwitch : MonoBehaviour, IAttackable, ISwitch
 {
     [SerializeField] List<Activatable> activatables = new List<Activatable>();
     public bool isHit;
@@ -16,7 +16,7 @@ public class PuzzleSwitch : MonoBehaviour, IAttackable
         isHit = false;
     }
 
-    public void SwitchHit()
+    public void ActivateSwitch()
     {
         isHit = true;
         AudioManager.PlaySFX("SwitchHit");
@@ -29,7 +29,7 @@ public class PuzzleSwitch : MonoBehaviour, IAttackable
     {
         if(!isHit)
         {
-            SwitchHit(); //This dowes noting atm the switch is activated in playerattack
+            ActivateSwitch(); //This dowes noting atm the switch is activated in playerattack
         }
     }
     public IEnumerator ActivationCutscene() //The same as activate when defeat enemies

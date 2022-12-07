@@ -193,6 +193,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""42abc5ac-3b77-4438-9a01-ca54116839a3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -1119,6 +1127,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""DEBUGRESETHOOKSHOT"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""51fa6a3c-24e2-49b8-97f7-ebfb58ec4eaa"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1199,6 +1218,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Land_Aim = m_Land.FindAction("Aim", throwIfNotFound: true);
         m_Land_DEBUGRESET = m_Land.FindAction("DEBUGRESET", throwIfNotFound: true);
         m_Land_DEBUGRESETHOOKSHOT = m_Land.FindAction("DEBUGRESETHOOKSHOT", throwIfNotFound: true);
+        m_Land_Interact = m_Land.FindAction("Interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1270,6 +1290,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Land_Aim;
     private readonly InputAction m_Land_DEBUGRESET;
     private readonly InputAction m_Land_DEBUGRESETHOOKSHOT;
+    private readonly InputAction m_Land_Interact;
     public struct LandActions
     {
         private @PlayerControls m_Wrapper;
@@ -1296,6 +1317,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Aim => m_Wrapper.m_Land_Aim;
         public InputAction @DEBUGRESET => m_Wrapper.m_Land_DEBUGRESET;
         public InputAction @DEBUGRESETHOOKSHOT => m_Wrapper.m_Land_DEBUGRESETHOOKSHOT;
+        public InputAction @Interact => m_Wrapper.m_Land_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Land; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1371,6 +1393,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @DEBUGRESETHOOKSHOT.started -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGRESETHOOKSHOT;
                 @DEBUGRESETHOOKSHOT.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGRESETHOOKSHOT;
                 @DEBUGRESETHOOKSHOT.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGRESETHOOKSHOT;
+                @Interact.started -= m_Wrapper.m_LandActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_LandActionsCallbackInterface = instance;
             if (instance != null)
@@ -1441,6 +1466,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @DEBUGRESETHOOKSHOT.started += instance.OnDEBUGRESETHOOKSHOT;
                 @DEBUGRESETHOOKSHOT.performed += instance.OnDEBUGRESETHOOKSHOT;
                 @DEBUGRESETHOOKSHOT.canceled += instance.OnDEBUGRESETHOOKSHOT;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
         }
     }
@@ -1505,5 +1533,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnAim(InputAction.CallbackContext context);
         void OnDEBUGRESET(InputAction.CallbackContext context);
         void OnDEBUGRESETHOOKSHOT(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }

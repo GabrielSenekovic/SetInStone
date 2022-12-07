@@ -11,7 +11,8 @@ public class GoBackAndForth : MonoBehaviour
     {
         NONE = 0, //Doesn't move
         HORIZONTAL = 1, //Goes back and forth horizontally
-        VERTICAL = 1 << 1
+        VERTICAL = 1 << 1,
+        FOLLOWPLAYER = 1 << 2 //Switch direction towards player
     }
     [SerializeField] float movementSpeed;
     Rigidbody2D body;
@@ -21,6 +22,7 @@ public class GoBackAndForth : MonoBehaviour
     [SerializeField] Behavior behavior;
     Vector2 startPosition;
     [SerializeField] int distanceToTravel; //Goes out from the middle
+    GameObject player;
 
     public void OnAwake(bool pushable, bool turnAround)
     {
@@ -34,10 +36,14 @@ public class GoBackAndForth : MonoBehaviour
             body.bodyType = RigidbodyType2D.Kinematic;
         }
     }
+    private void Start()
+    {
+        player = Game.GetCurrentPlayer();
+    }
     public void OnUpdate()
     {
-        int x = behavior == Behavior.HORIZONTAL ? direction : 0;
-        int y = behavior == Behavior.VERTICAL ? direction : 0;
+        int x = behavior.HasFlag(Behavior.HORIZONTAL) ? direction : 0;
+        int y = behavior.HasFlag(Behavior.VERTICAL) ? direction : 0;
         if(pushable)
         {
             body.AddForce(new Vector2(x, y) * Time.deltaTime * movementSpeed, ForceMode2D.Impulse);
@@ -49,7 +55,18 @@ public class GoBackAndForth : MonoBehaviour
     }
     public void OnFixedUpdate()
     {
-        CheckIfFinishedTravel();
+        if(behavior.HasFlag(Behavior.FOLLOWPLAYER))
+        {
+            FollowPlayer();
+        }
+        else if(CheckIfFinishedTravel())
+        {
+            ChangeDir();
+        }
+    }
+    public void Stop()
+    {
+        body.velocity = Vector2.zero;
     }
     public Vector2 GetDirection()
     {
@@ -70,6 +87,12 @@ public class GoBackAndForth : MonoBehaviour
         direction = direction == 1 ? -1 : 1;
         FlipEntity();
     }
+    void ChangeDir(int dir)
+    {
+        body.velocity = Vector2.zero;
+        direction = dir;
+        FlipEntity();
+    }
     void FlipEntity()
     {
         if(turnAround)
@@ -77,21 +100,37 @@ public class GoBackAndForth : MonoBehaviour
             transform.localScale = new Vector3(direction, 1, 1);
         }
     }
-    void CheckIfFinishedTravel()
+    void FollowPlayer()
+    {
+        //Change dir toward player if the current dir is wrong
+        if (CheckIfFinishedTravel())
+        {
+            direction = 0;
+
+            int directionToPlayer = (int)Mathf.Sign((player.transform.position - transform.position).x);
+            int directionFromStart = (int)Mathf.Sign(transform.position.x - startPosition.x);
+            if (directionToPlayer != directionFromStart)
+            {
+                ChangeDir(directionToPlayer);
+            }
+        }
+        else if(direction != 0)
+        {
+            direction = (int)Mathf.Sign((player.transform.position - transform.position).x);
+        }
+    }
+    bool CheckIfFinishedTravel()
     {
         int distanceTravelled = (int)(startPosition - new Vector2(transform.position.x, transform.position.y)).magnitude;
         int directionFromStart = (int)Mathf.Sign(transform.position.x - startPosition.x);
-        if(distanceTravelled >= distanceToTravel && directionFromStart == direction )
-        {
-            ChangeDir();
-        }
+        return distanceTravelled >= distanceToTravel && (directionFromStart == direction || direction == 0);
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        int x = behavior == Behavior.HORIZONTAL ? distanceToTravel : 0;
-        int y = behavior == Behavior.VERTICAL ? distanceToTravel : 0;
+        int x = behavior.HasFlag(Behavior.HORIZONTAL) ? distanceToTravel : 0;
+        int y = behavior.HasFlag(Behavior.VERTICAL) ? distanceToTravel : 0;
 #if UNITY_EDITOR
         Gizmos.DrawLine(transform.position, new Vector2(transform.position.x + x, transform.position.y + y));
         Gizmos.DrawLine(transform.position, new Vector2(transform.position.x - x, transform.position.y - y));
