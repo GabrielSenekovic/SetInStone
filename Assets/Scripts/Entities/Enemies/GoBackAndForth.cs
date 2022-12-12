@@ -12,7 +12,8 @@ public class GoBackAndForth : MonoBehaviour
         NONE = 0, //Doesn't move
         HORIZONTAL = 1, //Goes back and forth horizontally
         VERTICAL = 1 << 1,
-        FOLLOWPLAYER = 1 << 2 //Switch direction towards player
+        FOLLOWPLAYER = 1 << 2, //Switch direction towards player
+        FROMPOSITION = 1 << 3, //Start traveling from startPosition
     }
     [SerializeField] float movementSpeed;
     Rigidbody2D body;
@@ -20,15 +21,24 @@ public class GoBackAndForth : MonoBehaviour
     bool pushable;
     bool turnAround;
     [SerializeField] Behavior behavior;
-    Vector2 startPosition;
+    Vector2 midPoint;
+    [SerializeField]Vector2 startDirection;
     [SerializeField] int distanceToTravel; //Goes out from the middle
     GameObject player;
 
     public void OnAwake(bool pushable, bool turnAround)
     {
-        startPosition = transform.position;
+        if (!behavior.HasFlag(Behavior.FROMPOSITION))
+        {
+            midPoint = transform.position;
+            ChooseRandomDir();
+        }
+        else //If start from position, set start position to be between position far away and its actual start position
+        {
+            direction = (int)startDirection.y;
+            midPoint = (Vector2)transform.position + startDirection * distanceToTravel / 2;
+        }
         body = GetComponent<Rigidbody2D>();
-        ChooseRandomDir();
         this.pushable = pushable;
         this.turnAround = turnAround;
         if(!pushable)
@@ -84,7 +94,7 @@ public class GoBackAndForth : MonoBehaviour
     void ChangeDir()
     {
         body.velocity = Vector2.zero;
-        direction = direction == 1 ? -1 : 1;
+        direction = -GetDirectionFromStart();
         FlipEntity();
     }
     void ChangeDir(int dir)
@@ -108,7 +118,7 @@ public class GoBackAndForth : MonoBehaviour
             direction = 0;
 
             int directionToPlayer = (int)Mathf.Sign((player.transform.position - transform.position).x);
-            int directionFromStart = (int)Mathf.Sign(transform.position.x - startPosition.x);
+            int directionFromStart = (int)Mathf.Sign(transform.position.x - midPoint.x);
             if (directionToPlayer != directionFromStart)
             {
                 ChangeDir(directionToPlayer);
@@ -119,10 +129,25 @@ public class GoBackAndForth : MonoBehaviour
             direction = (int)Mathf.Sign((player.transform.position - transform.position).x);
         }
     }
+    int GetDirectionFromStart()
+    {
+        if (behavior.HasFlag(Behavior.HORIZONTAL))
+        {
+            return (int)Mathf.Sign(transform.position.x - midPoint.x);
+        }
+        else
+        {
+            return (int)Mathf.Sign(transform.position.y - midPoint.y);
+        }
+    }
     bool CheckIfFinishedTravel()
     {
-        int distanceTravelled = (int)(startPosition - new Vector2(transform.position.x, transform.position.y)).magnitude;
-        int directionFromStart = (int)Mathf.Sign(transform.position.x - startPosition.x);
+        int distanceTravelled = (int)(midPoint - new Vector2(transform.position.x, transform.position.y)).magnitude;
+        if(behavior.HasFlag(Behavior.FROMPOSITION))
+        {
+            distanceTravelled *= 2;
+        }
+        int directionFromStart = GetDirectionFromStart();
         return distanceTravelled >= distanceToTravel && (directionFromStart == direction || direction == 0);
     }
 
@@ -132,10 +157,18 @@ public class GoBackAndForth : MonoBehaviour
         int x = behavior.HasFlag(Behavior.HORIZONTAL) ? distanceToTravel : 0;
         int y = behavior.HasFlag(Behavior.VERTICAL) ? distanceToTravel : 0;
 #if UNITY_EDITOR
-        Gizmos.DrawLine(transform.position, new Vector2(transform.position.x + x, transform.position.y + y));
-        Gizmos.DrawLine(transform.position, new Vector2(transform.position.x - x, transform.position.y - y));
-        Gizmos.DrawSphere(new Vector2(transform.position.x + x, transform.position.y + y), 0.1f);
-        Gizmos.DrawSphere(new Vector2(transform.position.x - x, transform.position.y - y), 0.1f);
+        if(!behavior.HasFlag(Behavior.FROMPOSITION))
+        {
+            Gizmos.DrawLine(transform.position, new Vector2(transform.position.x + x, transform.position.y + y));
+            Gizmos.DrawLine(transform.position, new Vector2(transform.position.x - x, transform.position.y - y));
+            Gizmos.DrawSphere(new Vector2(transform.position.x + x, transform.position.y + y), 0.1f);
+            Gizmos.DrawSphere(new Vector2(transform.position.x - x, transform.position.y - y), 0.1f);
+        }
+        else
+        {
+            Gizmos.DrawLine(transform.position, new Vector2(transform.position.x + x, transform.position.y + y));
+            Gizmos.DrawSphere(new Vector2(transform.position.x + x, transform.position.y + y), 0.1f);
+        }
 #endif
     }
 }

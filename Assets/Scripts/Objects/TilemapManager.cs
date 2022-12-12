@@ -22,7 +22,7 @@ public class TilemapManager : MonoBehaviour
     }
     public List<TilemapEntry> tileMaps;
 
-    public Tilemap GetTilemap(TilemapType type) => tileMaps.Where(t => t.type == type).First().tilemap;
+    public Tilemap GetTilemap(TilemapType type) => tileMaps.Where(t => t.type == type).FirstOrDefault().tilemap;
 
     private void Awake()
     {

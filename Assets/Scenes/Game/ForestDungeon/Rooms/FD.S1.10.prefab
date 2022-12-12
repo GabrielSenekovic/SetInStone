@@ -175,6 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionTo: {fileID: 0}
   roomValue: 0
+  intTile: {fileID: 0}
 --- !u!61 &7787379868861970857
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6376,6 +6377,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionTo: {fileID: 0}
   roomValue: 0
+  intTile: {fileID: 0}
 --- !u!61 &6999452075279390828
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6529,7 +6531,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myCollider: {fileID: 1946475923}
-  discovered: 0
   roomLight: {fileID: 0}
   links: []
 --- !u!1 &8826396095331697288

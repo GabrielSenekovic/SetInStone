@@ -45,17 +45,27 @@ public sealed class AudioManager : MonoBehaviour
     static int nextSFX_source = 0;
 
     static bool interrupt = false;
+
+    public static Music GetMusic(string name) => Array.Find(GetInstance().music, music => music.name == name);
     private void Awake() 
     {
         instance = this;
         music_source = gameObject.AddComponent<AudioSource>();
-        
+
+        if(SFX_source[0] == null)
+        {
+            CreateAudioSources();
+        }
+        music_source.volume = music_volume * global_volume;
+    }
+
+    void CreateAudioSources()
+    {
         for (int i = 0; i < 30; i++)
         {
             SFX_source[i] = gameObject.AddComponent<AudioSource>();
             SFX_source[i].volume = SFX_volume * global_volume;
         }
-        music_source.volume = music_volume * global_volume;
     }
 
 
@@ -74,7 +84,6 @@ public sealed class AudioManager : MonoBehaviour
         SFX_source[nextSFX_source].clip = sound.clip [UnityEngine.Random.Range(0, sound.clip.Count)];
         SFX_source[nextSFX_source].volume = SFX_volume * global_volume;
         SFX_source[nextSFX_source].Play();
-        if(instance.debug){Debug.Log("Playing SFX: " + sound.name);}
         nextSFX_source++;
         nextSFX_source = nextSFX_source >= 30 ? 0 : nextSFX_source;
     }
@@ -88,10 +97,6 @@ public sealed class AudioManager : MonoBehaviour
         }
         AudioManager temp = AudioManager.GetInstance();
         GetInstance().StartCoroutine(PlayMusic(m, loop));
-    }
-    public static Music GetMusic(string name)
-    {
-        return Array.Find(GetInstance().music, music => music.name == name);
     }
     public static IEnumerator PlayMusic(Music music, bool loop)
     {
@@ -120,23 +125,35 @@ public sealed class AudioManager : MonoBehaviour
     public static void ChangeSFXVolume(float value)
     {
         SFX_volume = value;
-        for(int i = 0; i < SFX_source.Length; i++)
+        for (int i = 0; i < SFX_source.Length; i++)
         {
-            SFX_source[i].volume = SFX_volume * global_volume;
+            if(SFX_source[i])
+            {
+                SFX_source[i].volume = SFX_volume * global_volume;
+            }
         }
     }
     public static void ChangeMusicVolume(float value)
     {
         music_volume = value;
-        music_source.volume = music_volume * global_volume;
+        if(music_source)
+        {
+            music_source.volume = music_volume * global_volume;
+        }
     }
     public static void ChangeGlobalVolume(float value)
     {
         global_volume = value;
-        music_source.volume = music_volume * global_volume;
-        for(int i = 0; i < SFX_source.Length; i++)
+        if (music_source)
         {
-            SFX_source[i].volume = SFX_volume * global_volume;
+            music_source.volume = music_volume * global_volume;
+        }
+        for (int i = 0; i < SFX_source.Length; i++)
+        {
+            if (SFX_source[i])
+            {
+                SFX_source[i].volume = SFX_volume * global_volume;
+            }
         }
     }
 }

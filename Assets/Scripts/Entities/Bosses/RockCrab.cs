@@ -31,9 +31,13 @@ public class RockCrab : MonoBehaviour
         anim = GetComponent<Animator>();
 
         movement.OnAwake(false, false);
-        player = Game.GetCurrentPlayer().transform;
+        
         attackCounter.Initialize(()=> { }, Timer.TimerBehavior.NONE);
         behavior = Behavior.WALKING;
+    }
+    private void Start()
+    {
+        player = Game.GetCurrentPlayer().transform;
     }
 
     private void Update()

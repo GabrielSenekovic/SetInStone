@@ -26,7 +26,6 @@ public class Timer
         current_value++;
         if(current_value >= max_value)
         {
-            Debug.Log(behavior);
             if(behavior == TimerBehavior.RESET_SELF)
             {
                 current_value = 0;

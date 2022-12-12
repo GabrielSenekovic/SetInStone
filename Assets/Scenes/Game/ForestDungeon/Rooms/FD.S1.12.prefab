@@ -2012,6 +2012,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionTo: {fileID: 0}
   roomValue: 0
+  intTile: {fileID: 0}
 --- !u!61 &1180706703682395165
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2148,9 +2149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b09e4354795fc394a9623ff46891154e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myCollider: {fileID: 0}
-  discovered: 0
-  roomLight: {fileID: 0}
+  myCollider: {fileID: 869982630}
+  roomLight: {fileID: 1471741864}
   links: []
 --- !u!1 &5613098328433872727
 GameObject:
@@ -7458,6 +7458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionTo: {fileID: 0}
   roomValue: 0
+  intTile: {fileID: 0}
 --- !u!61 &4064082234165303875
 BoxCollider2D:
   m_ObjectHideFlags: 0

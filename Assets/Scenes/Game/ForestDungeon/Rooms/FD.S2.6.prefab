@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionTo: {fileID: 0}
   roomValue: 0
+  intTile: {fileID: 0}
 --- !u!61 &376904387
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2596,7 +2597,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myCollider: {fileID: 588096576012999619}
-  discovered: 0
   roomLight: {fileID: 383737777676509954}
   links: []
 --- !u!114 &506300179
@@ -2820,6 +2820,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Petrified Squirrel Priest
       objectReference: {fileID: 0}
+    - target: {fileID: 8374592514786346963, guid: 92a374b36a4eb1b4385b02b49ad74349, type: 3}
+      propertyPath: bubble
+      value: 
+      objectReference: {fileID: 4129302837664924161, guid: 5b64495461de8544f87c67cb8830c27c, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92a374b36a4eb1b4385b02b49ad74349, type: 3}
 --- !u!4 &1456781744572290661 stripped

@@ -29,10 +29,6 @@ public class InputChange : MonoBehaviour
         map = inputAction.actionMaps[0];
         InputUser.onChange += OnControlsChanged;
         buttons = buttonListParent.GetComponentsInChildren<KeybindButton>().ToList();
-        if(debug)
-        {
-            Debug.Log("Input change setup");
-        }
     }
     private void Start()
     {
@@ -50,10 +46,6 @@ public class InputChange : MonoBehaviour
 
     public void SetDeviceAndScheme(InputDevice[] devices, string scheme)
     {
-        if (debug)
-        {
-            Debug.Log("Setting device and scheme to: " + scheme);
-        }
         currentDevices = devices.ToList();
         currentScheme = scheme;
     }
@@ -93,10 +85,6 @@ public class InputChange : MonoBehaviour
 
     public void SetBindingButtons()
     {
-        if (debug)
-        {
-            Debug.Log("Setting binding button");
-        }
         for (int i = 0; i < buttons.Count;)
         {
             switch (buttons[i].action)

@@ -283,8 +283,8 @@ Tilemap:
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: -4, y: -6, z: 0}
-  m_Size: {x: 59, y: 6, z: 1}
+  m_Origin: {x: -728, y: -6, z: 0}
+  m_Size: {x: 783, y: 35, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -457,8 +457,8 @@ Tilemap:
     m_Data: {fileID: 1856182587805845781, guid: 9ecfb09cd701f7e409071e745fbd1e66, type: 3}
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: -2, y: -3, z: 0}
-  m_Size: {x: 30, y: 5, z: 1}
+  m_Origin: {x: -364, y: -3, z: 0}
+  m_Size: {x: 392, y: 57, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -7150,8 +7150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myCollider: {fileID: 2683769657914381755}
-  discovered: 1
-  roomLight: {fileID: 0}
+  roomLight: {fileID: 2683769657976099634}
   links:
   - value: 0
     destination: {fileID: 0}

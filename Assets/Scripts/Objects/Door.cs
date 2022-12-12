@@ -8,6 +8,7 @@ public class Door : MonoBehaviour
     public Room transitionTo; //The room it transitions to
     private BoxCollider2D myCollider;
     [SerializeField] int roomValue;
+    [SerializeField] IntTile intTile;
     private void Start()
     {
         myCollider = GetComponent<BoxCollider2D>();
@@ -15,26 +16,38 @@ public class Door : MonoBehaviour
         {
             Tilemap utilityMap = manager.GetTilemap(TilemapManager.TilemapType.UTILITY);
             Tilemap modifierMap = manager.GetTilemap(TilemapManager.TilemapType.MODIFIER);
-            RemoveOtherDoors(utilityMap);
-            Vector3Int position = new Vector3Int((int)(transform.localPosition.x - 0.5f), (int)(transform.localPosition.y - 0.5f), 0);
+            if(GetDirection(utilityMap, out Vector2Int direction))
+            {
+                RemoveOtherDoors(utilityMap, direction);
+            }
+            Vector3Int position = new Vector3Int().AddSameValue(transform.localPosition, -0.5f);
             utilityMap.SetColor(position, Color.clear);
-            IntTile intTile = modifierMap.GetTile(position * 2) as IntTile;
-            roomValue = intTile.value;
+
+            roomValue = (modifierMap.GetTile(position * 2) as IntTile).value;
             Room transitionFrom = manager.transform.parent.GetComponent<Room>();
             transitionTo = transitionFrom.FetchLinkedRoom(roomValue);
         }
     }
-    private void RemoveOtherDoors(Tilemap map)
+    bool GetDirection(Tilemap map, out Vector2Int direction)
     {
-        int y = 1;
-        Vector3Int nextPosition = new Vector3Int((int)(transform.localPosition.x - 0.5f), (int)(transform.localPosition.y - 0.5f) + y,0);
+        //Returns false if there's no other doors in any direction
+        //Doors can be either to the left or up
+        int x = map.GetTile(new Vector3Int().SetByDirection(transform.localPosition, -0.5f, 1, new Vector2Int(1, 0))) ? 1 : 0;
+        int y = map.GetTile(new Vector3Int().SetByDirection(transform.localPosition, -0.5f, 1, new Vector2Int(0, 1))) ? 1 : 0;
+        direction = new Vector2Int(x, y);
+        return !(x == 0 && y == 0);
+    }
+    void RemoveOtherDoors(Tilemap map, Vector2Int direction) //Remove the door tiles and size up the collider
+    {
+        int w = 1;
+        Vector3Int nextPosition = new Vector3Int().SetByDirection(transform.localPosition, -0.5f, w, direction);
         while (map.GetTile(nextPosition) != null)
         {
-            map.SetTile(nextPosition, null); y++;
-            nextPosition = new Vector3Int((int)(transform.localPosition.x - 0.5f), (int)(transform.localPosition.y - 0.5f) + y, 0);
+            map.SetTile(nextPosition, null); w++;
+            nextPosition = new Vector3Int().SetByDirection(transform.localPosition, -0.5f, w, direction);
         }
-        myCollider.size = new Vector2(1, y);
-        myCollider.offset = new Vector2(0, (y - 1) * 0.5f);
+        myCollider.size = new Vector2(1 * direction.y + w * direction.x, 1 * direction.x + w * direction.y);
+        myCollider.offset = new Vector2(((w - 1) * 0.5f) * direction.x, ((w - 1) * 0.5f) * direction.y);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

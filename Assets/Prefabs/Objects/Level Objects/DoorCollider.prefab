@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e1b919f9965704f96e6e3283f59411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myRoom: {fileID: 0}
-  test: {fileID: 11400000, guid: b73c7ee6a62299b4c9e79899a60577ca, type: 2}
+  transitionTo: {fileID: 0}
+  roomValue: 0
+  intTile: {fileID: 11400000, guid: 302188b8c211d5441902758be90e680f, type: 2}
 --- !u!61 &1856182587805845779
 BoxCollider2D:
   m_ObjectHideFlags: 0
