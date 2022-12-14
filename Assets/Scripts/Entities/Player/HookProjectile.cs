@@ -41,7 +41,10 @@ public class HookProjectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(hookScript.state != HookShot.HookShotState.Shooting) { return; }
-        if(!hookScript.hit && !(other.CompareTag("Player") || other.CompareTag("PassThrough") ||  other.CompareTag("Water")) && other.gameObject.layer != LayerMask.NameToLayer("Pickup"))
+        if(!hookScript.hit 
+            && !(other.CompareTag("Player") || other.CompareTag("PassThrough") ||  other.CompareTag("Water")) 
+            && other.gameObject.layer != LayerMask.NameToLayer("Pickup")
+            && !other.GetComponent<PlatformEffector2D>())
         {
             body.gravityScale = 0; body.velocity = Vector2.zero; //Stop the hook
             hookScript.state = HookShot.HookShotState.Retracting;
