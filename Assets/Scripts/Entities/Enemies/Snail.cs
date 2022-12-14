@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.VFX;
 using System.Linq;
 
-public class Snail : MonoBehaviour, Attackable
+public class Snail : MonoBehaviour, IAttackable
 {
     public int atkCooldown;
     int timeSinceAttack;

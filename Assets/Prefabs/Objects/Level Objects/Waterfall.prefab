@@ -4974,7 +4974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0b4ae334d9082446916bb20772d43d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLength: 40
+  maxLength: 100
   fallSpeed: 20
   lineRenderer: {fileID: 6432486284959830474}
   coll: {fileID: 3387242506950950221}

@@ -93,6 +93,7 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
+  speed: 0
 --- !u!95 &5904749936834570383
 Animator:
   serializedVersion: 3
@@ -207,7 +208,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: aa069316309cdb4429005f1cc7e90894, type: 3}
+  m_Sprite: {fileID: -8722287472476567704, guid: 1b3cab6bee5d4e342aeeed2e6e77a7f4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -316,7 +317,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1b3cab6bee5d4e342aeeed2e6e77a7f4, type: 3}
+  m_Sprite: {fileID: 8707354326353403067, guid: 1b3cab6bee5d4e342aeeed2e6e77a7f4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

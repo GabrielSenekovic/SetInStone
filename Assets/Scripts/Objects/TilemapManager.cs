@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Linq;
 
 public class TilemapManager : MonoBehaviour
 {
@@ -10,7 +11,9 @@ public class TilemapManager : MonoBehaviour
         IVY, //For checking for adjacent ivies
         DECORATION, //For waterfalls to make their source disappear
         WATER,
-        GROUND
+        GROUND,
+        UTILITY,
+        MODIFIER
     }
     [System.Serializable]public struct TilemapEntry
     {
@@ -18,6 +21,8 @@ public class TilemapManager : MonoBehaviour
         public TilemapType type;
     }
     public List<TilemapEntry> tileMaps;
+
+    public Tilemap GetTilemap(TilemapType type) => tileMaps.Where(t => t.type == type).FirstOrDefault().tilemap;
 
     private void Awake()
     {
@@ -36,7 +41,7 @@ public class TilemapManager : MonoBehaviour
                     break;
                 case TilemapType.IVY: break;
                 case TilemapType.WATER:
-                    tileMaps[i].tilemap.color = new Color32(0, 0,0,128);
+                    tileMaps[i].tilemap.color = new Color32(255, 255,255,128);
                     tileMaps[i].tilemap.tag = "Water";
                     tileMaps[i].tilemap.gameObject.layer = LayerMask.NameToLayer("Water");
                     if(!tileMaps[i].tilemap.TryGetComponent<TilemapCollider2D>(out collider))
@@ -47,17 +52,5 @@ public class TilemapManager : MonoBehaviour
                     break;
             }
         }
-    }
-
-    public Tilemap GetTilemap(TilemapType type)
-    {
-        for(int i = 0; i < tileMaps.Count;i++)
-        {
-            if(tileMaps[i].type == type)
-            {
-                return tileMaps[i].tilemap;
-            }
-        }
-        return null;
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthModel : MonoBehaviour, Attackable
+public class HealthModel : MonoBehaviour, IAttackable
 {
     [SerializeField] public HealthBar healthBar;
 
@@ -37,10 +37,6 @@ public class HealthModel : MonoBehaviour, Attackable
         {
             transform.parent.GetComponent<Input>().SetControllable(false);
             body.velocity = Vector2.zero;
-            if(transform.parent.GetComponent<Movement>().submerged)
-            {
-                anim.SetBool("swimming", false);
-            }
             anim.SetBool("death", true);
             AudioManager.PlaySFX("VoiceDeath");
             Game.GameOver();
@@ -69,8 +65,8 @@ public class HealthModel : MonoBehaviour, Attackable
     public void ReturnToSafe()
     {
         Heal(12);
-        transform.position = safePos;
-        GetComponent<Input>().SetControllable(true);
+        transform.parent.position = safePos;
+        transform.parent.GetComponent<Input>().SetControllable(true);
         anim.SetBool("death", false);
         anim.SetBool("swimming", false);
         anim.SetTrigger("jump");

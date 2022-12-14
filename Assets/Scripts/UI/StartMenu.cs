@@ -2,17 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class StartMenu : MonoBehaviour
 {
     [SerializeField] Options options;
     [SerializeField] CanvasGroup keybindingMenu;
+    [SerializeField] InputChange inputChange;
 
+    private void Awake()
+    {
+        inputChange.Awake();
+        PlayerInput input = FindObjectOfType<PlayerInput>();
+        inputChange.SetDeviceAndScheme(input.devices.ToArray(), input.currentControlScheme);
+    }
     private void Start()
     {
         options.SFXSlider.value = AudioManager.SFX_volume;
         options.MusicSlider.value = AudioManager.music_volume;
         options.VolumeSlider.value = AudioManager.global_volume;
+
+        inputChange.SetBindingButtons();
     }
     public void Options()
     {

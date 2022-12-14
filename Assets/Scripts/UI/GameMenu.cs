@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class GameMenu : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class GameMenu : MonoBehaviour
     CanvasGroup optionsMenu;
     [SerializeField] CanvasGroup keybindingMenu;
     [SerializeField] CanvasGroup pauseMenu;
+    [SerializeField] InputChange inputChange;
     [System.NonSerialized] public CanvasGroup mapCanvas;
     public Map mapScript;
     bool pause = false;
@@ -30,23 +32,33 @@ public class GameMenu : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            mapCanvas = mapScript.GetComponent<CanvasGroup>();
-            optionsMenu = options.GetComponent<CanvasGroup>();
+            OnAwake();
         }
         else
         {
             Destroy(this.gameObject);
         }
     }
+    private void OnAwake()
+    {
+        mapCanvas = mapScript.GetComponent<CanvasGroup>();
+        optionsMenu = options.GetComponent<CanvasGroup>();
+        
+        inputChange.Awake();
+    }
     private void Start()
     {
         options.SFXSlider.value = AudioManager.SFX_volume;
         options.MusicSlider.value = AudioManager.music_volume;
         options.VolumeSlider.value = AudioManager.global_volume;
+
+        PlayerInput input = FindObjectOfType<PlayerInput>();
+        inputChange.SetDeviceAndScheme(input.devices.ToArray(), input.currentControlScheme);
+        inputChange.SetBindingButtons();
     }
     public static HealthBar ConnectToHealthBar()
     {
-        return Instance.hUD.playerHealthBar;
+        return instance.hUD.playerHealthBar;
     }
     public static Text GetTitleText()
     {
@@ -67,11 +79,11 @@ public class GameMenu : MonoBehaviour
     public void Pause()
     {
         if (Game.Instance.keybindConflict) { return; } //This variable should be in Input Change, but I don't have time make Input Change a variable of Game right now
-        pause = !pause;
-        Time.timeScale = pause ? 0 : 1;
         pauseMenu.SetCanvasGroupAs(Extensions.SetValue.TOGGLE);
         optionsMenu.SetCanvasGroupAs(Extensions.SetValue.OFF);
         keybindingMenu.SetCanvasGroupAs(Extensions.SetValue.OFF);
+        pause = pauseMenu.alpha == 1;
+        Time.timeScale = pause ? 0 : 1;
     }
     public void Map()
     {
@@ -104,6 +116,12 @@ public class GameMenu : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(seconds);
         instance.StartMenu();
+    }
+
+    public void UpdateCurrency(Inventory.Currency currency, int amount)
+    {
+        //Check if current area uses this currency. If so, show
+        hUD.UpdateCurrency(currency, amount);
     }
     public void Zoom(Vector2 value)
     {

@@ -10,7 +10,7 @@ public class RoomDoor : MonoBehaviour
     Vector3 startingPosition;
     Vector3 currentPosition;
     Animator anim;
-    public Room roomBehind;
+    public Room roomBehind; //if roomBehind is null, then it's simply in the middle of a room
 
     bool jammed = false;
     public bool locked;
@@ -71,7 +71,7 @@ public class RoomDoor : MonoBehaviour
             collider.SetActive(false);
             body.AddForce(Vector3.up * moveSpeed);
             currentPosition = body.transform.position;
-            roomBehind.Discover();
+            roomBehind?.Discover();
             open = true;
         }
     }

@@ -23,8 +23,8 @@ TagManager:
   - WallObstacle
   - DistortionEffect
   - AmbientEntity
-  - 
-  - 
+  - 3DObject
+  - Fire
   - 
   - 
   - 

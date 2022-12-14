@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b09e4354795fc394a9623ff46891154e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myCollider: {fileID: 0}
+  myCollider: {fileID: 3487367780302147214}
   enemies: []
   discovered: 0
   door: {fileID: 0}
@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_LightVolumeOpacity: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 00000000dfc2ec4d2b7520bb7ba5ca0e
   m_LightCookieSprite: {fileID: 0}
   m_UseNormalMap: 0
   m_LightOrder: 0
@@ -2136,7 +2136,7 @@ GameObject:
   - component: {fileID: 3487367780302147214}
   m_Layer: 0
   m_Name: Camera Collider
-  m_TagString: Untagged
+  m_TagString: PassThrough
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2165,7 +2165,7 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -2243,7 +2243,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84fecba46848e9b40b9e902ae2956773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileMaps: []
+  tileMaps:
+  - tilemap: {fileID: 8436432945403416513}
+    type: 3
+  - tilemap: {fileID: 3382679882343440940}
+    type: 2
 --- !u!1 &4586122671315470458
 GameObject:
   m_ObjectHideFlags: 0
