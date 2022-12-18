@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class RockCrab : MonoBehaviour
+public class RockCrab : MonoBehaviour, ISwitch
 {
     public enum Behavior
     {
@@ -33,7 +33,7 @@ public class RockCrab : MonoBehaviour
         movement.OnAwake(false, false);
         
         attackCounter.Initialize(()=> { }, Timer.TimerBehavior.NONE);
-        behavior = Behavior.WALKING;
+        behavior = Behavior.NONE;
     }
     private void Start()
     {
@@ -86,5 +86,17 @@ public class RockCrab : MonoBehaviour
     {
         Gizmos.color = behavior == Behavior.WALKING ? Color.green : Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRadius);
+    }
+
+    public void ActivateSwitch()
+    {
+        behavior = Behavior.WALKING;
+        //Activate boss
+    }
+
+    public IEnumerator ActivationCutscene()
+    {
+        //Boss cutscene
+        yield return null;
     }
 }

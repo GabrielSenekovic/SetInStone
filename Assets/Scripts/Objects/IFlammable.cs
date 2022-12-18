@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IFlammable
 {
     public void SetOnFire();
+    public bool OnFire();
 }

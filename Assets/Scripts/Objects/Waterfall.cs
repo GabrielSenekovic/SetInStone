@@ -37,7 +37,7 @@ public class Waterfall : MonoBehaviour
 
     void GetCurrentLength(out float currentMaxLength)
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, maxLength, mask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position - Vector3.up, -Vector2.up, maxLength, mask);
         if(hit)
         {
             currentMaxLength = Vector3.Distance(transform.position, hit.point);

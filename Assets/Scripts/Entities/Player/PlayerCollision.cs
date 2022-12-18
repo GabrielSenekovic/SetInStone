@@ -24,4 +24,11 @@ public class PlayerCollision : MonoBehaviour
             movement.ExitWater();
         }
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.collider.gameObject.TryGetComponent<IFlammable>(out IFlammable flammable) && movement.OnFire() && !flammable.OnFire())
+        {
+            flammable.SetOnFire();
+        }
+    }
 }
