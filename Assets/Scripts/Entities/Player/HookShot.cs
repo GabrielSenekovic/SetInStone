@@ -182,7 +182,7 @@ public class HookShot : MonoBehaviour
         if (debug) { Debug.Log("Shooting hookshot succeeded"); }
 
         RaycastHit2D closeRangeHit = Physics2D.Raycast(transform.position, hookDir, rayLength, whatIsGround);
-        if(closeRangeHit.collider != null) { return false; }
+        if(closeRangeHit.collider != null && !closeRangeHit.collider.gameObject.GetComponent<PlatformEffector2D>()) { return false; }
 
         hook.SetVisible(true);
         hit = false;
