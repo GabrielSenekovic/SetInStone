@@ -19,7 +19,7 @@ public class Input : MonoBehaviour
 
     [System.NonSerialized] public HookShot hookShot;
     [System.NonSerialized] public Pulka pulka;
-    [SerializeField] InputChange inputChange;
+    InputChange inputChange;
 
     bool debug = false;
     [SerializeField] GameObject aimArrow;
@@ -35,6 +35,7 @@ public class Input : MonoBehaviour
         pulka = GetComponent<Pulka>();
         inventory = GetComponent<Inventory>();
         interact = GetComponentInChildren<Interact>();
+        inputChange = FindObjectOfType<InputChange>();
 
         controllable = true;
     }
@@ -90,14 +91,6 @@ public class Input : MonoBehaviour
         if(!movement.IsSubmerged()){playerAnimator.SetBool("walking", true);}
         movement.SetMovingDirection(value.Get<float>());
         movement.FaceMovingDirection();
-    }
-    void OnDEBUGRESET()
-    {
-        movement.health.ReturnToSafe();
-    }
-    void OnDEBUGRESETHOOKSHOT()
-    {
-        hookShot.FinishRetraction();
     }
     void OnStopMove()
     {
@@ -252,18 +245,26 @@ public class Input : MonoBehaviour
         controls.Disable();
     }
 
-    void OnDebugDecrease()
-    {
-        GetComponent<HealthModel>().TakeDamage(1);
-    }
-
-    void OnDebugIncrease()
-    {
-        GetComponent<HealthModel>().Heal(1);
-    }
-
     public void SetControllable(bool value)
     {
         controllable = value;
+    }
+
+    void OnDEBUGRESET()
+    {
+        movement.health.ReturnToSafe();
+    }
+    void OnDEBUGRESETHOOKSHOT()
+    {
+        hookShot.FinishRetraction();
+    }
+    void OnDEBUGDAMAGE()
+    {
+        GetComponentInChildren<HealthModel>().TakeDamage(1);
+    }
+
+    void OnDEBUGHEAL()
+    {
+        GetComponentInChildren<HealthModel>().Heal(1);
     }
 }

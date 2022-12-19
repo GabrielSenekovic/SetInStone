@@ -6,8 +6,8 @@ public class HealthModel : MonoBehaviour, IAttackable
 {
     [SerializeField] public HealthBar healthBar;
 
-    [SerializeField] public int currentHealth;
-    [SerializeField] public int maxHealth;
+    [SerializeField] Timer healthCounter;
+
     [SerializeField] Rigidbody2D body;
     public Vector3 safePos;
 
@@ -15,25 +15,28 @@ public class HealthModel : MonoBehaviour, IAttackable
 
     [SerializeField]Animator anim;
 
+    public bool HasFullHealth() => healthCounter.IsFull();
+    public bool Damaged() => healthCounter.IsLowerThanMax();
+    public Timer GetCounter() => healthCounter;
+
     void Start()
     {
         Debug.Assert(body != null);
         Debug.Assert(anim != null);
-        currentHealth = maxHealth;
         healthBar = GameMenu.ConnectToHealthBar();
-        healthBar.Initialize(maxHealth, currentHealth);
+        healthBar.Initialize(healthCounter.MaxValue, healthCounter.CurrentValue);
+        healthCounter.Initialize(()=> { }, Timer.TimerBehavior.START_FULL, ()=> { healthBar.UpdateHealthBar(healthCounter.CurrentValue); });
         Game.AttachPlayer(gameObject);
         safePos = transform.position;
     }
 
     public void TakeDamage(int damage)
     {
-        currentHealth = currentHealth - damage < 0 ? 0 : currentHealth - damage;
-        healthBar.UpdateHealthBar(currentHealth);
+        healthCounter.Subtract(damage);
         AudioManager.PlaySFX("TakeDamage");
         AudioManager.PlaySFX("DamageBubbles");
         AudioManager.PlaySFX("VoiceHurt");
-        if (currentHealth <= 0 && reviveAmount <= 0)
+        if (healthCounter.IsEmpty() && reviveAmount <= 0)
         {
             transform.parent.GetComponent<Input>().SetControllable(false);
             body.velocity = Vector2.zero;
@@ -44,9 +47,8 @@ public class HealthModel : MonoBehaviour, IAttackable
     }
     public void Heal(int heal)
     {
-        if(currentHealth == maxHealth){return;}
-        currentHealth = currentHealth + heal > maxHealth ? maxHealth : currentHealth + heal;
-        healthBar.UpdateHealthBar(currentHealth);
+        if(healthCounter.IsFull()){return;}
+        healthCounter.Add(heal);
         AudioManager.PlaySFX("PickUpHeart");
         AudioManager.PlaySFX("VoiceHeal");
     }
@@ -55,11 +57,6 @@ public class HealthModel : MonoBehaviour, IAttackable
     {
         TakeDamage(value);
         body.AddForce(dir, ForceMode2D.Impulse);
-    }
-
-    public bool Damaged()
-    {
-        return currentHealth < maxHealth;
     }
 
     public void ReturnToSafe()

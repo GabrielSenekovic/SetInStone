@@ -132,8 +132,7 @@ public class Movement : MonoBehaviour
             if(movementState.HasFlag(NiyoMovementState.TOUCHING_WATER) && !movementState.HasFlag(NiyoMovementState.GROUNDED)
                 && Physics2D.OverlapCircleAll(surfaceCheck.transform.position, 0.5f).Any(e => e.gameObject.layer == LayerMask.NameToLayer("Water")))
             {
-                movementState = movementState.Submerge();
-                playerAnimator.SetBool("swimming", true);
+                Submerge();
             }
         }
         else if(movementState.HasFlag(NiyoMovementState.SUBMERGED) && !movementState.HasFlag(NiyoMovementState.TOUCHING_SURFACE))
@@ -260,27 +259,33 @@ public class Movement : MonoBehaviour
             return;
         }
 
-        Quaternion target = Quaternion.FromToRotation(transform.right, swimmingDirection) * transform.rotation;
-
-        target = new Quaternion(0,
-                                0,
-                                Mathf.Lerp(transform.rotation.z, target.z, swimmingTurnSpeed),
-                                Mathf.Lerp(transform.rotation.w, target.w, swimmingTurnSpeed));
-
-        Vector2 movementDirection = target * Vector2.right; 
-
-        transform.rotation = target;
-
-        if(target.eulerAngles.z - 180 > 90 || target.eulerAngles.z - 180 < -90)
+        if(movementState.HasFlag(NiyoMovementState.SUBMERGED))
         {
-            bodyTransform.localScale = new Vector3(1, 1, 1);
+            Quaternion target = Quaternion.FromToRotation(transform.right, swimmingDirection) * transform.rotation;
+
+            target = new Quaternion(0,
+                                    0,
+                                    Mathf.Lerp(transform.rotation.z, target.z, swimmingTurnSpeed),
+                                    Mathf.Lerp(transform.rotation.w, target.w, swimmingTurnSpeed));
+
+            Vector2 movementDirection = target * Vector2.right;
+
+            transform.rotation = target;
+            if (target.eulerAngles.z - 180 > 90 || target.eulerAngles.z - 180 < -90)
+            {
+                bodyTransform.localScale = new Vector3(1, 1, 1);
+            }
+            else
+            {
+                bodyTransform.localScale = new Vector3(1, -1, 1);
+            }
+
+            body.velocity = movementDirection * swimmingSpeed * speedMod;
         }
         else
         {
-            bodyTransform.localScale = new Vector3(1, -1, 1);
+            body.velocity = swimmingDirection * swimmingSpeed * speedMod;
         }
-
-        body.velocity = movementDirection * swimmingSpeed * speedMod;
     }
     public void UnCollideWithWalls()
     {
@@ -594,20 +599,33 @@ public class Movement : MonoBehaviour
         bubbleAnimator.SetBool("Fire", false);
     }
 
+    public bool IsInWater()
+    {
+        return movementState.HasFlag(NiyoMovementState.TOUCHING_WATER);
+    }
+
     public void EnterWater()
     {
-        movementState |= NiyoMovementState.TOUCHING_WATER;
-        movementState &= ~NiyoMovementState.GROUNDED;
-        body.drag = 1;
-        PutOutFire();
-        if(body.velocity.y > -5)
+        if(!movementState.HasFlag(NiyoMovementState.GROUNDED))
         {
-            body.velocity = new Vector2(body.velocity.x,-5);
+            movementState |= NiyoMovementState.TOUCHING_WATER;
+            body.drag = 1;
+            PutOutFire();
+            if (body.velocity.y > -5)
+            {
+                body.velocity = new Vector2(body.velocity.x, -5);
+            }
+            
         }
-        if(bodyTransform.localScale.x < 0)
+    }
+    public void Submerge()
+    {
+        movementState = movementState.Submerge();
+        if (bodyTransform.localScale.x < 0)
         {
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, 180)); //rotate body towards the facing direction
         }
+        playerAnimator.SetBool("swimming", true);
     }
     public void ExitWater()
     {
@@ -616,8 +634,15 @@ public class Movement : MonoBehaviour
         amntOfJumps = 0;
         body.drag = 0;
         transform.rotation = Quaternion.identity;
-        bodyTransform.localScale = new Vector3(transform.localScale.y, 1, 1);
-         playerAnimator.SetBool("swimming", false);
+        if(playerAnimator.GetBool("swimming"))
+        {
+            bodyTransform.localScale = new Vector3(transform.localScale.y, 1, 1);
+        }
+        else
+        {
+            bodyTransform.localScale = new Vector3(facingDirection, 1, 1);
+        }
+        playerAnimator.SetBool("swimming", false);
         if(!movementState.HasFlag(NiyoMovementState.LEDGE_HANGING)){body.gravityScale = normGrav;}
     }
     public bool IsSubmerged()

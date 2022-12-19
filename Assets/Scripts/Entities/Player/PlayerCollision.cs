@@ -8,13 +8,16 @@ public class PlayerCollision : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other) 
     {
-        if(other.CompareTag("Water"))
-        {
-            movement.EnterWater();
-        }
         if(other.GetComponent<Waterfall>())
         {
             movement.PutOutFire();
+        }
+    }
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Water") && !movement.IsInWater())
+        {
+            movement.EnterWater();
         }
     }
     void OnTriggerExit2D(Collider2D other) 
