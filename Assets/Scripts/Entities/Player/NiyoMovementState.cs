@@ -10,25 +10,26 @@ public enum NiyoMovementState
     GROUNDED = 1,
     JUMPING = 1 << 1,
     DUCKING = 1 << 2,
+    ONFEET = 1 << 3, //When off the cane
 
-    TOUCHING_WATER = 1 << 3,
-    TOUCHING_SURFACE = 1 << 4,
-    SUBMERGED = 1 << 5,
+    TOUCHING_WATER = 1 << 4,
+    TOUCHING_SURFACE = 1 << 5,
+    SUBMERGED = 1 << 6,
 
     WADING = GROUNDED | TOUCHING_SURFACE,
 
-    LEDGE_DETECTED = 1 << 6,
-    LEDGE_HANGING = 1 << 7,
-    FORCE_LEDGE_CLIMB = 1 << 8,
+    LEDGE_DETECTED = 1 << 7,
+    LEDGE_HANGING = 1 << 8,
+    FORCE_LEDGE_CLIMB = 1 << 9,
 
-    ONFIRE = 1 << 9,
+    ONFIRE = 1 << 10,
 
-    IS_FLUNG = 1 << 10, //Used for hookshotting. If moving in the opposite direction of velocity you break it but if you move in the same direction nothing happens
+    IS_FLUNG = 1 << 11, //Used for hookshotting. If moving in the opposite direction of velocity you break it but if you move in the same direction nothing happens
 
-    DISMOUNT_REQUEST = 1 << 11,
-    SLIDE_REQUEST = 1 << 12,
+    DISMOUNT_REQUEST = 1 << 12,
+    SLIDE_REQUEST = 1 << 13,
 
-    ACTIONBUFFER = 1 << 13
+    ACTIONBUFFER = 1 << 14
 }
 public static class NiyoMovementStateExtensions
 {

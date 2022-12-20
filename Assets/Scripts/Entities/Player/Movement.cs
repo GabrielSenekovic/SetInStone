@@ -102,7 +102,7 @@ public class Movement : MonoBehaviour
     private void Start() 
     {
         Debug.Assert(health != null);
-        ledgeClimbTimer.Initialize(() => ClimbLedge()); 
+        ledgeClimbTimer.Initialize(ClimbLedge); 
         healthTimer.Initialize(() => health.Heal(1)); 
         playerAnimator = GetComponentInChildren<Animator>();
         hookShot = GetComponent<HookShot>();
@@ -187,18 +187,20 @@ public class Movement : MonoBehaviour
         {
             Move(speedMod);
         }
-        else if(movementState.HasFlag(NiyoMovementState.LEDGE_HANGING) && (facingDirection == movingDirection 
-            || movementState.HasFlag(NiyoMovementState.FORCE_LEDGE_CLIMB) 
-            || movementState.HasFlag(NiyoMovementState.TOUCHING_SURFACE)))
+        if(movementState.HasFlag(NiyoMovementState.FORCE_LEDGE_CLIMB))
         {
-            if(movementState.HasFlag(NiyoMovementState.FORCE_LEDGE_CLIMB) || movementState.HasFlag(NiyoMovementState.TOUCHING_SURFACE))
-            {
-                ClimbLedge();
-            }
+            ClimbLedge();
         }
         if(movementState.HasFlag(NiyoMovementState.LEDGE_HANGING))
         {
-            ledgeClimbTimer.Increment();
+            if(facingDirection == movingDirection)
+            {
+                ledgeClimbTimer.Increment();
+            }
+            else
+            {
+                ledgeClimbTimer.Reset();
+            }
         }
 
         if(movementState.HasFlag(NiyoMovementState.JUMPING)) {jumpTimer++;}
@@ -261,16 +263,17 @@ public class Movement : MonoBehaviour
 
         if(movementState.HasFlag(NiyoMovementState.SUBMERGED))
         {
-            Quaternion target = Quaternion.FromToRotation(transform.right, swimmingDirection) * transform.rotation;
+            Quaternion target = Quaternion.FromToRotation(bodyTransform.right, swimmingDirection) * bodyTransform.rotation;
 
             target = new Quaternion(0,
                                     0,
-                                    Mathf.Lerp(transform.rotation.z, target.z, swimmingTurnSpeed),
-                                    Mathf.Lerp(transform.rotation.w, target.w, swimmingTurnSpeed));
+                                    Mathf.Lerp(bodyTransform.rotation.z, target.z, swimmingTurnSpeed),
+                                    Mathf.Lerp(bodyTransform.rotation.w, target.w, swimmingTurnSpeed));
 
             Vector2 movementDirection = target * Vector2.right;
 
-            transform.rotation = target;
+            bodyTransform.rotation = target;
+            mainCollider.transform.rotation = target * Quaternion.Euler(0,0,90);
             if (target.eulerAngles.z - 180 > 90 || target.eulerAngles.z - 180 < -90)
             {
                 bodyTransform.localScale = new Vector3(1, 1, 1);
@@ -303,6 +306,7 @@ public class Movement : MonoBehaviour
             && Mathf.Abs(body.velocity.y) < 1 && jumpTimer > 0 && !movementState.CanMove()) //!If the down velocity or the up velocity is less than a threshold
         {
             body.gravityScale = normGrav * gravityModifier;
+            Debug.Log("gravity set to normal by fall");
         }
     }
     public void Fling()
@@ -332,7 +336,7 @@ public class Movement : MonoBehaviour
 
     void CheckLedgeClimb()
     {
-        if(!movementState.HasFlag(NiyoMovementState.GROUNDED)) {return;}
+        if(movementState.HasFlag(NiyoMovementState.GROUNDED)) {return;}
         bool isTouchingWall = Physics2D.Raycast(wallCheck.position, new Vector2(facingDirection, 0), wallCheckDistance, whatIsGround);
         bool isTouchingLedge = Physics2D.Raycast(ledgeCheck.position, new Vector2(facingDirection, 0), wallCheckDistance, whatIsGround);
         bool isCloseToGround = Physics2D.Raycast(groundCheck.position, -transform.up, wallCheckDistance, whatIsGround);
@@ -355,11 +359,12 @@ public class Movement : MonoBehaviour
                 ledgePos2 = new Vector2(Mathf.Ceil(ledgePosBot.x - wallCheckDistance) - ledgeClimbXOffset2, Mathf.Floor(ledgePosBot.y) + ledgeClimbYOffset2);
             }
             body.gravityScale = 0; body.velocity = Vector2.zero;
+            Debug.Log("Gravity scale set zero, climbing ledge");
             mainCollider.gameObject.SetActive(false);
             playerAnimator.SetTrigger("ledgeHang");
             transform.position = ledgePos1;
             movementState &= ~NiyoMovementState.ACTIONBUFFER;
-            hookShot.FinishRetraction(); hookShot.state = HookShot.HookShotState.None;
+            //hookShot.FinishRetraction(); hookShot.state = HookShot.HookShotState.None; It turns gravity back to normal so rn its commented out
         }
     }
 
@@ -372,6 +377,7 @@ public class Movement : MonoBehaviour
         transform.position = ledgePos2;
         mainCollider.gameObject.SetActive(true);
         body.gravityScale = normGrav;
+        Debug.Log("gravity set to normal by finish climb");
         ledgeClimbTimer.Reset();
         playerAnimator.ResetTrigger("ledgeClimb");
     }
@@ -459,6 +465,7 @@ public class Movement : MonoBehaviour
         if (!movementState.HasFlag(NiyoMovementState.DUCKING)) {body.velocity = Vector2.zero;}
         else {body.AddForce( new Vector2(movingDirection * speed * 20, 0), ForceMode2D.Impulse);}
         body.gravityScale = normGrav;
+        Debug.Log("gravity set to normal by grounding");
     }
 
     public void StopVelocity()
@@ -485,12 +492,16 @@ public class Movement : MonoBehaviour
 
     public void TryJump()
     {
-        if(jumpBufferTimer <= 0) {return;} //! you can't jump unless you've pressed jump
-        if(movementState.HasFlag(NiyoMovementState.SUBMERGED) && !movementState.HasFlag(NiyoMovementState.TOUCHING_SURFACE)) {return;} //! cant jump if you're swimming, unless you're at the surface
-        if(movementState.HasFlag(NiyoMovementState.ACTIONBUFFER)) {return;} //! if hookshotting, don't try to jump
-        if(jumpTimer < jumpLimit) {return;} // ! you can't jump unless it's been a while since you last jumped
-        if(pulka.GetState() == Pulka.PulkaState.SITTING) { return; }
-        if(ledgeClimbTimer.IsCounting()) { return; }
+        if(pulka.GetState() == Pulka.PulkaState.SITTING 
+            || jumpBufferTimer <= 0 //! you can't jump unless you've pressed jump
+            || ledgeClimbTimer.IsCounting()
+            || jumpTimer < jumpLimit // ! you can't jump unless it's been a while since you last jumped
+            || movementState.HasFlag(NiyoMovementState.ACTIONBUFFER) //! if hookshotting, don't try to jump
+            || (movementState.HasFlag(NiyoMovementState.SUBMERGED) && !movementState.HasFlag(NiyoMovementState.TOUCHING_SURFACE)) //! cant jump if you're swimming, unless you're at the surface
+            ) 
+        { 
+            return; 
+        }
         if(movementState.HasFlag(NiyoMovementState.LEDGE_HANGING)) //If ledge hanging and trying to jump away from it
         {
             movementState &= ~NiyoMovementState.LEDGE_HANGING;
@@ -498,6 +509,7 @@ public class Movement : MonoBehaviour
             movementState |= NiyoMovementState.GROUNDED;
             mainCollider.gameObject.SetActive(true);
             body.gravityScale = normGrav;
+            Debug.Log("gravity set to normal by try jump ledge");
             amntOfJumps = 0;
             bodyTransform.localScale = new Vector3(-facingDirection,1,1);
         }
@@ -524,6 +536,7 @@ public class Movement : MonoBehaviour
             amntOfJumps++; // * you jumped one more time :-o
             jumpTimer = 0; // ? reset timer!
             body.gravityScale = normGrav; // ? Otherwise gravity is still big when trying to double jump
+            Debug.Log("Gravity set to normal in try jump");
         }
     }
 
@@ -550,6 +563,7 @@ public class Movement : MonoBehaviour
             movementDebug.buttonLiftPositionSecond = transform.position;
         }
         body.AddForce(new Vector2(0, -cancelJumpSpeed));
+        Debug.Log("gravity set to normal by stopping jump");
         body.gravityScale = normGrav * gravityModifier;
         playerAnimator.SetBool("falling", true);
         jumpTimer = jumpLimit; // TODO: should only happen if you have a jump left ( if jumps == maxjumps )
@@ -623,7 +637,7 @@ public class Movement : MonoBehaviour
         movementState = movementState.Submerge();
         if (bodyTransform.localScale.x < 0)
         {
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, 180)); //rotate body towards the facing direction
+            bodyTransform.rotation = Quaternion.Euler(new Vector3(0, 0, 180)); //rotate body towards the facing direction
         }
         playerAnimator.SetBool("swimming", true);
     }
@@ -633,8 +647,9 @@ public class Movement : MonoBehaviour
         healthTimer.Reset();
         amntOfJumps = 0;
         body.drag = 0;
-        transform.rotation = Quaternion.identity;
-        if(playerAnimator.GetBool("swimming"))
+        bodyTransform.rotation = Quaternion.identity;
+        mainCollider.transform.rotation = Quaternion.identity;
+        if (playerAnimator.GetBool("swimming"))
         {
             bodyTransform.localScale = new Vector3(transform.localScale.y, 1, 1);
         }
@@ -643,7 +658,11 @@ public class Movement : MonoBehaviour
             bodyTransform.localScale = new Vector3(facingDirection, 1, 1);
         }
         playerAnimator.SetBool("swimming", false);
-        if(!movementState.HasFlag(NiyoMovementState.LEDGE_HANGING)){body.gravityScale = normGrav;}
+        if(!movementState.HasFlag(NiyoMovementState.LEDGE_HANGING))
+        {
+            body.gravityScale = normGrav;
+            Debug.Log("gravity set to normal by exit water");
+        }
     }
     public bool IsSubmerged()
     {

@@ -14,8 +14,7 @@ public class HookProjectile : MonoBehaviour
     [SerializeField] SpriteRenderer renderer;
     [SerializeField] GameObject seaWeed;
 
-
-    void Start()
+    public void Start()
     {
         body = GetComponent<Rigidbody2D>();
         playerRb = hookScript.gameObject.GetComponent<Rigidbody2D>();
@@ -55,6 +54,12 @@ public class HookProjectile : MonoBehaviour
                 hookScript.StopPull();
                 return;
             }
+            if(other.TryGetComponent(out IAttackable attackable))
+            {
+                attackable.OnBeAttacked(1, body.velocity);
+                hookScript.StopPull();
+                return;
+            }
             hookScript.hit = true;
 
             playerRb.gravityScale = 0;
@@ -66,6 +71,7 @@ public class HookProjectile : MonoBehaviour
             playerRb.velocity = Dir * hookScript.hookSpeed;
 
             hitParticles.Play();
+            hookScript.OnHit();
 
             CheckHitPoints();
         }

@@ -68,7 +68,10 @@ public class HookShot : MonoBehaviour
             Retract();
         }
     }
-
+    public void OnHit()
+    {
+        movement.amntOfJumps = 0;
+    }
     public void FlingPlayer(Vector2 posIn) //This is when the player gets yeeted 
     {
         hit = false;
@@ -167,7 +170,7 @@ public class HookShot : MonoBehaviour
         if (debug) { Debug.Log("Letting go of hookshot"); }
         movement.RemoveFlag(NiyoMovementState.ACTIONBUFFER);
         body.gravityScale = movement.normGrav;
-        movement.amntOfJumps = 0;
+        
         state = HookShotState.None;
         Debug.Log("Setting state to none and making projectile invisible");
         hit = false;
@@ -243,7 +246,7 @@ public class HookShot : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.magenta;
+        /*Gizmos.color = Color.magenta;
         Gizmos.DrawLine(transform.position, (Vector2)transform.position + hookDir.normalized * 3);
         
         Gizmos.color = Color.magenta;
@@ -259,6 +262,6 @@ public class HookShot : MonoBehaviour
         {
             Gizmos.color = colliderCheckPoint_colors[i];
             Gizmos.DrawSphere(colliderCheckPoints[i], 0.4f);
-        }
+        }*/
     }
 }
