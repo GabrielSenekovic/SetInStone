@@ -38,16 +38,24 @@ public class Bloodfly : MonoBehaviour, IAttackable
                 GetComponent<Collider2D>().enabled = false;
             }
         }
+        if (collision.CompareTag("Water"))
+        {
+            Die();
+        }
     }
 
     public void OnBeAttacked(int value, Vector2 dir)
     {
         currentHealth -= value;
         body.AddForce(dir, ForceMode2D.Impulse);
-        if(currentHealth <= 0)
+        Die();
+    }
+    public void Die()
+    {
+        if (currentHealth <= 0)
         {
-           // Game.Instance.visualEffects.ChangePosition(deathCloud, transform.position);
-           // deathCloud.effect.Play();
+            // Game.Instance.visualEffects.ChangePosition(deathCloud, transform.position);
+            // deathCloud.effect.Play();
             Instantiate(bubble, transform.position, transform.rotation);
             AudioManager.PlaySFX("ButterflyDeath");
             gameObject.SetActive(false);

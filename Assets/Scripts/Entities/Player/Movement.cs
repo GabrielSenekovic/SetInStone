@@ -99,6 +99,13 @@ public class Movement : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        Collider2D cameraCollider = Physics2D.OverlapCircleAll(transform.position, 1).FirstOrDefault(c => c.CompareTag("PassThrough"));
+        Game.SetCameraCollider(cameraCollider);
+        room = cameraCollider as PolygonCollider2D;
+    }
+
     private void Start() 
     {
         Debug.Assert(health != null);
