@@ -101,18 +101,18 @@ public class Movement : MonoBehaviour
 
     private void Awake()
     {
-        Collider2D cameraCollider = Physics2D.OverlapCircleAll(transform.position, 1).FirstOrDefault(c => c.CompareTag("PassThrough"));
-        Game.SetCameraCollider(cameraCollider);
-        room = cameraCollider as PolygonCollider2D;
+        hookShot = GetComponent<HookShot>();
     }
 
     private void Start() 
     {
+        Collider2D cameraCollider = Physics2D.OverlapCircleAll(transform.position, 1).FirstOrDefault(c => c.CompareTag("PassThrough"));
+        Game.SetCameraCollider(cameraCollider);
+        room = cameraCollider as PolygonCollider2D;
         Debug.Assert(health != null);
         ledgeClimbTimer.Initialize(ClimbLedge); 
         healthTimer.Initialize(() => health.Heal(1)); 
         playerAnimator = GetComponentInChildren<Animator>();
-        hookShot = GetComponent<HookShot>();
         pulka = GetComponent<Pulka>();
         body = GetComponent<Rigidbody2D>(); //? gets the rigidbody of the player
 
