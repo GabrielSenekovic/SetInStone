@@ -14,13 +14,13 @@ public class SquirrelPriest : MonoBehaviour, IAttackable
         CLIMBING = 4,
         JUMPING = 5
     }
-    Behavior behavior;
-    public GameObject gunProjectile;
-    public GameObject acornProjectile;
+    [SerializeField]Behavior behavior;
+    [SerializeField] GameObject gunProjectile;
+    [SerializeField] GameObject acornProjectile;
     [SerializeField] Timer acornDropCounter;
     [SerializeField] Timer behaviorSwitcher;
-    public Transform wallCheck;
-    public float wallCheckDistance;
+    [SerializeField] Transform wallCheck;
+    [SerializeField] float wallCheckDistance;
     [SerializeField] public LayerMask whatIsGround;
     int facingDirection;
     public int contactDamage = 1;
@@ -29,11 +29,16 @@ public class SquirrelPriest : MonoBehaviour, IAttackable
     Rigidbody2D body;
     public Transform acornDropPosition;
 
+    readonly Vector2 jumpForce = new Vector2(30, 10f);
+
     private void Awake()
     {
         acornDropCounter.Initialize(DropAcorn);
         behaviorSwitcher.Initialize(SwitchBehavior);
         body = GetComponent<Rigidbody2D>();
+
+        facingDirection = -1; //Is on right wall. Facing the left
+        behavior = Behavior.NONE;
     }
 
     private void FixedUpdate()
@@ -43,6 +48,7 @@ public class SquirrelPriest : MonoBehaviour, IAttackable
             case Behavior.NONE: behaviorSwitcher.Increment(); break;
             case Behavior.JUMPING: acornDropCounter.Increment(); CheckForWall(); break;
             case Behavior.SHOOTING: Shoot(); break;
+            case Behavior.CLIMBING: Climb(); break;
         }
     }
     void SwitchBehavior()
@@ -50,7 +56,10 @@ public class SquirrelPriest : MonoBehaviour, IAttackable
         int randValue = UnityEngine.Random.Range(0, 2);
         if (randValue == 0)
         {
+            Debug.Log("Jump!");
             behavior = Behavior.JUMPING; acornDropCounter.Reset();
+            body.gravityScale = 1;
+            body.AddForce(new Vector2(jumpForce.x * facingDirection, jumpForce.y), ForceMode2D.Impulse);
         }
         else if(randValue == 1)
         {
@@ -59,15 +68,34 @@ public class SquirrelPriest : MonoBehaviour, IAttackable
     }
     void CheckForWall()
     {
-        bool isTouchingWall = Physics2D.Raycast(wallCheck.position, new Vector2(facingDirection, 0), wallCheckDistance, whatIsGround);
+        RaycastHit2D isTouchingWall = Physics2D.Raycast(wallCheck.position, new Vector2(facingDirection, 0), wallCheckDistance, whatIsGround);
         if(isTouchingWall)
         {
+            transform.position = isTouchingWall.point - new Vector2(facingDirection * wallCheckDistance, 0);
             LatchOntoWall();
+        }
+    }
+    void Climb()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(wallCheck.position, new Vector2(facingDirection, 0), wallCheckDistance, whatIsGround);
+        if (hit)
+        {
+            transform.position = hit.point - new Vector2(facingDirection * wallCheckDistance, 0);
+        }
+        body.AddForce(new Vector2(0, 0.1f), ForceMode2D.Impulse);
+        if(transform.localPosition.y >= 3)
+        {
+            body.velocity = Vector2.zero;
+            behavior = Behavior.NONE;
         }
     }
     void LatchOntoWall()
     {
-        behavior = Behavior.NONE; behaviorSwitcher.Reset();
+        behavior = Behavior.CLIMBING; behaviorSwitcher.Reset();
+        body.gravityScale = 0;
+        facingDirection *= -1;
+        body.velocity = Vector2.zero;
+        Debug.Log("Latched onto wall");
     }
     void DropAcorn()
     {
