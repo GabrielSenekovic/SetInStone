@@ -56,10 +56,9 @@ public class HeartContainer : MonoBehaviour
             {
                 healthModel = collision.transform.parent.GetComponent<HealthModel>();
             }
-            healthModel.maxHealth += 4;
-            healthModel.Heal(healthModel.maxHealth - healthModel.currentHealth);
+            Timer counter = healthModel.GetCounter();
+            counter.IncreaseMax(4);
             healthModel.healthBar.HeartContainerPickedUp();
-            healthModel.healthBar.UpdateHealthBar(healthModel.currentHealth);
             anim.SetTrigger("Take");
             swaySpeed = 0;
             anim.speed = 2;

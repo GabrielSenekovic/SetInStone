@@ -46,4 +46,6 @@ public class Fireplace : MonoBehaviour, IFlammable, ISwitch
         Game.Instance.cinemachineVirtualCamera.Follow = temp;
         Game.Instance.cinemachineVirtualCamera.gameObject.GetComponent<CinemachineConfiner>().m_ConfineScreenEdges = true;
     }
+
+    public bool OnFire() => onFire;
 }

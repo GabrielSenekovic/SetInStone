@@ -8,13 +8,16 @@ public class PlayerCollision : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other) 
     {
-        if(other.CompareTag("Water"))
-        {
-            movement.EnterWater();
-        }
         if(other.GetComponent<Waterfall>())
         {
             movement.PutOutFire();
+        }
+    }
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Water") && !movement.IsInWater())
+        {
+            movement.EnterWater();
         }
     }
     void OnTriggerExit2D(Collider2D other) 
@@ -22,6 +25,13 @@ public class PlayerCollision : MonoBehaviour
         if(other.CompareTag("Water"))
         {
             movement.ExitWater();
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.collider.gameObject.TryGetComponent<IFlammable>(out IFlammable flammable) && movement.OnFire() && !flammable.OnFire())
+        {
+            flammable.SetOnFire();
         }
     }
 }

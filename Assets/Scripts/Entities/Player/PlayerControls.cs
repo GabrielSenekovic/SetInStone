@@ -179,25 +179,65 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""DEBUGRESET"",
-                    ""type"": ""Button"",
-                    ""id"": ""3fbc97f2-a54e-4ee9-a6e3-5144b324ae12"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""DEBUGRESETHOOKSHOT"",
-                    ""type"": ""Button"",
-                    ""id"": ""461d3395-9add-4e0e-aa74-2848a7b528a8"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""42abc5ac-3b77-4438-9a01-ca54116839a3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""DEBUGBACK"",
+                    ""type"": ""Button"",
+                    ""id"": ""f2da64bb-94b0-404c-ac77-5d6bc75253b1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""DEBUGDIE"",
+                    ""type"": ""Button"",
+                    ""id"": ""ba434993-90dd-4eae-a84c-68ed4d20d828"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""DEBUGHEAL"",
+                    ""type"": ""Button"",
+                    ""id"": ""1bda97bb-4d3b-41d0-b095-0106cc2cd4b7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""DEBUGDAMAGE"",
+                    ""type"": ""Button"",
+                    ""id"": ""c3cdfc17-e083-4761-83a3-b7a02aac6526"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""DEBUGKILL"",
+                    ""type"": ""Button"",
+                    ""id"": ""232fecbf-b05e-4a9f-b781-cc72052b4ad2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""DEBUGNEXT"",
+                    ""type"": ""Button"",
+                    ""id"": ""ad2c7285-448d-4529-83e2-dfa86e071aff"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""DEBUGRESET"",
+                    ""type"": ""Button"",
+                    ""id"": ""3fbc97f2-a54e-4ee9-a6e3-5144b324ae12"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -1107,26 +1147,37 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""dbba51e0-9b42-4fd6-bd86-f7c30b3c7f6f"",
-                    ""path"": ""<XInputController>/leftTrigger"",
-                    ""interactions"": """",
+                    ""name"": ""Button With One Modifier"",
+                    ""id"": ""974a3bb4-dc46-4a3a-b68f-83ecfe3bdfdc"",
+                    ""path"": ""ButtonWithOneModifier"",
+                    ""interactions"": ""Press(behavior=1)"",
                     ""processors"": """",
-                    ""groups"": ""XBOX Controller"",
-                    ""action"": ""DEBUGRESETHOOKSHOT"",
-                    ""isComposite"": false,
+                    ""groups"": """",
+                    ""action"": ""DEBUGRESET"",
+                    ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""1cf529bf-a6a1-4974-a883-294f09887da6"",
-                    ""path"": ""<Keyboard>/numpadPlus"",
+                    ""name"": ""modifier"",
+                    ""id"": ""a3c99242-cd14-4a68-97ea-65213bf96ef3"",
+                    ""path"": ""<Keyboard>/ctrl"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""KeyboardMouse"",
-                    ""action"": ""DEBUGRESETHOOKSHOT"",
+                    ""groups"": """",
+                    ""action"": ""DEBUGRESET"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""button"",
+                    ""id"": ""ff08010e-68b4-45a1-af9f-1da73333d3be"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DEBUGRESET"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",
@@ -1138,6 +1189,204 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Button With One Modifier"",
+                    ""id"": ""e42d2104-cf4c-472c-ab20-0ccc45e6158a"",
+                    ""path"": ""ButtonWithOneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DEBUGHEAL"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""6e2b6209-207d-4a44-85ca-999c735a9d03"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DEBUGHEAL"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""button"",
+                    ""id"": ""ea723e8d-5dd0-4c6e-bf74-66fbcad5ca45"",
+                    ""path"": ""<Keyboard>/h"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DEBUGHEAL"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Button With One Modifier"",
+                    ""id"": ""ad49cfc4-c156-4634-bda1-2652714bb1b6"",
+                    ""path"": ""ButtonWithOneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DEBUGDIE"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""95d2dd4f-23af-4d3f-aafb-f690e26f24f8"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DEBUGDIE"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""button"",
+                    ""id"": ""c96b42ab-530d-48d9-a4b5-447646f3b18f"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DEBUGDIE"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Button With One Modifier"",
+                    ""id"": ""6c5a3909-7014-42fe-88ba-78810306616d"",
+                    ""path"": ""ButtonWithOneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DEBUGKILL"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""3b12860c-6501-4af8-9acd-3db8969ea745"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DEBUGKILL"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""button"",
+                    ""id"": ""8e2ca22b-9906-49aa-b190-fea48076fd06"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DEBUGKILL"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Button With One Modifier"",
+                    ""id"": ""50cdac81-e600-423c-b3c9-63578aabea2b"",
+                    ""path"": ""ButtonWithOneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DEBUGNEXT"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""1a4b598e-d806-406c-af37-4528f125171a"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DEBUGNEXT"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""button"",
+                    ""id"": ""76f3364e-b8b9-4c73-8159-aedc3e8d2211"",
+                    ""path"": ""<Keyboard>/n"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DEBUGNEXT"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Button With One Modifier"",
+                    ""id"": ""2bf47f0c-596e-4837-b406-be354a364a72"",
+                    ""path"": ""ButtonWithOneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DEBUGBACK"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""a196cccb-d6e8-4025-8b19-c10d784a1880"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DEBUGBACK"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""button"",
+                    ""id"": ""e3b6fb4c-9371-4eb6-be1b-91c345ca34c6"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DEBUGBACK"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Button With One Modifier"",
+                    ""id"": ""badddb6e-7e92-4d62-a12b-275251b34063"",
+                    ""path"": ""ButtonWithOneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DEBUGDAMAGE"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""012b1c2c-2d83-4771-9921-2e06a7a12aa6"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DEBUGDAMAGE"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""button"",
+                    ""id"": ""39e06abc-5f66-4c6d-b04f-075661a086ea"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DEBUGDAMAGE"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -1216,9 +1465,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Land_Navigate = m_Land.FindAction("Navigate", throwIfNotFound: true);
         m_Land_Zoom = m_Land.FindAction("Zoom", throwIfNotFound: true);
         m_Land_Aim = m_Land.FindAction("Aim", throwIfNotFound: true);
-        m_Land_DEBUGRESET = m_Land.FindAction("DEBUGRESET", throwIfNotFound: true);
-        m_Land_DEBUGRESETHOOKSHOT = m_Land.FindAction("DEBUGRESETHOOKSHOT", throwIfNotFound: true);
         m_Land_Interact = m_Land.FindAction("Interact", throwIfNotFound: true);
+        m_Land_DEBUGBACK = m_Land.FindAction("DEBUGBACK", throwIfNotFound: true);
+        m_Land_DEBUGDIE = m_Land.FindAction("DEBUGDIE", throwIfNotFound: true);
+        m_Land_DEBUGHEAL = m_Land.FindAction("DEBUGHEAL", throwIfNotFound: true);
+        m_Land_DEBUGDAMAGE = m_Land.FindAction("DEBUGDAMAGE", throwIfNotFound: true);
+        m_Land_DEBUGKILL = m_Land.FindAction("DEBUGKILL", throwIfNotFound: true);
+        m_Land_DEBUGNEXT = m_Land.FindAction("DEBUGNEXT", throwIfNotFound: true);
+        m_Land_DEBUGRESET = m_Land.FindAction("DEBUGRESET", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1288,9 +1542,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Land_Navigate;
     private readonly InputAction m_Land_Zoom;
     private readonly InputAction m_Land_Aim;
-    private readonly InputAction m_Land_DEBUGRESET;
-    private readonly InputAction m_Land_DEBUGRESETHOOKSHOT;
     private readonly InputAction m_Land_Interact;
+    private readonly InputAction m_Land_DEBUGBACK;
+    private readonly InputAction m_Land_DEBUGDIE;
+    private readonly InputAction m_Land_DEBUGHEAL;
+    private readonly InputAction m_Land_DEBUGDAMAGE;
+    private readonly InputAction m_Land_DEBUGKILL;
+    private readonly InputAction m_Land_DEBUGNEXT;
+    private readonly InputAction m_Land_DEBUGRESET;
     public struct LandActions
     {
         private @PlayerControls m_Wrapper;
@@ -1315,9 +1574,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Navigate => m_Wrapper.m_Land_Navigate;
         public InputAction @Zoom => m_Wrapper.m_Land_Zoom;
         public InputAction @Aim => m_Wrapper.m_Land_Aim;
-        public InputAction @DEBUGRESET => m_Wrapper.m_Land_DEBUGRESET;
-        public InputAction @DEBUGRESETHOOKSHOT => m_Wrapper.m_Land_DEBUGRESETHOOKSHOT;
         public InputAction @Interact => m_Wrapper.m_Land_Interact;
+        public InputAction @DEBUGBACK => m_Wrapper.m_Land_DEBUGBACK;
+        public InputAction @DEBUGDIE => m_Wrapper.m_Land_DEBUGDIE;
+        public InputAction @DEBUGHEAL => m_Wrapper.m_Land_DEBUGHEAL;
+        public InputAction @DEBUGDAMAGE => m_Wrapper.m_Land_DEBUGDAMAGE;
+        public InputAction @DEBUGKILL => m_Wrapper.m_Land_DEBUGKILL;
+        public InputAction @DEBUGNEXT => m_Wrapper.m_Land_DEBUGNEXT;
+        public InputAction @DEBUGRESET => m_Wrapper.m_Land_DEBUGRESET;
         public InputActionMap Get() { return m_Wrapper.m_Land; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1387,15 +1651,30 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Aim.started -= m_Wrapper.m_LandActionsCallbackInterface.OnAim;
                 @Aim.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnAim;
                 @Aim.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnAim;
-                @DEBUGRESET.started -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGRESET;
-                @DEBUGRESET.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGRESET;
-                @DEBUGRESET.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGRESET;
-                @DEBUGRESETHOOKSHOT.started -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGRESETHOOKSHOT;
-                @DEBUGRESETHOOKSHOT.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGRESETHOOKSHOT;
-                @DEBUGRESETHOOKSHOT.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGRESETHOOKSHOT;
                 @Interact.started -= m_Wrapper.m_LandActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnInteract;
+                @DEBUGBACK.started -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGBACK;
+                @DEBUGBACK.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGBACK;
+                @DEBUGBACK.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGBACK;
+                @DEBUGDIE.started -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGDIE;
+                @DEBUGDIE.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGDIE;
+                @DEBUGDIE.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGDIE;
+                @DEBUGHEAL.started -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGHEAL;
+                @DEBUGHEAL.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGHEAL;
+                @DEBUGHEAL.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGHEAL;
+                @DEBUGDAMAGE.started -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGDAMAGE;
+                @DEBUGDAMAGE.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGDAMAGE;
+                @DEBUGDAMAGE.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGDAMAGE;
+                @DEBUGKILL.started -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGKILL;
+                @DEBUGKILL.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGKILL;
+                @DEBUGKILL.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGKILL;
+                @DEBUGNEXT.started -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGNEXT;
+                @DEBUGNEXT.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGNEXT;
+                @DEBUGNEXT.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGNEXT;
+                @DEBUGRESET.started -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGRESET;
+                @DEBUGRESET.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGRESET;
+                @DEBUGRESET.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnDEBUGRESET;
             }
             m_Wrapper.m_LandActionsCallbackInterface = instance;
             if (instance != null)
@@ -1460,15 +1739,30 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Aim.started += instance.OnAim;
                 @Aim.performed += instance.OnAim;
                 @Aim.canceled += instance.OnAim;
-                @DEBUGRESET.started += instance.OnDEBUGRESET;
-                @DEBUGRESET.performed += instance.OnDEBUGRESET;
-                @DEBUGRESET.canceled += instance.OnDEBUGRESET;
-                @DEBUGRESETHOOKSHOT.started += instance.OnDEBUGRESETHOOKSHOT;
-                @DEBUGRESETHOOKSHOT.performed += instance.OnDEBUGRESETHOOKSHOT;
-                @DEBUGRESETHOOKSHOT.canceled += instance.OnDEBUGRESETHOOKSHOT;
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
+                @DEBUGBACK.started += instance.OnDEBUGBACK;
+                @DEBUGBACK.performed += instance.OnDEBUGBACK;
+                @DEBUGBACK.canceled += instance.OnDEBUGBACK;
+                @DEBUGDIE.started += instance.OnDEBUGDIE;
+                @DEBUGDIE.performed += instance.OnDEBUGDIE;
+                @DEBUGDIE.canceled += instance.OnDEBUGDIE;
+                @DEBUGHEAL.started += instance.OnDEBUGHEAL;
+                @DEBUGHEAL.performed += instance.OnDEBUGHEAL;
+                @DEBUGHEAL.canceled += instance.OnDEBUGHEAL;
+                @DEBUGDAMAGE.started += instance.OnDEBUGDAMAGE;
+                @DEBUGDAMAGE.performed += instance.OnDEBUGDAMAGE;
+                @DEBUGDAMAGE.canceled += instance.OnDEBUGDAMAGE;
+                @DEBUGKILL.started += instance.OnDEBUGKILL;
+                @DEBUGKILL.performed += instance.OnDEBUGKILL;
+                @DEBUGKILL.canceled += instance.OnDEBUGKILL;
+                @DEBUGNEXT.started += instance.OnDEBUGNEXT;
+                @DEBUGNEXT.performed += instance.OnDEBUGNEXT;
+                @DEBUGNEXT.canceled += instance.OnDEBUGNEXT;
+                @DEBUGRESET.started += instance.OnDEBUGRESET;
+                @DEBUGRESET.performed += instance.OnDEBUGRESET;
+                @DEBUGRESET.canceled += instance.OnDEBUGRESET;
             }
         }
     }
@@ -1531,8 +1825,13 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnNavigate(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
-        void OnDEBUGRESET(InputAction.CallbackContext context);
-        void OnDEBUGRESETHOOKSHOT(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnDEBUGBACK(InputAction.CallbackContext context);
+        void OnDEBUGDIE(InputAction.CallbackContext context);
+        void OnDEBUGHEAL(InputAction.CallbackContext context);
+        void OnDEBUGDAMAGE(InputAction.CallbackContext context);
+        void OnDEBUGKILL(InputAction.CallbackContext context);
+        void OnDEBUGNEXT(InputAction.CallbackContext context);
+        void OnDEBUGRESET(InputAction.CallbackContext context);
     }
 }

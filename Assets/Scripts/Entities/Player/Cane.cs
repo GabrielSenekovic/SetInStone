@@ -7,18 +7,21 @@ public class Cane : MonoBehaviour, ITool
 {
     int atkCooldown;
     public int atkCooldownMax;
-    public Vector2 atkPos;
-    public float atkAngle;
+    Vector2 atkPos;
+    float atkAngle;
 
-    public Vector2 originalCanePosition;
+    Vector2 originalCanePosition;
 
     public int baseAtkDamage;
     Rigidbody2D playerBody;
+    Movement movement;
 
     [SerializeField] GameObject cane;
+    [SerializeField] GameObject caneProjectile;
+    [SerializeField] float projectileSpeed;
 
     Vector2 mousePositionSaved;
-    public bool mouse;
+    bool mouse;
 
     public float attackRange = 2;
 
@@ -28,6 +31,7 @@ public class Cane : MonoBehaviour, ITool
 
     void Start()
     {
+        movement = GetComponent<Movement>();
         playerBody = GetComponent<Rigidbody2D>();
     }
 
@@ -65,7 +69,7 @@ public class Cane : MonoBehaviour, ITool
         mouse = false;
     }
 
-    void MoveHitBox(Vector2 point)
+    void Hit(Vector2 point)
     {
         Collider2D[] hitObjects = Physics2D.OverlapCircleAll(point, 1.0f, LayerMask.GetMask("Entity"), playerBody.transform.position.z,
         playerBody.transform.position.z);
@@ -87,7 +91,7 @@ public class Cane : MonoBehaviour, ITool
 
     private void OnDrawGizmos()
     {
-        Vector3 mPos = Mouse.current.position.ReadValue();
+        /*Vector3 mPos = Mouse.current.position.ReadValue();
         mPos.z = 18; // cam z *-1
 
         Vector2 lookdir = mPos - transform.position;
@@ -101,7 +105,7 @@ public class Cane : MonoBehaviour, ITool
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere((Vector2)transform.position + mousePositionSaved, 0.1f);
         Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(transform.position - new Vector3(0,0,5), 0.2f);
+        Gizmos.DrawSphere(transform.position - new Vector3(0,0,5), 0.2f);*/
     }
 
     public bool Use()
@@ -115,11 +119,16 @@ public class Cane : MonoBehaviour, ITool
         cane.transform.rotation = Quaternion.Euler(0, 0, atkAngle);
 
         caneAnimator.SetTrigger("Attack");
-        MoveHitBox(cane.transform.position + (Vector3)(new Vector2(Mathf.Cos(atkAngle * Mathf.Deg2Rad),
+        Hit(cane.transform.position + (Vector3)(new Vector2(Mathf.Cos(atkAngle * Mathf.Deg2Rad),
               Mathf.Sin(atkAngle * Mathf.Deg2Rad))));
 
         atkCooldown = 0; // * is on cooldown
         elapsedFrames = 0;
+        if(movement.IsSubmerged())
+        {
+            Instantiate(caneProjectile, cane.transform.position, cane.transform.rotation).TryGetComponent(out Rigidbody2D projectile);
+            projectile.velocity = (cane.transform.position - transform.position).normalized * projectileSpeed;
+        }
         return true;
     }
 }

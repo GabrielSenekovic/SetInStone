@@ -26,6 +26,7 @@ public class Door : MonoBehaviour
             roomValue = (modifierMap.GetTile(position * 2) as IntTile).value;
             Room transitionFrom = manager.transform.parent.GetComponent<Room>();
             transitionTo = transitionFrom.FetchLinkedRoom(roomValue);
+            modifierMap.SetTile(position * 2, null);
         }
     }
     bool GetDirection(Tilemap map, out Vector2Int direction)

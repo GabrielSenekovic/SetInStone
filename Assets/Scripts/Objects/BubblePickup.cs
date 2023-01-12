@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class Pickupable : MonoBehaviour
+public class BubblePickup : MonoBehaviour, IPickupable
 {
     HealthModel healthModel;
     [SerializeField] int value;
@@ -13,24 +13,21 @@ public class Pickupable : MonoBehaviour
         Collider2D hit = Physics2D.OverlapCircleAll(transform.position, 0.5f).FirstOrDefault(c => c.CompareTag("Player"));
         if(hit != null)
         {
-            pickUP(hit);
+            PickUp(hit);
         }
     }
 
-    void pickUP(Collider2D collision)
+    public void PickUp(Collider2D collision)
     {
         healthModel = collision.GetComponentInParent<HealthModel>();
-        if(healthModel.currentHealth == healthModel.maxHealth)
+        Timer healthCounter = healthModel.GetCounter();
+        if(healthCounter.IsFull())
         {
             return;
         }
         if(healthModel.Damaged())
         {
             healthModel.Heal(value);
-            Destroy(gameObject);
-        }
-        else if(healthModel.currentHealth == healthModel.maxHealth)
-        {
             Destroy(gameObject);
         }
     }
