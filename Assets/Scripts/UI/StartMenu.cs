@@ -50,4 +50,9 @@ public class StartMenu : MonoBehaviour
     {
         Game.Instance.Quit();
     }
+
+    public void LoadCredits()
+    {
+        SceneManager.LoadScene("Credits");
+    }
 }
