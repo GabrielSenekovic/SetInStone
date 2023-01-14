@@ -13,6 +13,7 @@ public class Waterfall : MonoBehaviour
     
     float lastLength;
     public GameObject splashEffectObject;
+    [SerializeField] bool on;
 
     void Start()
     {
@@ -37,14 +38,21 @@ public class Waterfall : MonoBehaviour
 
     void GetCurrentLength(out float currentMaxLength)
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position - Vector3.up, -Vector2.up, maxLength, mask);
-        if(hit)
+        if(on)
         {
-            currentMaxLength = Vector3.Distance(transform.position, hit.point);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position - Vector3.up, -Vector2.up, maxLength, mask);
+            if (hit)
+            {
+                currentMaxLength = Vector3.Distance(transform.position, hit.point);
+            }
+            else
+            {
+                currentMaxLength = maxLength;
+            }
         }
         else
         {
-            currentMaxLength = maxLength;
+            currentMaxLength = 0;
         }
     }
     void CalculateActualLength(float currentMaxLength, out float currentLength)
@@ -60,6 +68,7 @@ public class Waterfall : MonoBehaviour
     }
     void RescaleCollider(float currentLength)
     {
+        if(coll == null) { return; }
         coll.size = new Vector2(coll.size.x, currentLength);
         coll.offset = new Vector2(0, -currentLength/2);
     }
@@ -68,4 +77,9 @@ public class Waterfall : MonoBehaviour
         splashEffectObject.gameObject.SetActive(currentLength >= currentMaxLength);
         splashEffectObject.transform.position = transform.position - Vector3.up * currentLength;
     }
+    public void SetOn(bool value)
+    {
+        on = value;
+    }
+    public bool GetOn() => on;
 }

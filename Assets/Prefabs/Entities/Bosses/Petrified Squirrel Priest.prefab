@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1081144349448783305
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4364006805654021495}
+  m_Layer: 10
+  m_Name: GunSpawnPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4364006805654021495
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1081144349448783305}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3429205627106990397}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1357087497394387788
 GameObject:
   m_ObjectHideFlags: 0
@@ -115,6 +145,7 @@ Transform:
   - {fileID: 1962631876878498656}
   - {fileID: 7531265731261168068}
   - {fileID: 5662967513014213500}
+  - {fileID: 4364006805654021495}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -137,15 +168,22 @@ MonoBehaviour:
     max_value: 10
   behaviorSwitcher:
     max_value: 10
+  shootTimer:
+    max_value: 15
+  shootCounter:
+    max_value: 3
   wallCheck: {fileID: 7531265731261168068}
   wallCheckDistance: 1.3
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
+  leftHatch: {fileID: 0}
+  rightHatch: {fileID: 0}
   contactDamage: 1
   currentHealth: 0
   maxHealth: 20
   acornDropPosition: {fileID: 5662967513014213500}
+  gunShootPosition: {fileID: 4364006805654021495}
 --- !u!50 &403427115991413024
 Rigidbody2D:
   serializedVersion: 4

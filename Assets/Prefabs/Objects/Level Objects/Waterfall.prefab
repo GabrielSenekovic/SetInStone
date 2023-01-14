@@ -4982,3 +4982,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1296
   splashEffectObject: {fileID: 1317965191488544010}
+  on: 1
+  breakOnCollision: 1

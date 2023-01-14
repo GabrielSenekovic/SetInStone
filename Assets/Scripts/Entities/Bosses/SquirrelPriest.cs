@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 public class SquirrelPriest : MonoBehaviour, IAttackable
 {
@@ -19,22 +20,34 @@ public class SquirrelPriest : MonoBehaviour, IAttackable
     [SerializeField] GameObject acornProjectile;
     [SerializeField] Timer acornDropCounter;
     [SerializeField] Timer behaviorSwitcher;
+    [SerializeField] Timer shootTimer;
+    [SerializeField] Timer shootCounter;
     [SerializeField] Transform wallCheck;
     [SerializeField] float wallCheckDistance;
     [SerializeField] public LayerMask whatIsGround;
+    [SerializeField] Hatch leftHatch;
+    [SerializeField] Hatch rightHatch;
     int facingDirection;
     public int contactDamage = 1;
     public int currentHealth;
     public int maxHealth;
     Rigidbody2D body;
     public Transform acornDropPosition;
+    public Transform gunShootPosition;
+    GameObject[] gunProjectiles = new GameObject[3];
 
     readonly Vector2 jumpForce = new Vector2(30, 10f);
 
     private void Awake()
     {
+        for(int i = 0; i < gunProjectiles.Length; i++)
+        {
+            gunProjectiles[i] = Instantiate(gunProjectile, transform.position, Quaternion.identity);
+        }
         acornDropCounter.Initialize(DropAcorn);
         behaviorSwitcher.Initialize(SwitchBehavior);
+        shootTimer.Initialize(() => { }, Timer.TimerBehavior.NONE);
+        shootCounter.Initialize(() => { behavior = Behavior.NONE; behaviorSwitcher.Reset();});
         body = GetComponent<Rigidbody2D>();
 
         facingDirection = -1; //Is on right wall. Facing the left
@@ -49,21 +62,28 @@ public class SquirrelPriest : MonoBehaviour, IAttackable
             case Behavior.JUMPING: acornDropCounter.Increment(); CheckForWall(); break;
             case Behavior.SHOOTING: Shoot(); break;
             case Behavior.CLIMBING: Climb(); break;
+            case Behavior.GOING_FOR_HATCH: behaviorSwitcher.Increment(); break;
         }
     }
     void SwitchBehavior()
     {
-        int randValue = UnityEngine.Random.Range(0, 2);
+        int randValue = UnityEngine.Random.Range(0, 3);
         if (randValue == 0)
         {
-            Debug.Log("Jump!");
             behavior = Behavior.JUMPING; acornDropCounter.Reset();
             body.gravityScale = 1;
             body.AddForce(new Vector2(jumpForce.x * facingDirection, jumpForce.y), ForceMode2D.Impulse);
         }
-        else if(randValue == 1)
+        else if (randValue == 1 && gunProjectiles.All(g => !g.activeSelf))
         {
             behavior = Behavior.SHOOTING;
+        }
+        else if(randValue == 2)
+        {
+            if(!OpenHatch())
+            {
+                behavior = Behavior.NONE;
+            }
         }
     }
     void CheckForWall()
@@ -94,12 +114,33 @@ public class SquirrelPriest : MonoBehaviour, IAttackable
         behavior = Behavior.CLIMBING; behaviorSwitcher.Reset();
         body.gravityScale = 0;
         facingDirection *= -1;
+        transform.localScale = new Vector3(facingDirection, 1, 1);
         body.velocity = Vector2.zero;
-        Debug.Log("Latched onto wall");
+    }
+    bool OpenHatch()
+    {
+        if(facingDirection == -1 && !rightHatch.GetOn())
+        {
+            rightHatch.OpenClose(true);
+            behavior = Behavior.GOING_FOR_HATCH;
+            behaviorSwitcher.Reset();
+            return true;
+        }
+        else if (facingDirection == 1 && !leftHatch.GetOn())
+        {
+            leftHatch.OpenClose(true);
+            behavior = Behavior.GOING_FOR_HATCH;
+            behaviorSwitcher.Reset();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     void DropAcorn()
     {
-        Instantiate(acornProjectile, acornDropPosition.position, Quaternion.identity, transform);
+        Instantiate(acornProjectile, acornDropPosition.position, Quaternion.identity, null);
     }
     public void OnBeAttacked(int value, Vector2 dir)
     {
@@ -116,11 +157,17 @@ public class SquirrelPriest : MonoBehaviour, IAttackable
     }
     public void Shoot()
     {
-        behavior = Behavior.NONE; behaviorSwitcher.Reset();
-        float angle = 90 * facingDirection;
-        for(int i = 0; i < 3; i++)
+        shootTimer.Increment();
+        if(shootTimer.IsFull())
         {
-            Rigidbody2D body = Instantiate(gunProjectile).GetComponentInChildren<Rigidbody2D>();
+            gunProjectiles[shootCounter.CurrentValue].SetActive(true);
+            AudioManager.PlaySFX("SnailShoot");
+            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), gunProjectiles[shootCounter.CurrentValue].GetComponent<Collider2D>());
+            Vector2 atkPos = Game.GetPlayerPosition() - (Vector2)body.transform.position;
+            gunProjectiles[shootCounter.CurrentValue].GetComponent<EnemyProjectile>().Shoot(atkPos, 10, 0, body.position);
+            shootCounter.Increment();
+            float angle = 90 * facingDirection;
+            shootTimer.Reset();
         }
     }
     public void Die()

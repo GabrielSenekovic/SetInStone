@@ -73,7 +73,7 @@ public class Snail : MonoBehaviour, IAttackable
                 AudioManager.PlaySFX("SnailShoot");
                 Physics2D.IgnoreCollision(GetComponent<Collider2D>(), atkProjectile.GetComponent<Collider2D>());
                 atkPos = obj.transform.position - body.transform.position;
-                atkProjectile.GetComponent<EnemyProjectile>().Shoot(atkPos, atkSpeed, atkAngle, body.position);
+                atkProjectile.GetComponent<EnemyProjectile>().Shoot(atkPos, atkSpeed, atkAngle, body.position, true);
                 shot = true;
                 timeSinceAttack = 0;
             }
