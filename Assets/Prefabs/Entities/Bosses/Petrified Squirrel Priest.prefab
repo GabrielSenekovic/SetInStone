@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 1700253647929495529}
   - component: {fileID: 403427115991413024}
   - component: {fileID: 1786866011270391360}
+  - component: {fileID: 227030083479249318}
   m_Layer: 10
   m_Name: Petrified Squirrel Priest
   m_TagString: Untagged
@@ -180,8 +181,6 @@ MonoBehaviour:
   leftHatch: {fileID: 0}
   rightHatch: {fileID: 0}
   contactDamage: 1
-  currentHealth: 0
-  maxHealth: 20
   acornDropPosition: {fileID: 5662967513014213500}
   gunShootPosition: {fileID: 4364006805654021495}
 --- !u!50 &403427115991413024
@@ -221,6 +220,22 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.6
+--- !u!114 &227030083479249318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4910875699537171167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed32b8ffbf88b084f827da7c9b2af197, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
+  maxHealth: 20
+  bubble: {fileID: 4129302837664924161, guid: 5b64495461de8544f87c67cb8830c27c, type: 3}
+  enemy: {fileID: 4910875699537171167}
 --- !u!1 &6507319140774568805
 GameObject:
   m_ObjectHideFlags: 0

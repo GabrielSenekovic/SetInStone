@@ -48,4 +48,6 @@ public class Fireplace : MonoBehaviour, IFlammable, ISwitch
     }
 
     public bool OnFire() => onFire;
+
+    public bool IsActivated() => onFire;
 }

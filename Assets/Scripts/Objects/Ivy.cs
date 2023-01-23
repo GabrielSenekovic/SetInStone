@@ -15,7 +15,7 @@ public class Ivy : MonoBehaviour
     int spreadTimer_Max = 10;
     Tilemap map;
 
-    RoomDoor door;
+    Door door;
     private void Start() 
     {
         fireTimer_Max = Random.Range(30, 50);
@@ -92,9 +92,9 @@ public class Ivy : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other) 
     {
-        if(other.transform.parent && other.transform.parent.GetComponent<RoomDoor>())
+        if(other.transform.parent && other.transform.parent.GetComponent<Door>())
         {
-            door = other.transform.parent.GetComponent<RoomDoor>();
+            door = other.transform.parent.GetComponent<Door>();
             door.Jam();
         }
         if((other.CompareTag("Player") && other.transform.parent && other.transform.parent.GetComponent<Movement>().OnFire()) || other.GetComponent<Fire>())

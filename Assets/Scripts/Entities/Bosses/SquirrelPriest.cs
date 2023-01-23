@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using System.Linq;
 
-public class SquirrelPriest : MonoBehaviour, IAttackable
+public class SquirrelPriest : MonoBehaviour, ISwitch
 {
     public enum Behavior
     {
@@ -13,7 +13,8 @@ public class SquirrelPriest : MonoBehaviour, IAttackable
         GOING_FOR_HATCH = 2,
         HANGING = 3,
         CLIMBING = 4,
-        JUMPING = 5
+        JUMPING = 5,
+        IDLE = 6
     }
     [SerializeField]Behavior behavior;
     [SerializeField] GameObject gunProjectile;
@@ -29,8 +30,6 @@ public class SquirrelPriest : MonoBehaviour, IAttackable
     [SerializeField] Hatch rightHatch;
     int facingDirection;
     public int contactDamage = 1;
-    public int currentHealth;
-    public int maxHealth;
     Rigidbody2D body;
     public Transform acornDropPosition;
     public Transform gunShootPosition;
@@ -47,18 +46,17 @@ public class SquirrelPriest : MonoBehaviour, IAttackable
         acornDropCounter.Initialize(DropAcorn);
         behaviorSwitcher.Initialize(SwitchBehavior);
         shootTimer.Initialize(() => { }, Timer.TimerBehavior.NONE);
-        shootCounter.Initialize(() => { behavior = Behavior.NONE; behaviorSwitcher.Reset();});
+        shootCounter.Initialize(() => { behavior = Behavior.IDLE; behaviorSwitcher.Reset();});
         body = GetComponent<Rigidbody2D>();
 
         facingDirection = -1; //Is on right wall. Facing the left
-        behavior = Behavior.NONE;
     }
 
     private void FixedUpdate()
     {
         switch(behavior)
         {
-            case Behavior.NONE: behaviorSwitcher.Increment(); break;
+            case Behavior.IDLE: behaviorSwitcher.Increment(); break;
             case Behavior.JUMPING: acornDropCounter.Increment(); CheckForWall(); break;
             case Behavior.SHOOTING: Shoot(); break;
             case Behavior.CLIMBING: Climb(); break;
@@ -82,7 +80,7 @@ public class SquirrelPriest : MonoBehaviour, IAttackable
         {
             if(!OpenHatch())
             {
-                behavior = Behavior.NONE;
+                behavior = Behavior.IDLE;
             }
         }
     }
@@ -106,7 +104,7 @@ public class SquirrelPriest : MonoBehaviour, IAttackable
         if(transform.localPosition.y >= 3)
         {
             body.velocity = Vector2.zero;
-            behavior = Behavior.NONE;
+            behavior = Behavior.IDLE;
         }
     }
     void LatchOntoWall()
@@ -142,12 +140,6 @@ public class SquirrelPriest : MonoBehaviour, IAttackable
     {
         Instantiate(acornProjectile, acornDropPosition.position, Quaternion.identity, null);
     }
-    public void OnBeAttacked(int value, Vector2 dir)
-    {
-        currentHealth -= value;
-        body.AddForce(dir, ForceMode2D.Impulse);
-        Die();
-    }
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -170,13 +162,16 @@ public class SquirrelPriest : MonoBehaviour, IAttackable
             shootTimer.Reset();
         }
     }
-    public void Die()
+
+    public bool IsActivated() => behavior != Behavior.NONE;
+
+    public void ActivateSwitch()
     {
-        if (currentHealth <= 0)
-        {
-            // Game.Instance.visualEffects.ChangePosition(deathCloud, transform.position);
-            // deathCloud.effect.Play();
-            gameObject.SetActive(false);
-        }
+        behavior = Behavior.IDLE;
+    }
+
+    public IEnumerator ActivationCutscene()
+    {
+        yield return null;
     }
 }

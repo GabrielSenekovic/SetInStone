@@ -109,7 +109,8 @@ public class Movement : MonoBehaviour
         Collider2D cameraCollider = Physics2D.OverlapCircleAll(transform.position, 1).FirstOrDefault(c => c.CompareTag("PassThrough"));
         Game.SetCameraCollider(cameraCollider);
         room = cameraCollider as PolygonCollider2D;
-        Debug.Assert(health != null);
+        cameraCollider.GetComponentInParent<Room>().OnEnterRoom();
+        
         ledgeClimbTimer.Initialize(ClimbLedge); 
         healthTimer.Initialize(() => health.Heal(1)); 
         playerAnimator = GetComponentInChildren<Animator>();

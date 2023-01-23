@@ -10,9 +10,8 @@ public class Room : MonoBehaviour
     [SerializeField] Collider2D myCollider;
     [SerializeField] Light2D roomLight;
     bool discovered;
+    bool visited;
     public List<Area.RoomToDoor> links = new List<Area.RoomToDoor>();
-
-    ActivatesWhenDefeatEnemies activatesWhenDefeatEnemies;
     public Collider2D GetCollider()
     {
         return myCollider;
@@ -24,7 +23,6 @@ public class Room : MonoBehaviour
         {
             myCollider.gameObject.tag = "PassThrough";
         }
-        TryGetComponent(out activatesWhenDefeatEnemies);
     }
     public void SetLinkedRooms(Area.RoomToDoor[] links)
     {
@@ -35,6 +33,14 @@ public class Room : MonoBehaviour
     public void Discover()
     {
         discovered = true;
+    }
+    public void OnEnterRoom()
+    {
+        if(!discovered)
+        {
+            Discover();
+        }
+        visited = true;
     }
     void FixedUpdate()
     {

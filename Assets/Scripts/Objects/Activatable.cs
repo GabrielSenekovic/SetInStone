@@ -17,7 +17,14 @@ public class Activatable : MonoBehaviour
         switch(type)
         {
             case ACTIVATABLETYPE.DOOR: 
-            GetComponent<RoomDoor>().doorOpening = true;
+                if(GetComponent<Door>().CanOpen())
+                {
+                    GetComponent<Door>().doorOpening = true;
+                }
+                else
+                {
+                    GetComponent<Door>().CloseDoor();
+                }
             AudioManager.PlaySFX("DoorOpen");
             break;
             case ACTIVATABLETYPE.LAMP:

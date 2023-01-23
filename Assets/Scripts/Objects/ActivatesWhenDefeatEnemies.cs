@@ -7,7 +7,6 @@ public class ActivatesWhenDefeatEnemies : MonoBehaviour
 {
     [SerializeField] List<Activatable> activatables = new List<Activatable>();
     [SerializeField] List<EnemyHealth> enemies = new List<EnemyHealth>();
-    [SerializeField] bool closeDoorBehindPlayer;
 
     private void Awake()
     {

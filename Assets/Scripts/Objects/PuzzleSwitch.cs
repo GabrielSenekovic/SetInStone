@@ -6,7 +6,7 @@ using Cinemachine;
 public class PuzzleSwitch : MonoBehaviour, IAttackable, ISwitch
 {
     [SerializeField] List<Activatable> activatables = new List<Activatable>();
-    public bool isHit;
+    bool isHit;
     Animator anim;
 
     // Start is called before the first frame update
@@ -50,4 +50,6 @@ public class PuzzleSwitch : MonoBehaviour, IAttackable, ISwitch
         Game.Instance.cinemachineVirtualCamera.Follow = temp;
         Game.Instance.cinemachineVirtualCamera.gameObject.GetComponent<CinemachineConfiner>().m_ConfineScreenEdges = true;
     }
+
+    public bool IsActivated() => isHit;
 }

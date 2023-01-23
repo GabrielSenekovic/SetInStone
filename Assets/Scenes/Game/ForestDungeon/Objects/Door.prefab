@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 153492696530379513}
   - component: {fileID: 6135707736520283680}
-  - component: {fileID: 3822999761101964079}
   - component: {fileID: 8121006399909755438}
   - component: {fileID: 5074753571928976479}
   - component: {fileID: 1906187216197110649}
+  - component: {fileID: 5363913153293746156}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -58,22 +58,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 5
---- !u!114 &3822999761101964079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 153492696530379517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 058608bd2e6bdc64ca72ef7274adc85d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  doorOpening: 0
-  moveSpeed: 6
-  roomBehind: {fileID: 0}
-  collider: {fileID: 5661310512102723599}
 --- !u!114 &8121006399909755438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,6 +141,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5363913153293746156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153492696530379517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebb29e4a092678c4db1a311ba371ee8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doorOpening: 0
+  moveSpeed: 2
+  roomBehind: {fileID: 0}
+  locked: 0
+  jamCounter: 0
+  collider: {fileID: 0}
 --- !u!1 &3137720873660743263
 GameObject:
   m_ObjectHideFlags: 0

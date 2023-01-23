@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface ISwitch
 {
+    public bool IsActivated();
     public void ActivateSwitch();
     public IEnumerator ActivationCutscene();
 }

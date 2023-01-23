@@ -99,4 +99,6 @@ public class RockCrab : MonoBehaviour, ISwitch
         //Boss cutscene
         yield return null;
     }
+
+    public bool IsActivated() => behavior != Behavior.NONE;
 }
