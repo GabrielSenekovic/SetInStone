@@ -5,7 +5,7 @@ using Cinemachine;
 
 public class CutsceneTrigger : MonoBehaviour, ISwitch
 {
-    [SerializeField] List<Activatable> activatables = new List<Activatable>();
+    [SerializeField] List<GameObject> activatables = new List<GameObject>();
     bool activated = false;
     public void ActivateSwitch()
     {
@@ -20,9 +20,10 @@ public class CutsceneTrigger : MonoBehaviour, ISwitch
         yield return new WaitForSeconds(1.0f);
         for (int i = 0; i < activatables.Count; i++)
         {
-            Game.Instance.cinemachineVirtualCamera.Follow = activatables[i].transform;
+            IActivatable activatable = activatables[i].GetComponent<IActivatable>();
+            Game.Instance.cinemachineVirtualCamera.Follow = activatable.Transform();
             yield return new WaitForSeconds(0.4f);
-            activatables[i].Activate();
+            activatable.Activate();
             if (i == activatables.Count - 1)
             {
                 AudioManager.PlaySFX("Discovery");

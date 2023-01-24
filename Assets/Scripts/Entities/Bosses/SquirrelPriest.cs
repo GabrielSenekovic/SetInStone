@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using System.Linq;
 
-public class SquirrelPriest : MonoBehaviour, ISwitch
+public class SquirrelPriest : MonoBehaviour, IActivatable
 {
     public enum Behavior
     {
@@ -34,6 +34,7 @@ public class SquirrelPriest : MonoBehaviour, ISwitch
     public Transform acornDropPosition;
     public Transform gunShootPosition;
     GameObject[] gunProjectiles = new GameObject[3];
+    Animator anim;
 
     readonly Vector2 jumpForce = new Vector2(30, 10f);
 
@@ -48,7 +49,7 @@ public class SquirrelPriest : MonoBehaviour, ISwitch
         shootTimer.Initialize(() => { }, Timer.TimerBehavior.NONE);
         shootCounter.Initialize(() => { behavior = Behavior.IDLE; behaviorSwitcher.Reset();});
         body = GetComponent<Rigidbody2D>();
-
+        anim = GetComponent<Animator>();
         facingDirection = -1; //Is on right wall. Facing the left
     }
 
@@ -69,12 +70,14 @@ public class SquirrelPriest : MonoBehaviour, ISwitch
         if (randValue == 0)
         {
             behavior = Behavior.JUMPING; acornDropCounter.Reset();
+            anim.SetBool("Jumping", true);
             body.gravityScale = 1;
             body.AddForce(new Vector2(jumpForce.x * facingDirection, jumpForce.y), ForceMode2D.Impulse);
         }
         else if (randValue == 1 && gunProjectiles.All(g => !g.activeSelf))
         {
             behavior = Behavior.SHOOTING;
+            anim.SetTrigger("Shoot");
         }
         else if(randValue == 2)
         {
@@ -104,12 +107,15 @@ public class SquirrelPriest : MonoBehaviour, ISwitch
         if(transform.localPosition.y >= 3)
         {
             body.velocity = Vector2.zero;
+            anim.SetBool("Climbing", false);
             behavior = Behavior.IDLE;
         }
     }
     void LatchOntoWall()
     {
         behavior = Behavior.CLIMBING; behaviorSwitcher.Reset();
+        anim.SetBool("Jumping", false);
+        anim.SetBool("Climbing", true);
         body.gravityScale = 0;
         facingDirection *= -1;
         transform.localScale = new Vector3(facingDirection, 1, 1);
@@ -121,6 +127,7 @@ public class SquirrelPriest : MonoBehaviour, ISwitch
         {
             rightHatch.OpenClose(true);
             behavior = Behavior.GOING_FOR_HATCH;
+            anim.SetTrigger("Grab Chain");
             behaviorSwitcher.Reset();
             return true;
         }
@@ -128,6 +135,7 @@ public class SquirrelPriest : MonoBehaviour, ISwitch
         {
             leftHatch.OpenClose(true);
             behavior = Behavior.GOING_FOR_HATCH;
+            anim.SetTrigger("Grab Chain");
             behaviorSwitcher.Reset();
             return true;
         }
@@ -165,7 +173,7 @@ public class SquirrelPriest : MonoBehaviour, ISwitch
 
     public bool IsActivated() => behavior != Behavior.NONE;
 
-    public void ActivateSwitch()
+    public void Activate()
     {
         behavior = Behavior.IDLE;
     }
@@ -173,5 +181,10 @@ public class SquirrelPriest : MonoBehaviour, ISwitch
     public IEnumerator ActivationCutscene()
     {
         yield return null;
+    }
+
+    public Transform Transform()
+    {
+        return transform;
     }
 }
